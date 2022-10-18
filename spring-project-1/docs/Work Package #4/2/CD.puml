@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ReviewController {
+     +getPendingReviews():  Iterable<Review>
+}
+
+class ReviewServiceImpl {
+    +findAllPending(): Iterable<Review>
+
+}
+
+interface ReviewService <<interface>> {
+    +findAllPending(): Iterable<Review>
+
+}
+
+class Review {
+    - reviewID
+    - text
+    - rating
+    - upVote
+    - downVote
+    - funnyFact
+    - dataTime
+    - status
+    - version
+    Review(Long reviewId, String text, int rating, Date date, String status)
+
+}
+
+interface ReviewRepository <<interface>> {
+    +findAllPending(): Iterable<Review>
+}
+
+ReviewController..>ReviewService
+ReviewController..>Review
+ReviewService..>ReviewServiceImpl
+ReviewServiceImpl..>ReviewRepository
+ReviewRepository "1" -right-> "0..*" Review:  records
+@enduml

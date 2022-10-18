@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "Customer" as Customer
+participant "System" as System
+
+activate Customer
+
+Customer -> System: Create review in pending state
+System --> Customer: Return review
+
+
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+class Product {
+    - productId
+    - name
+    - description
+    - images
+    - SKU
+}
+
+class Review {
+    - reviewId
+    - text
+    - rating
+    - upvote
+    - downvote
+    - dataTime
+    - status
+    - funnyFact
+}
+
+
+class User {
+    - username
+    - password
+    - email
+    - role
+}
+
+class AggregatedRating {
+    - oneStar
+    - twoStar
+    - threeStar
+    - fourStar
+    - fiveStar
+    - aggregatingRating
+}
+
+User "1" -down-- "*" Review: manage >
+Product "1" -down-- "*" Review: has >
+Product "1" -down-- "1" AggregatedRating: has >
+
+@enduml

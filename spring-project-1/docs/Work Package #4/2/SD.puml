@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autoactivate on
+autonumber
+
+participant ":Moderator" as Moderator
+participant ":ReviewController" as Controller
+participant ":ReviewService" as Service
+participant ":ReviewRepository" as Repository
+participant "list:List<Reviews>" as List
+
+Moderator -> Controller : GET getPendingReviews()
+Controller -> Service : findAllPending()
+Service -> Repository : findAllPending()
+Repository --> Service : list
+Service --> Controller : list
+Controller --> Moderator : list
+
+@enduml

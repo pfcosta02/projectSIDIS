@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="614px" preserveAspectRatio="none" style="width:656px;height:614px;background:#FFFFFF;" version="1.1" viewBox="0 0 656 614" width="656px" zoomAndPan="magnify"><defs/><g><!--MD5=[ee6344d516906ecc8b439ac61d539e0d]
+class ReviewController--><g id="elem_ReviewController"><rect codeLine="6" fill="#F1F1F1" height="61.2188" id="ReviewController" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="238" x="193" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107" x="258.5" y="26.5332">ReviewController</text><line style="stroke:#181818;stroke-width:0.5;" x1="194" x2="430" y1="34.6094" y2="34.6094"/><line style="stroke:#181818;stroke-width:0.5;" x1="194" x2="430" y1="42.6094" y2="42.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="226" x="199" y="61.1426">+create(): ResponseEntity&lt;Review&gt;</text></g><!--MD5=[e5477415c5dbcdabfda1ba2e82d9bcc5]
+class ReviewServiceImpl--><g id="elem_ReviewServiceImpl"><rect codeLine="10" fill="#F1F1F1" height="61.2188" id="ReviewServiceImpl" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="228" x="97" y="266"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="117" x="152.5" y="285.5332">ReviewServiceImpl</text><line style="stroke:#181818;stroke-width:0.5;" x1="98" x2="324" y1="293.6094" y2="293.6094"/><line style="stroke:#181818;stroke-width:0.5;" x1="98" x2="324" y1="301.6094" y2="301.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="216" x="103" y="320.1426">+create(Review resource): Review</text></g><!--MD5=[0b56730ea20f38f13e8afabab30647d3]
+class ReviewService--><g id="elem_ReviewService"><rect codeLine="15" fill="#F1F1F1" height="76.3125" id="ReviewService" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="228" x="109" y="129"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="61" x="192.5" y="146.457">«interface»</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="90" x="178" y="163.627">ReviewService</text><line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="336" y1="171.7031" y2="171.7031"/><line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="336" y1="179.7031" y2="179.7031"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="216" x="115" y="198.2363">+create(Review resource): Review</text></g><!--MD5=[eb0e8f8ddfdc21c3fdb48447501fec67]
+class Review--><g id="elem_Review"><rect codeLine="20" fill="#F1F1F1" height="219.7031" id="Review" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="445" x="204.5" y="388"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="45" x="404.5" y="407.5332">Review</text><line style="stroke:#181818;stroke-width:0.5;" x1="205.5" x2="648.5" y1="415.6094" y2="415.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="58" x="210.5" y="434.1426">-reviewID</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="27" x="210.5" y="451.752">-text</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="41" x="210.5" y="469.3613">-rating</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="210.5" y="486.9707">-upVote</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="210.5" y="504.5801">-downVote</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="210.5" y="522.1895">-funnyFact</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="64" x="210.5" y="539.7988">-dataTime</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="43" x="210.5" y="557.4082">-status</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="51" x="210.5" y="575.0176">-version</text><line style="stroke:#181818;stroke-width:0.5;" x1="205.5" x2="648.5" y1="582.0938" y2="582.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="433" x="210.5" y="600.627">Review(Long reviewId, String text, int rating, Date date, String status)</text></g><!--MD5=[646427437b77c51076e5aa1bc572221c]
+class ReviewRepository--><g id="elem_ReviewRepository"><rect codeLine="34" fill="#F1F1F1" height="76.3125" id="ReviewRepository" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118" x="7" y="460"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="61" x="35.5" y="477.457">«interface»</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="112" x="10" y="494.627">ReviewRepository</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="124" y1="502.7031" y2="502.7031"/><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="124" y1="510.7031" y2="510.7031"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="82" x="13" y="529.2363">+save(): void</text></g><!--MD5=[d057c3dfebd49e5861f569cf4a1dc708]
+link ReviewController to ReviewService--><g id="link_ReviewController_ReviewService"><path codeLine="38" d="M291.36,68.07 C279.61,84.9 264.72,106.23 251.84,124.69 " fill="none" id="ReviewController-to-ReviewService" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="248.95,128.82,257.3774,123.723,251.8087,124.7178,250.8139,119.1491,248.95,128.82" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[ad60faa5aaf821ba299f657f8b243999]
+link ReviewController to Review--><g id="link_ReviewController_Review"><path codeLine="39" d="M328.05,68.35 C336.79,85.65 347.18,108.09 354,129 C381.06,212 399.8,308.97 411.51,382.52 " fill="none" id="ReviewController-to-Review" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="412.34,387.78,414.8732,378.2625,411.5528,382.8424,406.973,379.522,412.34,387.78" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[73d36e88ca65f5469b250fd4304dbf63]
+link ReviewService to ReviewServiceImpl--><g id="link_ReviewService_ReviewServiceImpl"><path codeLine="40" d="M219.5,205.22 C217.85,222.67 215.91,243.35 214.29,260.52 " fill="none" id="ReviewService-to-ReviewServiceImpl" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="213.8,265.72,218.6318,257.1378,214.272,260.7423,210.6675,256.3826,213.8,265.72" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[b3b064fd269ea8760e915da69fd89045]
+link ReviewServiceImpl to ReviewRepository--><g id="link_ReviewServiceImpl_ReviewRepository"><path codeLine="41" d="M189.29,327.37 C164.52,361.45 123.84,417.41 96.04,455.67 " fill="none" id="ReviewServiceImpl-to-ReviewRepository" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="93.05,459.78,101.5723,454.8433,95.9858,455.7326,95.0965,450.1461,93.05,459.78" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[c5c637c91b919388842e6ccc8b21e26a]
+link ReviewRepository to Review--><g id="link_ReviewRepository_Review"><path codeLine="42" d="M125.21,498 C146.58,498 172.18,498 199.3,498 " fill="none" id="ReviewRepository-to-Review" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="204.38,498,195.38,494,199.38,498,195.38,502,204.38,498" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="43" x="143.25" y="491.4951">records</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="132.8528" y="494.5225">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="176.7472" y="511.7683">0..*</text></g><!--MD5=[4cd5dd21599abae6db433ae344728e37]
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ReviewController {
+     +create(): ResponseEntity<Review>
+}
+
+class ReviewServiceImpl {
+    +create(Review resource): Review
+
+}
+
+interface ReviewService <<interface>> {
+    +create(Review resource): Review
+
+}
+
+class Review {
+    - reviewID
+    - text
+    - rating
+    - upVote
+    - downVote
+    - funnyFact
+    - dataTime
+    - status
+    - version
+    Review(Long reviewId, String text, int rating, Date date, String status)
+
+}
+
+interface ReviewRepository <<interface>> {
+    + save(): void
+}
+
+ReviewController..>ReviewService
+ReviewController..>Review
+ReviewService..>ReviewServiceImpl
+ReviewServiceImpl..>ReviewRepository
+ReviewRepository "1" -right-> "0..*" Review:  records
+@enduml
+
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ReviewController {
+     +create(): ResponseEntity<Review>
+}
+
+class ReviewServiceImpl {
+    +create(Review resource): Review
+
+}
+
+interface ReviewService <<interface>> {
+    +create(Review resource): Review
+
+}
+
+class Review {
+    - reviewID
+    - text
+    - rating
+    - upVote
+    - downVote
+    - funnyFact
+    - dataTime
+    - status
+    - version
+    Review(Long reviewId, String text, int rating, Date date, String status)
+
+}
+
+interface ReviewRepository <<interface>> {
+    + save(): void
+}
+
+ReviewController..>ReviewService
+ReviewController..>Review
+ReviewService..>ReviewServiceImpl
+ReviewServiceImpl..>ReviewRepository
+ReviewRepository "1" -right-> "0..*" Review:  records
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 14:29:17 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

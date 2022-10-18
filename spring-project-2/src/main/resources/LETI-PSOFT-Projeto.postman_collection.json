@@ -1,0 +1,703 @@
+{
+	"info": {
+		"_postman_id": "357b64e3-f4c1-4d84-94c4-2d7762a21c7e",
+		"name": "LETI-PSOFT-Projeto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17817487"
+	},
+	"item": [
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Authtenticates\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let token = postman.getResponseHeader(\"Authorization\");\r",
+									"    pm.environment.set(\"token\", token);    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"rfnm@mail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/login",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"rfnm99@gmail.com\",\r\n    \"fullName\":\"Rafael\",\r\n    \"password\":\"bar123\",\r\n    \"rePassword\":\"bar123\",\r\n    \"authorities\":[\"MODERATOR\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/register",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Images",
+			"item": [
+				{
+					"name": "Public",
+					"item": [
+						{
+							"name": "Get photo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products/2/photo/martelo.jpg",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"2",
+										"photo",
+										"martelo.jpg"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Private",
+					"item": [
+						{
+							"name": "Upload one photo",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Rafael/Documents/Faculdade/PSOFT/psoft-project-g2/src/main/resources/martelo.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products/2/photo",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"2",
+										"photo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload multiple photos",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/C:/Users/pedro/Desktop/ISEP/PSOFT/psoft-project-g2/src/main/resources/martelo.jpg"
+										},
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/C:/Users/pedro/Desktop/ISEP/PSOFT/psoft-project-g2/src/main/resources/martelo-bola-8011.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products/1/photos",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"1",
+										"photos"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Product Management",
+			"item": [
+				{
+					"name": "Public",
+					"item": [
+						{
+							"name": "GET All products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Product Rating",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products/1/rating",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"1",
+										"rating"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Single Product By ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products/1",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Single Product By Name",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products/name/Martelo",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"name",
+										"Martelo"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Private",
+					"item": [
+						{
+							"name": "POST product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Samsung S22\",\r\n    \"description\": \"Smartphone Samsung S22 256GB\",\r\n    \"sku\": \"ABCD123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/products",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Reviews Management",
+			"item": [
+				{
+					"name": "Public",
+					"item": [
+						{
+							"name": "GET Reviews of a product sorted by date and votes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/product/1/date/votes",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"product",
+										"1",
+										"date",
+										"votes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Reviews of a product sorted by date",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/product/1/date",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"product",
+										"1",
+										"date"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Single Review",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/2",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "For registered users",
+					"item": [
+						{
+							"name": "POST review",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productId\": \"1\",\r\n    \"customerId\": \"5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Review",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "If-Match",
+										"value": "1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/7",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET my reviews",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/customer/5",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"customer",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "upVote",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"upVote\":\"+1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/7/upvote",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"7",
+										"upvote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "downVote",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"downVote\":\"+1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/6/downvote",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"6",
+										"downvote"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "For moderators",
+					"item": [
+						{
+							"name": "GET pending reviews",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/pending",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"pending"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept or Reject Review",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "If-Match",
+										"value": "0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\":\"Approved\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/reviews/3",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"reviews",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

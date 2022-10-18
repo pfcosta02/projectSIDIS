@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autoactivate on
+autonumber
+
+participant ":Customer" as Customer
+participant ":ReviewController" as Controller
+participant ":ReviewService" as Service
+participant ":ReviewRepository" as Repository
+
+activate Customer
+
+Customer -> Controller : DELETE deleteReview(reviewId)
+Controller -> Service : deleteById(reviewId)
+Service -> Repository : deleteByIdIfMatch(reviewId)
+note right
+only successful
+if review has no votes
+end note
+Repository --> Service : success
+Service --> Controller : success
+Controller --> Customer : success
+
+
+@enduml
