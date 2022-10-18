@@ -3,6 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+register app/target/
+spring-project-1/target/
+spring-project-2/target/
 
 ### STS ###
 .apt_generated
