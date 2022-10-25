@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ReviewController {
+    +deleteReview(Long reviewId, Review review): Review review
+}
+
+class ReviewServiceImpl {
+    +ReviewService(ReviewRepository revRepo)
+    +deleteById(Long reviewId, Review review): void
+}
+
+interface ReviewService <<interface>> {
+    +deleteById(Long reviewId, Review review): void
+}
+
+class Review {
+    -reviewId
+    -text
+    -rating
+    -upvote
+    -downvote
+    -date/time
+    -status
+    -funnyFact
+    Review(Long reviewId, String text, int rating, int upvote, int downvote, LocalDateTime date, String status, String funnyFact)
+}
+
+interface ReviewRepository <<interface>> {
+    + deleteByIdIfMatch(): List<Review>
+}
+
+ReviewController..>ReviewService
+ReviewController..>Review
+ReviewService..>ReviewServiceImpl
+ReviewServiceImpl..>ReviewRepository
+ReviewRepository "1" -right-> "0..*" Review:  records
+@enduml

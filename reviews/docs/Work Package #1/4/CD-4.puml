@@ -1,0 +1,52 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ProductController {
++ResponseEntity<Product> getProduct
+}
+
+class Product {
+-name
+-productId
+-Sku
+-description
++getName()
++getProductId()
++getSku()
++getDescription()
+}
+
+
+
+class ProductService {
+    + findAll()
+    + findOne(Long id)
+    + findByName(String name)
+}
+
+interface ProductRepository <<interface>> {
+List<ProductAllView>findAllProducts()
+List<ProductNameView>findByName(name)
+}
+
+interface ProductServiceImpl <<interface>> {
+    +List<ProductAllView> findAll()
+    +Optional<Product> findOne(final Long productId)
+    +List<ProductNameView> findByName(final String name)
+
+}
+
+
+ProductService "1" -down-> "1" ProductServiceImpl:  uses
+
+
+ProductController ..> ProductService
+ProductServiceImpl ..> ProductRepository
+ProductService ..> Product
+
+
+
+@enduml

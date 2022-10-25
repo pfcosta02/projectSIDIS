@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "registered Customer" as Customer
+participant "System" as System
+
+activate Customer
+
+Customer -> System: asks to show catalog of products
+System --> Customer: return catalog of products
+Customer -> System: select one of the products
+System --> Customer: return the details of the product
+
+
+
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+
+class Product {
+    - productID
+    - name
+
+
+}
+
+
+
+@enduml
+

@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ProductService {
+    +Optional<Product> findOne(Long id);
+}
+
+class ReviewController {
+    ResponseEntity<Review> create
+}
+
+class ReviewServiceImpl {
+    +ReviewService(ReviewRepository revRepo)
+    +Review create(final Review resource)
+    }
+
+interface ReviewService <<interface>> {
+    +ReviewService(ReviewRepository revRepo)
+    +Review create(Review resource)
+
+}
+
+class Review {
+    - reviewID
+    - text
+    - rating
+    - upVote
+    - downVote
+    - funnyFact
+    - dataTime
+    - status
+    - version
+    Review(Long reviewId, String text, int rating, Date date, String status)
+
+}
+
+interface ReviewRepository <<interface>> {
+    +save(obj) Review.newFrom(resource)
+}
+
+ReviewController..>ProductService
+ReviewController..>ReviewService
+ReviewService..>ReviewServiceImpl
+ReviewServiceImpl..>ReviewRepository
+ReviewRepository "1" -right-> "0..*" Review:  records
+@enduml

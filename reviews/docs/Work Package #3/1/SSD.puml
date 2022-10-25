@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "User" as User
+participant "System" as System
+
+activate User
+
+User -> System: Asks to show catalog of products
+System --> User: Return catalog of products
+User -> System: Selects a product
+System --> User: Show selected product
+User -> System: Asks to show All reviews of that product
+System --> User: Show reviews
+User -> System: Selects a review
+System --> User: Show review
+User -> System: Vote for review
+System --> User: Asks for confirmation
+User -> System: Confirms
+System --> User: Informs of success
+
+
+
+@enduml

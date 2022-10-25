@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "Moderator" as Moderator
+participant "System" as System
+
+activate Moderator
+
+Moderator -> System: Asks all pending reviews
+System --> Moderator: Return all pending reviews
+
+
+@enduml

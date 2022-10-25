@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autoactivate on
+autonumber
+
+participant ":Moderator" as Moderator
+participant ":ProductController" as Controller
+participant ":ProductService" as Service
+participant ":Product" as Product
+participant ":ProductRepository" as Repository
+
+Moderator -> Controller : GET product()
+Controller -> Service : getProduct(product)
+Service -> Product : newFrom(product)
+Product -> Repository : findOne()
+Repository --> Product : success
+Product --> Service : success
+Service --> Controller : success
+Controller --> Moderator : success
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "registered Customer" as Customer
+participant "System" as System
+
+activate Customer
+
+Customer -> System: asks to show catalog of products
+System --> Customer: return catalog of products
+group alt (search by name)
+Customer -> System: Asks to search the product by name in the catalog
+System --> Customer: returns the results of the search
+end alt
+group alt (search by code)
+Customer -> System: Asks to search the product by bar code in the catalog
+System --> Customer: returns the results of the search
+end alt
+
+
+
+@enduml
