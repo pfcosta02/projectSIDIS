@@ -1,6 +1,7 @@
 package com.example.project.controllers;
 
 import com.example.project.views.ReviewView;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,6 +27,11 @@ import com.example.project.services.ReviewService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 @Tag(name = "Reviews", description = "Endpoints for managing reviews")
 @RestController
@@ -40,9 +46,23 @@ public class    ReviewController {
 
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
     @GetMapping(value = "/product/{productId}/date/votes")
-    public Iterable<Review> getApprovedReviews(@PathVariable("productId") final Long productId) {
-        final var product = productService.findOne(productId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+    public Iterable<Review> getApprovedReviews(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
+
+        String url = "http://localhost:8082/api/products/" + productId;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        if (response.toString().length() == 0) {
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
 
         return service.findApprovedReviews(productId);
     }
