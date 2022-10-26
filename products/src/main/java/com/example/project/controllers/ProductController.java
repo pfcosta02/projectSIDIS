@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.project.model.ProductDTO;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
 import com.example.project.services.FileStorageService;
@@ -33,7 +34,6 @@ public class ProductController {
 
     @Autowired
     private ProductService service;
-    ;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -93,5 +93,12 @@ public class ProductController {
         return Arrays.asList(files).stream().map(f -> uploadFile(productId, f)).collect(Collectors.toList());
     }
 
+    @Operation(summary = "Search for a product by his sku")
+    @GetMapping(value = "/sku/{sku}")
+    public ProductDTO findBySku(@PathVariable(value =  "sku" )String sku)  {
+
+        return service.findBySku(sku);
+
+    }
 
 }

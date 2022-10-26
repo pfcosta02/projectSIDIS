@@ -36,7 +36,7 @@ public class SpringConfig {
     // OpenAPI
     @Bean
     public OpenAPI openApi() {
-        return new OpenAPI().info(new Info().title("PSOFT Project API").description("API project for the evaluation of the subject of PSOFT - Projeto de Sofware").version("v1.0")
+        return new OpenAPI().info(new Info().title("SIDIS Product APP").description("Product API").version("v1.0")
                 .termsOfService("TOC"));
     }
 

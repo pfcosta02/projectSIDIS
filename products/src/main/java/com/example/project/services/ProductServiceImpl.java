@@ -3,6 +3,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.project.model.ProductDTO;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,27 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Product> findOne(final Long productId) {
-        return repository.findById(productId);
+        Optional<Product> optionalProduct = repository.findById(productId);
+
+        if (optionalProduct.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
+
+        return optionalProduct;
+    }
+
+    @Override
+    public ProductDTO findBySku(final String sku) {
+
+        Optional<Product> optionalProduct = repository.findBySku(sku);
+
+        if (optionalProduct.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
+
+        ProductDTO productDTO = new ProductDTO(optionalProduct.get().getSku(), optionalProduct.get().getName(), optionalProduct.get().getDescription(),optionalProduct.get().getSetOfImages());
+
+        return productDTO;
     }
 
     @Override
@@ -47,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     public void addImage(String filename, Long id) {
         Optional<Product> optionalProduct = repository.findById(id);
 
-        if (!optionalProduct.isPresent()){
+        if (optionalProduct.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
         optionalProduct.get().addImages(filename);

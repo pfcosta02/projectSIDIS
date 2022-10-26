@@ -30,7 +30,8 @@ public class Product {
     private String description;
 
     @ElementCollection
-    private Set<String> setOfImages = new HashSet<String>();
+    @Column(name = "images")
+    private List<String> images;
 
     @Version
     private Long version;
@@ -96,20 +97,20 @@ public class Product {
             obj.setSku(resource.sku);
         }
         if(resource.getSetOfImages() != null){
-            obj.setSetOfImages(resource.setOfImages);
+            obj.setSetOfImages(resource.images);
         }
         return obj;
     }
 
     public void addImages(String filename) {
-        setOfImages.add(filename);
+        images.add(filename);
     }
 
-    public Set<String> getSetOfImages() {
-        return setOfImages;
+    public List<String> getSetOfImages() {
+        return images;
     }
 
-    public void setSetOfImages(Set<String> setOfImages) {
-        this.setOfImages = setOfImages;
+    public void setSetOfImages(List<String> setOfImages) {
+        this.images = setOfImages;
     }
 }
