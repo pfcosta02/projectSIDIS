@@ -46,8 +46,7 @@ public interface ReviewService {
      * @return
      */
     Review partialUpdate(Long id, Review resource, long parseLong);
-    Review upVote(Long id, Review resource);
-    Review downVote(Long id, Review resource);
+
 
 }
 

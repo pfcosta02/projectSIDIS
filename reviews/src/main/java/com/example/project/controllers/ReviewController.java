@@ -58,7 +58,7 @@ public class    ReviewController {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        ObjectMapper mapper = new ObjectMapper();
+       // ObjectMapper mapper = new ObjectMapper();
 
         if (response.toString().length() == 0) {
             new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
@@ -67,6 +67,7 @@ public class    ReviewController {
         return service.findApprovedReviews(productId);
     }
 
+    /*
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
     @GetMapping(value = "/product/{productId}/date")
     public Iterable<Review> findApprovedReviewsByDate(@PathVariable("productId") final Long productId) {
@@ -170,4 +171,6 @@ public class    ReviewController {
         service.deleteById(reviewId, Long.parseLong(ifMatchValue));
         return ResponseEntity.noContent().build();
     }
+
+     */
 }

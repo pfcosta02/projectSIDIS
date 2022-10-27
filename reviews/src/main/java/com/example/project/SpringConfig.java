@@ -8,7 +8,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 
 @Configuration
-@EnableConfigurationProperties({ FileStorageProperties.class })
 public class SpringConfig {
 
     // Etags
@@ -32,7 +31,7 @@ public class SpringConfig {
     // OpenAPI
     @Bean
     public OpenAPI openApi() {
-        return new OpenAPI().info(new Info().title("PSOFT Project API").description("API project for the evaluation of the subject of PSOFT - Projeto de Sofware").version("v1.0")
+        return new OpenAPI().info(new Info().title("SIDIS Reviews App").description("Reviews API").version("v1.0")
                 .termsOfService("TOC"));
     }
 

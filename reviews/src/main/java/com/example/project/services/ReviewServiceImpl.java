@@ -77,27 +77,7 @@ public class ReviewServiceImpl implements ReviewService {
         return repository.save(review);
     }
 
-    @Override
-    public Review upVote(final Long id, final Review resource) {
 
-        final var review = repository.findById(id)
-                .orElseThrow(() -> new MyResourceNotFoundException("Cannot update an object that does not yet exist"));
-
-        review.upVote(resource);
-
-        return repository.save(review);
-    }
-
-    @Override
-    public Review downVote(final Long id, final Review resource) {
-
-        final var review = repository.findById(id)
-                .orElseThrow(() -> new MyResourceNotFoundException("Cannot update an object that does not yet exist"));
-
-        review.downVote(resource);
-
-        return repository.save(review);
-    }
 
     @Override
     public void deleteById(final Long id, final long desiredVersion) {
