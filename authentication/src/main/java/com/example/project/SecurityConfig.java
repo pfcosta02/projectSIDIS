@@ -86,8 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll().antMatchers(format("%s/**", restApiDocPath)).permitAll()
                 .antMatchers(format("%s/**", swaggerPath)).permitAll()
                 // Our public endpoints
-                .antMatchers("/api/public/**").permitAll().antMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-                .antMatchers("/api/public/**").permitAll().antMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
+                //.antMatchers("/api/public/**").permitAll().antMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                //.antMatchers("/api/public/**").permitAll().antMatchers(HttpMethod.GET, "/api/reviews/**").permitAll()
                 // Our private endpoints
                 /*
                 .antMatchers("/api/admin/user/**").hasRole(Role.ADMIN).antMatchers("/api/products/**")

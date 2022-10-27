@@ -48,7 +48,7 @@ public class    ReviewController {
     @GetMapping(value = "/product/{productId}/date/votes")
     public Iterable<Review> getApprovedReviews(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
 
-        String url = "http://localhost:8082/api/products/" + productId;
+        String url = "http://localhost:8081/api/products/" + productId;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -58,40 +58,60 @@ public class    ReviewController {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-       // ObjectMapper mapper = new ObjectMapper();
 
-        if (response.toString().length() == 0) {
-            new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        if (response.body().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
         return service.findApprovedReviews(productId);
     }
 
-    /*
+
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
     @GetMapping(value = "/product/{productId}/date")
-    public Iterable<Review> findApprovedReviewsByDate(@PathVariable("productId") final Long productId) {
-        final var product = productService.findOne(productId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+    public Iterable<Review> findApprovedReviewsByDate(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
+
+        String url = "http://localhost:8081/api/products/" + productId;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+
+        if (response.body().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
 
         return service.findApprovedReviewsByDate(productId);
     }
 
+
     @Operation(summary = "Gets Pending Review")
-    @RolesAllowed(Role.MODERATOR)
     @GetMapping(value = "/pending")
     public Iterable<Review> getPendingReviews() {
         return service.findAllPending();
     }
 
     @Operation(summary = "Gets Reviews of a client")
-    @RolesAllowed(Role.CUSTOMER)
     @GetMapping(value = "/customer/{id}")
-    public Iterable<ReviewView> findMyReviews(@PathVariable("id") final Long customerId) {
-        final var customer = userService.getUser(customerId);
+    public Iterable<ReviewView> findMyReviews(@PathVariable("id") final Long customerId) throws IOException, InterruptedException {
+        String url = "http://localhost:8080/api/customer/user/" + customerId;
 
-        if(customer.getId() == null) {
-            new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not Found");
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+
+        if (response.body().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer Not Found");
         }
 
         return service.findMyReviews(customerId);
@@ -107,13 +127,24 @@ public class    ReviewController {
     }
 
     @Operation(summary = "Creates a Review")
-    @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Review> create(@Valid @RequestBody final Review resource) {
+    public ResponseEntity<Review> create(@Valid @RequestBody final Review resource) throws IOException, InterruptedException {
 
-        final var product = productService.findOne(resource.getProductId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+        String url = "http://localhost:8081/api/products/" + resource.getProductId();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+
+        if (response.body().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
 
         final var review = service.create(resource);
 
@@ -121,7 +152,6 @@ public class    ReviewController {
     }
 
     @Operation(summary = "Partially updates an existing review")
-    @RolesAllowed(Role.MODERATOR)
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Review> partialUpdate(final WebRequest request,
                                              @PathVariable("id") @Parameter(description = "The id of the review to update") final Long id,
@@ -136,31 +166,8 @@ public class    ReviewController {
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
 
-    @Operation(summary = "Vote a like in a review")
-    @RolesAllowed(Role.CUSTOMER)
-    @PatchMapping(value = "/{id}/upvote")
-    public ResponseEntity<Review> upVote(final WebRequest request,
-                                                @PathVariable("id") @Parameter(description = "The id of the review to update") final Long id,
-                                                @Valid @RequestBody final Review resource) {
-
-        final var review = service.upVote(id, resource);
-        return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
-    }
-
-    @Operation(summary = "Vote a dislike in a review")
-    @RolesAllowed(Role.CUSTOMER)
-    @PatchMapping(value = "/{id}/downvote")
-    public ResponseEntity<Review> downVote(final WebRequest request,
-                                         @PathVariable("id") @Parameter(description = "The id of the review to update") final Long id,
-                                         @Valid @RequestBody final Review resource) {
-
-
-        final var review = service.downVote(id, resource);
-        return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
-    }
 
     @Operation(summary = "Customer can delete one of his reviews - available only if reviews has no votes")
-    @RolesAllowed(Role.CUSTOMER)
     @DeleteMapping(value = "/{reviewId}")
     public ResponseEntity<Review> deleteReview(final WebRequest request, @PathVariable("reviewId") final Long reviewId) {
         final String ifMatchValue = request.getHeader("If-Match");
@@ -171,6 +178,4 @@ public class    ReviewController {
         service.deleteById(reviewId, Long.parseLong(ifMatchValue));
         return ResponseEntity.noContent().build();
     }
-
-     */
 }
