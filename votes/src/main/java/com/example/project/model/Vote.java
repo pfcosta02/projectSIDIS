@@ -1,18 +1,20 @@
 package com.example.project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.StaleObjectStateException;
 
 import javax.persistence.*;
+import java.io.IOException;
 
 @Entity
 public class Vote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column (name = "vote")
-    private boolean vote;
+    private String vote;
 
     @Column (name = "reviewId")
     private Long reviewId;
@@ -20,14 +22,36 @@ public class Vote {
     @Column (name = "customerId")
     private Long customerId;
 
+    @Version
+    private Long version;
+
     public Vote() {
     }
 
-    public Vote(boolean vote, Long reviewId, Long customerId) {
+    public Vote(String vote, Long reviewId, Long customerId) {
         this.vote = vote;
         this.reviewId = reviewId;
         this.customerId = customerId;
     }
+
+    public static Vote newFrom(final Vote resource) {
+        final Vote obj = new Vote();
+
+        if (resource.getVote() != null) {
+            if (resource.getVote() == "UpVote" || resource.getVote() == "DownVote") {
+                obj.setVote(resource.vote);
+            }
+        }
+        if (resource.getReviewId() != null) {
+            obj.setReviewId(resource.reviewId);
+        }
+        if (resource.getCustomerId() != null) {
+            obj.setCustomerId(resource.customerId);
+        }
+
+        return obj;
+    }
+
 
     public Long getId() {
         return id;
@@ -37,11 +61,11 @@ public class Vote {
         this.id = id;
     }
 
-    public boolean isVote() {
+    public String getVote() {
         return vote;
     }
 
-    public void setVote(boolean vote) {
+    public void setVote(String vote) {
         this.vote = vote;
     }
 
@@ -59,5 +83,9 @@ public class Vote {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 }

@@ -11,8 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 @Tag(name = "Votes", description = "Endpoints for managing votes")
 @RestController
@@ -25,11 +31,26 @@ public class VoteController {
     private VoteService service;
 
     @Operation(summary = "Make a vote in a review")
-    @PostMapping(value = "/{idReview}")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Vote> create(@RequestBody final VoteDTO resource, @PathVariable("idReview") final int idReview) throws IOException {
-        final var vote = service.create(resource,idReview);
-        return ResponseEntity.ok().body(vote);
+    public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource) throws IOException, InterruptedException {
+        String url = "http://localhost:8082/api/reviews/" + resource.getReviewId();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+
+        if (response.body().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
+        }
+
+        final var vote = service.create(resource);
+        return ResponseEntity.ok().eTag(Long.toString(vote.getVersion())).body(vote);
     }
 
 }

@@ -5,17 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class VoteDTO {
 
-    private boolean vote;
+    private String vote;
 
-    public VoteDTO(boolean vote) {
+    public VoteDTO(String vote) {
         this.vote = vote;
     }
 
-    public boolean getVote() {
+    public String getVote() {
         return vote;
     }
 
-    public void setVote(boolean vote) {
+    public void setVote(String vote) {
         this.vote = vote;
     }
 }
