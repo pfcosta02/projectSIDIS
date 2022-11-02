@@ -32,7 +32,7 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Iterable<Vote> findByReview(Long reviewId) {
-        return repository.findByReview(reviewId);
+    public List<Vote> findVotesReview(Long reviewId) {
+        return repository.findVotesReview(reviewId);
     }
 }

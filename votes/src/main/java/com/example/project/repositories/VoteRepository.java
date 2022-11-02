@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface VoteRepository extends CrudRepository<Vote, Long> {
 
     @Modifying
     @Query("SELECT f FROM Vote f WHERE f.reviewId = ?1 ")
-    Iterable<Vote> findByReview(Long reviewId);
+    List<Vote> findVotesReview(Long reviewId);
 
 }

@@ -19,6 +19,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @Tag(name = "Votes", description = "Endpoints for managing votes")
 @RestController
@@ -29,6 +30,26 @@ public class VoteController {
 
     @Autowired
     private VoteService service;
+
+    @Operation(summary = "Shows catalog of products")
+    @GetMapping(value = "/{reviewId}")
+    public List<Vote> findVotesReview(@PathVariable("productId") final Long reviewId) throws IOException, InterruptedException {
+        String url = "http://localhost:8082/api/reviews/" + reviewId;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        if (response.body().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
+        }
+
+        return service.findVotesReview(reviewId);
+    }
 
     @Operation(summary = "Make a vote in a review")
     @PostMapping
