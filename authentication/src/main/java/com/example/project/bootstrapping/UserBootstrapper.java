@@ -64,7 +64,7 @@ public class UserBootstrapper implements CommandLineRunner {
         if (userRepo.findByUsername("rfnm@mail.com").isEmpty()) {
             User u2 = new User("rfnm@mail.com", encoder.encode("12345"));
             u2.setFullName("Rafael Moreira");
-            u2.addAuthority(new Role(Role.MODERATOR));
+            u2.addAuthority(new Role(Role.ADMIN));
             userRepo.save(u2);
         }
 

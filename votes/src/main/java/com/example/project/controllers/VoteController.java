@@ -31,9 +31,9 @@ public class VoteController {
     @Autowired
     private VoteService service;
 
-    @Operation(summary = "Shows catalog of products")
+    @Operation(summary = "Shows catalog of reviews")
     @GetMapping(value = "/{reviewId}")
-    public List<Vote> findVotesReview(@PathVariable("productId") final Long reviewId) throws IOException, InterruptedException {
+    public List<Vote> findVotesReview(@PathVariable("reviewId") final Long reviewId) throws IOException, InterruptedException {
         String url = "http://localhost:8082/api/reviews/" + reviewId;
 
         HttpClient client = HttpClient.newHttpClient();

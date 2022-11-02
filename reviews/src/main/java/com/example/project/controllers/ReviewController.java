@@ -1,5 +1,6 @@
 package com.example.project.controllers;
 
+import com.example.project.model.VoteDTO;
 import com.example.project.views.ReviewView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.project.model.VoteDTO;
 import com.example.project.model.Review;
 import com.example.project.services.ReviewService;
 
@@ -32,10 +34,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @Tag(name = "Reviews", description = "Endpoints for managing reviews")
 @RestController
 @RequestMapping("/api/reviews")
+@RolesAllowed("ADMIN")
+
 public class    ReviewController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
@@ -178,4 +183,35 @@ public class    ReviewController {
         service.deleteById(reviewId, Long.parseLong(ifMatchValue));
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "UpVotes")
+    @GetMapping(value = "/upVote/{reviewId}")
+    public ResponseEntity<Review> getVotes(@PathVariable("reviewId") final Long reviewId) throws IOException, InterruptedException {
+
+        final var review = service.findOne(reviewId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
+
+
+        String url = "http://localhost:8083/api/votes/" + reviewId;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        VoteDTO vote = mapper.readValue(response.body(),VoteDTO.class);
+
+        if (response.body().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review has no votes");
+        }
+
+        service.getVotes(review, response.body());
+        return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
+    }
+
 }

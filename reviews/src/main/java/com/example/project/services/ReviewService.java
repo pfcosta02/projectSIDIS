@@ -47,6 +47,6 @@ public interface ReviewService {
      */
     Review partialUpdate(Long id, Review resource, long parseLong);
 
-
+    void getVotes(Review review, String votes);
 }
 

@@ -4,10 +4,12 @@ import java.util.Optional;
 import com.example.project.exceptions.MyResourceNotFoundException;
 import com.example.project.views.ReviewView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.project.model.Review;
 import com.example.project.repositories.ReviewRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -82,5 +84,17 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteById(final Long id, final long desiredVersion) {
         repository.deleteByIdIfMatch(id, desiredVersion);
+    }
+
+
+    @Override
+    public void getVotes(Review review, String votes) {
+        if (votes == "UpVote") {
+            review.setUpVote(review.getUpVote()+1);
+        } else if (votes == "DownVote") {
+            review.setDownVote(review.getDownVote()+1);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There was an error with the vote");
+        }
     }
 }
