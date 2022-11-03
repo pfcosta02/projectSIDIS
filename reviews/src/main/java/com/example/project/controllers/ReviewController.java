@@ -1,6 +1,7 @@
 package com.example.project.controllers;
 
 import com.example.project.model.VoteDTO;
+import com.example.project.usermanagement.model.Role;
 import com.example.project.views.ReviewView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +40,6 @@ import java.util.List;
 @Tag(name = "Reviews", description = "Endpoints for managing reviews")
 @RestController
 @RequestMapping("/api/reviews")
-@RolesAllowed("ADMIN")
 
 public class    ReviewController {
 
@@ -97,12 +97,14 @@ public class    ReviewController {
 
     @Operation(summary = "Gets Pending Review")
     @GetMapping(value = "/pending")
+    @RolesAllowed(Role.MODERATOR)
     public Iterable<Review> getPendingReviews() {
         return service.findAllPending();
     }
 
     @Operation(summary = "Gets Reviews of a client")
     @GetMapping(value = "/customer/{id}")
+    @RolesAllowed(Role.CUSTOMER)
     public Iterable<ReviewView> findMyReviews(@PathVariable("id") final Long customerId) throws IOException, InterruptedException {
         String url = "http://localhost:8080/api/customer/user/" + customerId;
 
@@ -132,6 +134,7 @@ public class    ReviewController {
     }
 
     @Operation(summary = "Creates a Review")
+    @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Review> create(@Valid @RequestBody final Review resource) throws IOException, InterruptedException {
@@ -157,6 +160,7 @@ public class    ReviewController {
     }
 
     @Operation(summary = "Partially updates an existing review")
+    @RolesAllowed(Role.MODERATOR)
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Review> partialUpdate(final WebRequest request,
                                              @PathVariable("id") @Parameter(description = "The id of the review to update") final Long id,
@@ -173,6 +177,7 @@ public class    ReviewController {
 
 
     @Operation(summary = "Customer can delete one of his reviews - available only if reviews has no votes")
+    @RolesAllowed(Role.CUSTOMER)
     @DeleteMapping(value = "/{reviewId}")
     public ResponseEntity<Review> deleteReview(final WebRequest request, @PathVariable("reviewId") final Long reviewId) {
         final String ifMatchValue = request.getHeader("If-Match");

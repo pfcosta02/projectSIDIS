@@ -3,6 +3,7 @@ package com.example.project.controllers;
 import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
 import com.example.project.services.VoteService;
+import com.example.project.usermanagement.model.Role;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
@@ -52,6 +54,7 @@ public class VoteController {
     }
 
     @Operation(summary = "Make a vote in a review")
+    @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource) throws IOException, InterruptedException {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.project.model.ProductDTO;
+import com.example.project.usermanagement.model.Role;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
 import com.example.project.services.FileStorageService;
@@ -23,6 +24,7 @@ import com.example.project.model.Product;
 import com.example.project.services.ProductService;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @Tag(name = "Products", description = "Endpoints for managing products")
@@ -60,6 +62,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Create a product")
+    @RolesAllowed(Role.ADMIN)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Product> createProduct(@Valid @RequestBody final Product productId) {
@@ -68,6 +71,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Uploads a photo of a product")
+    @RolesAllowed(Role.ADMIN)
     @PostMapping("/{productId}/photo")
     @ResponseStatus(HttpStatus.CREATED)
     public UploadFileResponse uploadFile(@PathVariable("productId") final Long productId,
@@ -86,6 +90,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Uploads a set of photos of a product")
+    @RolesAllowed(Role.ADMIN)
     @PostMapping("/{productId}/photos")
     @ResponseStatus(HttpStatus.CREATED)
     public List<UploadFileResponse> uploadMultipleFiles(@PathVariable("productId") final Long productId,
