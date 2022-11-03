@@ -12,15 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -105,19 +97,21 @@ public class    ReviewController {
     @Operation(summary = "Gets Reviews of a client")
     @GetMapping(value = "/customer/{id}")
     @RolesAllowed(Role.CUSTOMER)
-    public Iterable<ReviewView> findMyReviews(@PathVariable("id") final Long customerId) throws IOException, InterruptedException {
+    public Iterable<ReviewView> findMyReviews(@PathVariable("id") final Long customerId,final WebRequest request2) throws IOException, InterruptedException {
         String url = "http://localhost:8080/api/customer/user/" + customerId;
+
+        final String auth = request2.getHeader("Authorization");
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
+                .header("Authorization", auth)
                 .uri(URI.create(url))
                 .build();
 
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-
-        if (response.body().isEmpty()) {
+        if (response.statusCode() != 200) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer Not Found");
         }
 
