@@ -3,12 +3,29 @@ package com.example.project.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Column;
+import javax.persistence.Version;
+
 public class VoteDTO {
 
-    private String vote;
+    public int id;
 
-    public VoteDTO(String vote) {
+    public String vote;
+
+    public int reviewId;
+
+    public int customerId;
+
+    public int version;
+
+    public VoteDTO(){}
+
+    public VoteDTO(int id, String vote, int reviewId, int customerId, int version) {
         this.vote = vote;
+        this.reviewId = reviewId;
+        this.customerId = customerId;
+        this.id = id;
+        this.version = version;
     }
 
     public String getVote() {

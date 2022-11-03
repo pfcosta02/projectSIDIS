@@ -33,9 +33,6 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public List<Vote> findVotesReview(Long reviewId) {
-
-
-
         return repository.findVotesReview(reviewId);
     }
 }

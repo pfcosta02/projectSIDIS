@@ -2,6 +2,8 @@ package com.example.project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.StaleObjectStateException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.io.IOException;
@@ -40,6 +42,8 @@ public class Vote {
         if (resource.getVote() != null) {
             if (resource.getVote().equals("UpVote") || resource.getVote().equals("DownVote")) {
                 obj.setVote(resource.vote);
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Vote");
             }
         }
         if (resource.getReviewId() != null) {

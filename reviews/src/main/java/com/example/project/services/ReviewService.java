@@ -1,8 +1,10 @@
 package com.example.project.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.example.project.model.Review;
+import com.example.project.model.VoteDTO;
 import com.example.project.views.ReviewView;
 
 public interface ReviewService {
@@ -47,6 +49,6 @@ public interface ReviewService {
      */
     Review partialUpdate(Long id, Review resource, long parseLong);
 
-    void getVotes(Review review, String votes);
+    void getVotes(Review review, List<VoteDTO> votes);
 }
 

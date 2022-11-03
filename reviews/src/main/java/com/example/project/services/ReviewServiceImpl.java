@@ -1,7 +1,9 @@
 package com.example.project.services;
+import java.util.List;
 import java.util.Optional;
 
 import com.example.project.exceptions.MyResourceNotFoundException;
+import com.example.project.model.VoteDTO;
 import com.example.project.views.ReviewView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,13 +90,14 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public void getVotes(Review review, String votes) {
-        if (votes == "UpVote") {
-            review.setUpVote(review.getUpVote()+1);
-        } else if (votes == "DownVote") {
-            review.setDownVote(review.getDownVote()+1);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There was an error with the vote");
+    public void getVotes(Review review, List<VoteDTO> votes) {
+
+        for (int i = 0; i < votes.size(); i++) {
+            if(votes.get(i).vote.equals("UpVote")){
+                review.setUpVote(review.getUpVote()+1);
+            } else if (votes.get(i).vote.equals("DownVote")) {
+                review.setDownVote(review.getDownVote()+1);
+            }
         }
     }
 }

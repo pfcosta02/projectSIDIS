@@ -46,7 +46,7 @@ public class VoteController {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        if (response.body().isEmpty()) {
+        if (response.statusCode() != 200) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
         }
 
@@ -69,7 +69,7 @@ public class VoteController {
                 HttpResponse.BodyHandlers.ofString());
 
 
-        if (response.body().isEmpty()) {
+        if (response.statusCode() != 200) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
         }
 

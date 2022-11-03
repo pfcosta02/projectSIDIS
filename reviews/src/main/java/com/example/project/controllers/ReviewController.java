@@ -3,6 +3,7 @@ package com.example.project.controllers;
 import com.example.project.model.VoteDTO;
 import com.example.project.usermanagement.model.Role;
 import com.example.project.views.ReviewView;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -201,15 +202,16 @@ public class    ReviewController {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        VoteDTO vote = mapper.readValue(response.body(),VoteDTO.class);
-
-        if (response.body().isEmpty()) {
+        if (response.statusCode() != 200) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review has no votes");
         }
 
-        service.getVotes(review, response.body());
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<VoteDTO> votes = mapper.readValue(response.body(), new TypeReference<List<VoteDTO>>() {});
+
+        service.getVotes(review, votes);
+
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
 
