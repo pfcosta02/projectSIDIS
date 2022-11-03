@@ -20,7 +20,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     List<ProductNameView> findByName(String name);
 
     @Query("SELECT f.productId AS productId, f.name AS name, f.description AS description, f.sku AS sku FROM Product f WHERE f.sku = ?1")
-    Optional<Product> findBySku(String sku);
+    List<ProductNameView> findBySku(String sku);
 
 
 }

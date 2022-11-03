@@ -38,7 +38,7 @@ public class Vote {
         final Vote obj = new Vote();
 
         if (resource.getVote() != null) {
-            if (resource.getVote() == "UpVote" || resource.getVote() == "DownVote") {
+            if (resource.getVote().equals("UpVote") || resource.getVote().equals("DownVote")) {
                 obj.setVote(resource.vote);
             }
         }

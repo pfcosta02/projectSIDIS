@@ -12,7 +12,7 @@ public interface ProductService {
 
     List<ProductAllView> findAll();
     Optional<Product> findOne(Long productId);
-    ProductDTO findBySku(String sku);
+    List<ProductNameView> findBySku(String sku);
     List<ProductNameView> findByName(String name);
     Product create(Product product);
 

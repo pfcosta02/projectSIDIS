@@ -25,7 +25,7 @@ import java.util.List;
 
 @Tag(name = "Votes", description = "Endpoints for managing votes")
 @RestController
-@RequestMapping("/votes")
+@RequestMapping("/api/votes")
 public class VoteController {
 
     private static final Logger logger = LoggerFactory.getLogger(VoteController.class);

@@ -55,6 +55,12 @@ public class ProductController {
         return ResponseEntity.ok().eTag(Long.toString(product.getVersion())).body(product);
     }
 
+    @Operation(summary = "Search for a product by his sku")
+    @GetMapping(value = "/sku/{sku}")
+    public Iterable<ProductNameView> findBySku(@PathVariable(value = "sku" )String sku)  {
+       return service.findBySku(sku);
+    }
+
     @Operation(summary = "Search for a product by his name")
     @GetMapping(value = "/name/{productName}")
     public Iterable<ProductNameView> findByName(@PathVariable(value =  "productName" )String productName) {
@@ -96,14 +102,6 @@ public class ProductController {
     public List<UploadFileResponse> uploadMultipleFiles(@PathVariable("productId") final Long productId,
                                                         @RequestParam("files") final MultipartFile[] files) {
         return Arrays.asList(files).stream().map(f -> uploadFile(productId, f)).collect(Collectors.toList());
-    }
-
-    @Operation(summary = "Search for a product by his sku")
-    @GetMapping(value = "/sku/{sku}")
-    public ProductDTO findBySku(@PathVariable(value =  "sku" )String sku)  {
-
-        return service.findBySku(sku);
-
     }
 
 }

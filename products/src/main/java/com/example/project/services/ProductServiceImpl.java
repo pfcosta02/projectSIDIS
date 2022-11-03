@@ -37,17 +37,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO findBySku(final String sku) {
-
-        Optional<Product> optionalProduct = repository.findBySku(sku);
-
-        if (optionalProduct.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
-
-        ProductDTO productDTO = new ProductDTO(optionalProduct.get().getSku(), optionalProduct.get().getName(), optionalProduct.get().getDescription(),optionalProduct.get().getSetOfImages());
-
-        return productDTO;
+    public  List<ProductNameView> findBySku(final String sku) {
+        return repository.findBySku(sku);
     }
 
     @Override
