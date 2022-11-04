@@ -1,9 +1,11 @@
 package com.example.project.controllers;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.project.model.AggregatedRating;
 import com.example.project.model.ProductDTO;
 import com.example.project.usermanagement.model.Role;
 import com.example.project.views.ProductAllView;
@@ -102,6 +104,18 @@ public class ProductController {
     public List<UploadFileResponse> uploadMultipleFiles(@PathVariable("productId") final Long productId,
                                                         @RequestParam("files") final MultipartFile[] files) {
         return Arrays.asList(files).stream().map(f -> uploadFile(productId, f)).collect(Collectors.toList());
+    }
+
+    @Operation(summary = "Search for a rating of a product")
+    @GetMapping(value = "/{productId}/rating")
+    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
+
+        final var product = service.findOne(productId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+
+        AggregatedRating aggregatedRating = service.getProductRating(productId);
+
+        return ResponseEntity.ok().body(aggregatedRating);
     }
 
 }
