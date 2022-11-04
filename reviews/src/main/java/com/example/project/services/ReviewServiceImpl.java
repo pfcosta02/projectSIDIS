@@ -93,11 +93,16 @@ public class ReviewServiceImpl implements ReviewService {
     public void getVotes(Review review, List<VoteDTO> votes) {
 
         for (int i = 0; i < votes.size(); i++) {
-            if(votes.get(i).vote.equals("UpVote")){
-                review.setUpVote(review.getUpVote()+1);
-            } else if (votes.get(i).vote.equals("DownVote")) {
-                review.setDownVote(review.getDownVote()+1);
+            if(votes.size() != review.getUpVote() + review.getDownVote()) {
+                if(votes.get(i).vote.equals("UpVote")){
+                    review.setUpVote(review.getUpVote()+1);
+                } else if (votes.get(i).vote.equals("DownVote")) {
+                    review.setDownVote(review.getDownVote()+1);
+                }
             }
+
         }
+
+        repository.save(review);
     }
 }
