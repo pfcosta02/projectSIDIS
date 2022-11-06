@@ -16,7 +16,9 @@ import com.example.project.model.ProductDTO;
 import com.example.project.model.ReviewDTO;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository repository;
 
     @Override
-    public List<ProductDTO> findAll() throws IOException, InterruptedException {
+    public List<ProductDTO> findAll() {
         List<Product> allProducts = repository.findAllProducts();
         List<ProductDTO> allProductsDto = new ArrayList<>();
 
@@ -42,26 +44,32 @@ public class ProductServiceImpl implements ProductService {
             allProductsDto.add(product);
         }
 
-        String url = "http://localhost:8084/api/products";
+        try {
+            String url = "http://localhost:8084/api/products";
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
 
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
 
-        if(response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            List<ProductDTO> products = mapper.readValue(response.body(), new TypeReference<List<ProductDTO>>() {});
+
+            for(int i=0; i < products.size(); i++) {
+                allProductsDto.add(products.get(i));
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        List<ProductDTO> products = mapper.readValue(response.body(), new TypeReference<List<ProductDTO>>() {});
-
-        for(int i=0; i < products.size(); i++) {
-            allProductsDto.add(products.get(i));
-        }
         return allProductsDto;
     }
 

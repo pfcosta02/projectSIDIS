@@ -4,20 +4,20 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.project.model.Review;
+import com.example.project.model.ReviewDTO;
 import com.example.project.model.VoteDTO;
 import com.example.project.views.ReviewView;
+import org.springframework.web.context.request.WebRequest;
 
 public interface ReviewService {
 
-    Iterable<Review> findAll();
+    List<ReviewDTO> findApprovedReviews(String productSku);
 
-    Iterable<Review> findApprovedReviews(String productSku);
+    List<ReviewDTO> findApprovedReviewsByDate(String productSku);
 
-    Iterable<Review> findApprovedReviewsByDate(String productSku);
+    List<ReviewDTO> findAllPending();
 
-    Iterable<Review> findAllPending();
-
-    Iterable<ReviewView> findMyReviews(Long id);
+    List<ReviewDTO> findMyReviews(Long id, WebRequest request);
 
     Optional<Review> findOne(Long id);
 

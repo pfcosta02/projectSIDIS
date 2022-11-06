@@ -1,8 +1,15 @@
 package com.example.project.services;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.example.project.exceptions.MyResourceNotFoundException;
+import com.example.project.model.ReviewDTO;
 import com.example.project.model.VoteDTO;
 import com.example.project.views.ReviewView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.project.model.Review;
 import com.example.project.repositories.ReviewRepository;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -19,23 +27,84 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewRepository repository;
 
     @Override
-    public Iterable<Review> findAll() {
-        return repository.findAll();
+    public List<ReviewDTO> findApprovedReviews(final String productSku) {
+
+        List<Review> allReviews = repository.findApprovedReviews(productSku);
+        List<ReviewDTO> allReviewsDto = new ArrayList<>();
+
+        for(int i=0; i < allReviews.size(); i++) {
+            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(),allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
+            allReviewsDto.add(product);
+        }
+
+        try {
+            String url = "http://localhost:8081/api/products/sku/" + productSku;
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return allReviewsDto;
     }
 
     @Override
-    public Iterable<Review> findApprovedReviews(final String productSku) {
-        return repository.findApprovedReviews(productSku);
+    public List<ReviewDTO> findApprovedReviewsByDate(final String productSku) {
+        List<Review> allReviews = repository.findApprovedReviewsByDate(productSku);
+        List<ReviewDTO> allReviewsDto = new ArrayList<>();
+
+        for(int i=0; i < allReviews.size(); i++) {
+            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(),allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
+            allReviewsDto.add(product);
+        }
+
+        try {
+            String url = "http://localhost:8081/api/products/sku/" + productSku;
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return allReviewsDto;
     }
 
     @Override
-    public Iterable<Review> findApprovedReviewsByDate(final String productSku) {
-        return repository.findApprovedReviewsByDate(productSku);
-    }
+    public List<ReviewDTO> findAllPending() {
 
-    @Override
-    public Iterable<Review> findAllPending() {
-        return repository.findAllPending();
+        List<Review> allReviews = repository.findAllPending();
+        List<ReviewDTO> allReviewsDto = new ArrayList<>();
+
+        for(int i=0; i < allReviews.size(); i++) {
+            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(),allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
+            allReviewsDto.add(product);
+        }
+
+        return allReviewsDto;
     }
 
     @Override
@@ -44,14 +113,63 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Iterable<ReviewView> findMyReviews(final Long customerId) {
-        return repository.findMyReviews(customerId);
+    public List<ReviewDTO> findMyReviews(final Long customerId, WebRequest request2) {
+        List<Review> allReviews = repository.findMyReviews(customerId);
+        List<ReviewDTO> allReviewsDto = new ArrayList<>();
+
+        for(int i=0; i < allReviews.size(); i++) {
+            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(),allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
+            allReviewsDto.add(product);
+        }
+
+        try {
+            String url = "http://localhost:8080/api/customer/user/" + customerId;
+
+            final String auth = request2.getHeader("Authorization");
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .header("Authorization", auth)
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return allReviewsDto;
     }
 
     @Override
     public Review create(final Review resource) {
         // construct a new object based on data received by the service to ensure domain
         // invariants are met
+        try {
+            String url = "http://localhost:8081/api/products/sku/" + resource.getProductSku();
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+
+            if (response.body().isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         final Review obj = Review.newFrom(resource);
 
         return repository.save(obj);

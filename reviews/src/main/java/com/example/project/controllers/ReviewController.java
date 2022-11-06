@@ -1,9 +1,12 @@
 package com.example.project.controllers;
 
+import com.example.project.model.ReviewDTO;
 import com.example.project.model.VoteDTO;
 import com.example.project.usermanagement.model.Role;
 import com.example.project.views.ReviewView;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -49,22 +52,7 @@ public class    ReviewController {
 
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
     @GetMapping(value = "/product/{productSku}/date/votes")
-    public Iterable<Review> getApprovedReviews(@PathVariable("productSku") final String productSku) throws IOException, InterruptedException {
-
-        String url = "http://localhost:8081/api/products/sku/" + productSku;
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-
-        if (response.body().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
+    public List<ReviewDTO> getApprovedReviews(@PathVariable("productSku") final String productSku) {
 
         return service.findApprovedReviews(productSku);
     }
@@ -72,22 +60,7 @@ public class    ReviewController {
 
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
     @GetMapping(value = "/product/{productSku}/date")
-    public Iterable<Review> findApprovedReviewsByDate(@PathVariable("productSku") final String productSku) throws IOException, InterruptedException {
-
-        String url = "http://localhost:8081/api/products/sku/" + productSku;
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-
-        if (response.body().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
+    public List<ReviewDTO> findApprovedReviewsByDate(@PathVariable("productSku") final String productSku) {
 
         return service.findApprovedReviewsByDate(productSku);
     }
@@ -96,32 +69,16 @@ public class    ReviewController {
     @Operation(summary = "Gets Pending Review")
     @GetMapping(value = "/pending")
     @RolesAllowed(Role.MODERATOR)
-    public Iterable<Review> getPendingReviews() {
+    public List<ReviewDTO> getPendingReviews() {
         return service.findAllPending();
     }
 
     @Operation(summary = "Gets Reviews of a client")
     @GetMapping(value = "/customer/{id}")
     @RolesAllowed(Role.CUSTOMER)
-    public Iterable<ReviewView> findMyReviews(@PathVariable("id") final Long customerId,final WebRequest request2) throws IOException, InterruptedException {
-        String url = "http://localhost:8080/api/customer/user/" + customerId;
+    public List<ReviewDTO> findMyReviews(@PathVariable("id") final Long customerId,final WebRequest request) {
 
-        final String auth = request2.getHeader("Authorization");
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .header("Authorization", auth)
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer Not Found");
-        }
-
-        return service.findMyReviews(customerId);
+        return service.findMyReviews(customerId,request);
     }
 
     @Operation(summary = "Find a review by their ID")
@@ -137,22 +94,7 @@ public class    ReviewController {
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Review> create(@Valid @RequestBody final Review resource,final WebRequest request2) throws IOException, InterruptedException {
-
-        String url = "http://localhost:8081/api/products/sku/" + resource.getProductSku();
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-
-        if (response.body().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
+    public ResponseEntity<Review> create(@Valid @RequestBody final Review resource,final WebRequest request2)  {
 
         final String auth = request2.getHeader("Authorization");
 
@@ -199,32 +141,35 @@ public class    ReviewController {
     }
 
     @Operation(summary = "UpVotes")
-    @GetMapping(value = "/upVote/{reviewId}")
-    public ResponseEntity<Review> getVotes(@PathVariable("reviewId") final Long reviewId) throws IOException, InterruptedException {
+    @GetMapping(value = "/votes/{reviewId}")
+    public ResponseEntity<Review> getVotes(@PathVariable("reviewId") final Long reviewId) {
 
         final var review = service.findOne(reviewId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
+        try{
+            String url = "http://localhost:8083/api/votes/" + reviewId;
 
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
 
-        String url = "http://localhost:8083/api/votes/" + reviewId;
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
+            if (response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review has no votes");
+            }
 
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
+            ObjectMapper mapper = new ObjectMapper();
 
-        if (response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review has no votes");
+            List<VoteDTO> votes = mapper.readValue(response.body(), new TypeReference<List<VoteDTO>>() {});
+
+            service.getVotes(review, votes);
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
         }
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        List<VoteDTO> votes = mapper.readValue(response.body(), new TypeReference<List<VoteDTO>>() {});
-
-        service.getVotes(review, votes);
 
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
