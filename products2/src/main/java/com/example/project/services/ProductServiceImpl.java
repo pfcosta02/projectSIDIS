@@ -101,82 +101,89 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public AggregatedRating getProductRating(String sku) throws IOException, InterruptedException {
+    public AggregatedRating getProductRating(String sku) {
 
-        String url = "http://localhost:8082/api/reviews/product/" + sku + "/date";
+        AggregatedRating aggregatedRating = null;
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
+        try {
+            String url = "http://localhost:8082/api/reviews/product/" + sku + "/date";
 
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
 
-        if (response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product as no reviews");
-        }
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        List<ReviewDTO> reviews = mapper.readValue(response.body(), new TypeReference<List<ReviewDTO>>() {});
-
-        int oneStarCounter = 0;
-        int twoStarCounter = 0;
-        int threeStarCounter = 0;
-        int fourStarCounter = 0;
-        int fiveStarCounter = 0;
-        float oneStarPercentage = 0;
-        float twoStarPercentage = 0;
-        float threeStarPercentage= 0;
-        float fourStarPercentage = 0;
-        float fiveStarPercentage = 0;
-        float media = 0;
-        int soma = 0;
-        int total = 0;
-
-        for(ReviewDTO r: reviews){
-            total++;
-            soma = soma + r.getRating();
-
-            switch (r.getRating()) {
-                case 1:
-                    oneStarCounter++;
-                    break;
-                case 2:
-                    twoStarCounter++;
-                    break;
-                case 3:
-                    threeStarCounter++;
-                    break;
-                case 4:
-                    fourStarCounter++;
-                    break;
-                case 5:
-                    fiveStarCounter++;
-                    break;
-                default:
-                    break;
+            if (response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product as no reviews");
             }
 
+            ObjectMapper mapper = new ObjectMapper();
+
+            List<ReviewDTO> reviews = mapper.readValue(response.body(), new TypeReference<List<ReviewDTO>>() {});
+
+            int oneStarCounter = 0;
+            int twoStarCounter = 0;
+            int threeStarCounter = 0;
+            int fourStarCounter = 0;
+            int fiveStarCounter = 0;
+            float oneStarPercentage = 0;
+            float twoStarPercentage = 0;
+            float threeStarPercentage= 0;
+            float fourStarPercentage = 0;
+            float fiveStarPercentage = 0;
+            float media = 0;
+            int soma = 0;
+            int total = 0;
+
+            for(ReviewDTO r: reviews){
+                total++;
+                soma = soma + r.getRating();
+
+                switch (r.getRating()) {
+                    case 1:
+                        oneStarCounter++;
+                        break;
+                    case 2:
+                        twoStarCounter++;
+                        break;
+                    case 3:
+                        threeStarCounter++;
+                        break;
+                    case 4:
+                        fourStarCounter++;
+                        break;
+                    case 5:
+                        fiveStarCounter++;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            if(total == 0) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product dont have reviews");
+            }
+
+            media = (float) soma / total;
+
+            DecimalFormat df = new DecimalFormat("#.0");
+            DecimalFormat df2 = new DecimalFormat("#");
+
+            oneStarPercentage = ((float) oneStarCounter / total) * 100;
+            twoStarPercentage = ((float) twoStarCounter / total) * 100;
+            threeStarPercentage = ((float) threeStarCounter / total) * 100;
+            fourStarPercentage =  ((float) fourStarCounter / total) * 100;
+            fiveStarPercentage =   ((float) fiveStarCounter / total) * 100;
+
+            aggregatedRating = new AggregatedRating(df2.format(oneStarPercentage) + "%",df2.format(twoStarPercentage) + "%",df2.format(threeStarPercentage) + "%",df2.format(fourStarPercentage) + "%",df2.format(fiveStarPercentage) + "%",df.format(media));
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
         }
-
-        if(total == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product dont have reviews");
-        }
-
-        media = (float) soma / total;
-
-        DecimalFormat df = new DecimalFormat("#.0");
-        DecimalFormat df2 = new DecimalFormat("#");
-
-        oneStarPercentage = ((float) oneStarCounter / total) * 100;
-        twoStarPercentage = ((float) twoStarCounter / total) * 100;
-        threeStarPercentage = ((float) threeStarCounter / total) * 100;
-        fourStarPercentage =  ((float) fourStarCounter / total) * 100;
-        fiveStarPercentage =   ((float) fiveStarCounter / total) * 100;
-
-        AggregatedRating aggregatedRating = new AggregatedRating(df2.format(oneStarPercentage) + "%",df2.format(twoStarPercentage) + "%",df2.format(threeStarPercentage) + "%",df2.format(fourStarPercentage) + "%",df2.format(fiveStarPercentage) + "%",df.format(media));
 
         return aggregatedRating;
     }

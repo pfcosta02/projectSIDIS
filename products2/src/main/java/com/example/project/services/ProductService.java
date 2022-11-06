@@ -17,6 +17,6 @@ public interface ProductService {
     Optional<ProductDTO> findBySku(String sku);
     Optional<ProductDTO> findByName(String name);
     Product create(Product product);
-    AggregatedRating getProductRating(String sku) throws IOException, InterruptedException;
+    AggregatedRating getProductRating(String sku);
     void addImage(String filename, Long id);
 }

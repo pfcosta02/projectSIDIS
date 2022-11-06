@@ -105,7 +105,7 @@ public class ProductController {
 
     @Operation(summary = "Search for a rating of a product")
     @GetMapping(value = "/{productId}/rating")
-    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final String sku) throws IOException, InterruptedException {
+    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final String sku) {
 
         final var product = service.findBySku(sku)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));

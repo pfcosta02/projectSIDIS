@@ -51,7 +51,7 @@ public class ProductController {
 
     @Operation(summary = "Search for a product by his sku")
     @GetMapping(value = "/sku/{sku}")
-    public ResponseEntity<ProductDTO> findBySku(@PathVariable(value = "sku" )String sku) throws IOException, InterruptedException {
+    public ResponseEntity<ProductDTO> findBySku(@PathVariable(value = "sku" )String sku) {
         final var product = service.findBySku(sku)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
@@ -60,7 +60,7 @@ public class ProductController {
 
     @Operation(summary = "Search for a product by his name")
     @GetMapping(value = "/name/{productName}")
-    public ResponseEntity<ProductDTO> findByName(@PathVariable(value =  "productName" )String productName) throws IOException, InterruptedException {
+    public ResponseEntity<ProductDTO> findByName(@PathVariable(value =  "productName" )String productName) {
         final var product = service.findByName(productName)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
@@ -106,7 +106,7 @@ public class ProductController {
 
     @Operation(summary = "Search for a rating of a product")
     @GetMapping(value = "/{productSku}/rating")
-    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productSku") final String productSku) throws IOException, InterruptedException {
+    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productSku") final String productSku) {
 
         final var product = service.findBySku(productSku)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
