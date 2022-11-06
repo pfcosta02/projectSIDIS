@@ -69,8 +69,8 @@ public class    ReviewController {
     @Operation(summary = "Gets Pending Review")
     @GetMapping(value = "/pending")
     @RolesAllowed(Role.MODERATOR)
-    public List<ReviewDTO> getPendingReviews() {
-        return service.findAllPending();
+    public List<ReviewDTO> getPendingReviews(final WebRequest request) {
+        return service.findAllPending(request);
     }
 
     @Operation(summary = "Gets Reviews of a client")

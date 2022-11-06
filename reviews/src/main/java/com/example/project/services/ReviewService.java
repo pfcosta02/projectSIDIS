@@ -15,7 +15,7 @@ public interface ReviewService {
 
     List<ReviewDTO> findApprovedReviewsByDate(String productSku);
 
-    List<ReviewDTO> findAllPending();
+    List<ReviewDTO> findAllPending(WebRequest request2);
 
     List<ReviewDTO> findMyReviews(Long id, WebRequest request);
 

@@ -12,6 +12,8 @@ import com.example.project.exceptions.MyResourceNotFoundException;
 import com.example.project.model.ReviewDTO;
 import com.example.project.model.VoteDTO;
 import com.example.project.views.ReviewView;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -57,6 +59,32 @@ public class ReviewServiceImpl implements ReviewService {
             e.printStackTrace();
         }
 
+        try {
+            String url = "http://localhost:8086/api/reviews/product/"+ productSku + "/date/votes";
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            List<ReviewDTO> products = mapper.readValue(response.body(), new TypeReference<List<ReviewDTO>>() {});
+
+            for(int i=0; i < products.size(); i++) {
+                allReviewsDto.add(products.get(i));
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return allReviewsDto;
     }
 
@@ -90,11 +118,37 @@ public class ReviewServiceImpl implements ReviewService {
             e.printStackTrace();
         }
 
+        try {
+            String url = "http://localhost:8086/api/reviews/product/"+ productSku + "/date";
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            List<ReviewDTO> products = mapper.readValue(response.body(), new TypeReference<List<ReviewDTO>>() {});
+
+            for(int i=0; i < products.size(); i++) {
+                allReviewsDto.add(products.get(i));
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return allReviewsDto;
     }
 
     @Override
-    public List<ReviewDTO> findAllPending() {
+    public List<ReviewDTO> findAllPending(WebRequest request2) {
 
         List<Review> allReviews = repository.findAllPending();
         List<ReviewDTO> allReviewsDto = new ArrayList<>();
@@ -102,6 +156,35 @@ public class ReviewServiceImpl implements ReviewService {
         for(int i=0; i < allReviews.size(); i++) {
             ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(),allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
             allReviewsDto.add(product);
+        }
+
+        try {
+            String url = "http://localhost:8086/api/reviews/pending";
+
+            final String auth = request2.getHeader("Authorization");
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .header("Authorization", auth)
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            List<ReviewDTO> products = mapper.readValue(response.body(), new TypeReference<List<ReviewDTO>>() {});
+
+            for(int i=0; i < products.size(); i++) {
+                allReviewsDto.add(products.get(i));
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
 
         return allReviewsDto;
@@ -138,6 +221,32 @@ public class ReviewServiceImpl implements ReviewService {
 
             if(response.statusCode() != 200) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String url = "http://localhost:8086/api/reviews/customer/"+ customerId;
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            List<ReviewDTO> products = mapper.readValue(response.body(), new TypeReference<List<ReviewDTO>>() {});
+
+            for(int i=0; i < products.size(); i++) {
+                allReviewsDto.add(products.get(i));
             }
 
         } catch (IOException | InterruptedException e) {

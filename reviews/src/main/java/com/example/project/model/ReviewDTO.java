@@ -19,6 +19,8 @@ public class ReviewDTO {
     public Long customerId;
     public String funnyFact;
 
+    public ReviewDTO(){}
+
     public ReviewDTO(Long reviewId, Integer rating, Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long customerId, String funnyFact) {
         this.reviewId = reviewId;
         this.rating = rating;
