@@ -136,6 +136,12 @@ public class ProductServiceImpl implements ProductService {
     public Product create(final Product product) {
         // construct a new object based on data received by the service to ensure domain
         // invariants are met
+        final var optionalProduct = repository.findBySku(product.getSku());
+
+        if (optionalProduct.isPresent()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Product sku already exists");
+        }
+
         final Product obj = Product.newFrom(product);
 
         return repository.save(obj);
