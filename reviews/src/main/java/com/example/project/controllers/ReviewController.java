@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,6 +42,9 @@ public class    ReviewController {
 
     @Autowired
     private ReviewService service;
+
+    @Autowired
+    private JwtDecoder jwtDecoder;
 
 
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
@@ -132,7 +137,7 @@ public class    ReviewController {
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Review> create(@Valid @RequestBody final Review resource) throws IOException, InterruptedException {
+    public ResponseEntity<Review> create(@Valid @RequestBody final Review resource,final WebRequest request2) throws IOException, InterruptedException {
 
         String url = "http://localhost:8081/api/products/sku/" + resource.getProductSku();
 
@@ -148,6 +153,15 @@ public class    ReviewController {
         if (response.body().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
+
+        final String auth = request2.getHeader("Authorization");
+
+        String newToken = auth.replace("Bearer ", "");
+        Jwt decodedToken = this.jwtDecoder.decode(newToken);
+        String subject = (String) decodedToken.getClaims().get("sub");
+        Long userId = Long.valueOf(subject.split(",")[0]);
+
+        resource.setCustomerId(userId);
 
         final var review = service.create(resource);
 

@@ -1,12 +1,11 @@
 package com.example.project.bootstrapping;
 
+import com.example.project.model.Vote;
+import com.example.project.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-
-import com.example.project.model.Review;
-import com.example.project.repositories.ReviewRepository;
 
 /**
  * Spring will load and execute all components that implement the interface
@@ -21,25 +20,26 @@ import com.example.project.repositories.ReviewRepository;
  */
 @Component
 @Profile("bootstrap")
-public class ReviewBootstrapper implements CommandLineRunner {
+public class VoteBootstrapper implements CommandLineRunner {
     // setText setRating setVote setDataTime setStatus
     @Autowired
-    private ReviewRepository reviewRepo;
+    private VoteRepository voteRepo;
 
     @Override
     public void run(String... args) throws Exception {
-        if (reviewRepo.findById(1L).isEmpty()) {
-            Review f1 = new Review(1L);
-            f1.setText("Bom");
-            f1.setRating(4);
-            f1.setUpVote(0);
-            f1.setDownVote(0);
-            f1.setDataTime("06-11-2022 23:30:00");
-            f1.setFunnyFact();
-            f1.setStatus("Pending");
-            f1.setProductSku("123456789A");
+        if (voteRepo.findById(1L).isEmpty()) {
+            Vote f1 = new Vote();
             f1.setCustomerId(3L);
-            reviewRepo.save(f1);
+            f1.setVote("UpVote");
+            f1.setReviewId(1L);
+            voteRepo.save(f1);
+        }
+        if (voteRepo.findById(2L).isEmpty()) {
+            Vote f1 = new Vote();
+            f1.setCustomerId(3L);
+            f1.setVote("DownVote");
+            f1.setReviewId(1L);
+            voteRepo.save(f1);
         }
 
     }
