@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "RegisteredCustomer" as RegisteredCustomer
+participant "System" as System
+
+activate RegisteredCustomer
+
+RegisteredCustomer -> System: asks to show catalog of products
+System --> RegisteredCustomer: return catalog of products
+RegisteredCustomer -> System: selects the product
+System --> RegisteredCustomer: show the product
+RegisteredCustomer -> System: asks to review and rate the selected product
+System --> RegisteredCustomer: asks to insert the data
+RegisteredCustomer -> System: inserts the data
+
+System --> RegisteredCustomer: shows all data and requests confirmation
+RegisteredCustomer -> System: confirms the data
+System --> RegisteredCustomer: informs operation success
+
+
+
+
+
+@enduml

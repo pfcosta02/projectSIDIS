@@ -1,4 +1,5 @@
 package com.example.project;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,6 +39,11 @@ public class SpringConfig {
     public OpenAPI openApi() {
         return new OpenAPI().info(new Info().title("SIDIS Product APP").description("Product API").version("v1.0")
                 .termsOfService("TOC"));
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 

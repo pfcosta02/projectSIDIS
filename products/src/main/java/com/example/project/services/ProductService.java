@@ -13,8 +13,8 @@ import com.example.project.views.ProductNameView;
 public interface ProductService {
 
     List<ProductAllView> findAll();
-    Optional<Product> findOne(Long productId);
-    List<ProductNameView> findBySku(String sku);
+    Optional<Product> findOne(Long productId) throws IOException, InterruptedException;
+    List<ProductNameView> findBySku(String sku) throws IOException, InterruptedException;
     List<ProductNameView> findByName(String name);
     Product create(Product product);
     AggregatedRating getProductRating(Long productId) throws IOException, InterruptedException;

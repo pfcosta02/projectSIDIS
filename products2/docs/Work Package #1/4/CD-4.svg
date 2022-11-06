@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="648px" preserveAspectRatio="none" style="width:537px;height:648px;background:#FFFFFF;" version="1.1" viewBox="0 0 537 648" width="537px" zoomAndPan="magnify"><defs/><g><!--MD5=[da60459599bfcabead66c448ce02a5b9]
+class ProductController--><g id="elem_ProductController"><rect codeLine="6" fill="#F1F1F1" height="61.2188" id="ProductController" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="257" x="23" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="111" x="96" y="26.5332">ProductController</text><line style="stroke:#181818;stroke-width:0.5;" x1="24" x2="279" y1="34.6094" y2="34.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="245" x="29" y="53.1426">+ResponseEntity&lt;Product&gt; getProduct</text><line style="stroke:#181818;stroke-width:0.5;" x1="24" x2="279" y1="60.2188" y2="60.2188"/></g><!--MD5=[72136138052d025cffdce3c22fbd185f]
+class Product--><g id="elem_Product"><rect codeLine="10" fill="#F1F1F1" height="184.4844" id="Product" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121" x="7" y="303"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49" x="43" y="322.5332">Product</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="127" y1="330.6094" y2="330.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="13" y="349.1426">-name</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="64" x="13" y="366.752">-productId</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="13" y="384.3613">-Sku</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="13" y="401.9707">-description</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="127" y1="409.0469" y2="409.0469"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="13" y="427.5801">+getName()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="98" x="13" y="445.1895">+getProductId()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="62" x="13" y="462.7988">+getSku()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="109" x="13" y="480.4082">+getDescription()</text></g><!--MD5=[58a28f2d5507ae66b1dc95167690ce61]
+class ProductService--><g id="elem_ProductService"><rect codeLine="23" fill="#F1F1F1" height="96.4375" id="ProductService" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="181" x="61" y="129"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="96" x="103.5" y="148.5332">ProductService</text><line style="stroke:#181818;stroke-width:0.5;" x1="62" x2="241" y1="156.6094" y2="156.6094"/><line style="stroke:#181818;stroke-width:0.5;" x1="62" x2="241" y1="164.6094" y2="164.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56" x="67" y="183.1426">+findAll()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="115" x="67" y="200.752">+findOne(Long id)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="169" x="67" y="218.3613">+findByName(String name)</text></g><!--MD5=[f9761e4ec0e5a044b983a0fb01ce84a9]
+class ProductRepository--><g id="elem_ProductRepository"><rect codeLine="29" fill="#F1F1F1" height="93.9219" id="ProductRepository" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="284" x="204.5" y="548"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="61" x="316" y="565.457">«interface»</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="117" x="288" y="582.627">ProductRepository</text><line style="stroke:#181818;stroke-width:0.5;" x1="205.5" x2="487.5" y1="590.7031" y2="590.7031"/><line style="stroke:#181818;stroke-width:0.5;" x1="205.5" x2="487.5" y1="598.7031" y2="598.7031"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="235" x="210.5" y="617.2363">List&lt;ProductAllView&gt;findAllProducts()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="272" x="210.5" y="634.8457">List&lt;ProductNameView&gt;findByName(name)</text></g><!--MD5=[995e7ea07ac4e414ed6eb23d37d5a552]
+class ProductServiceImpl--><g id="elem_ProductServiceImpl"><rect codeLine="34" fill="#F1F1F1" height="111.5313" id="ProductServiceImpl" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="367" x="163" y="339"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="61" x="316" y="356.457">«interface»</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="121" x="286" y="373.627">ProductServiceImpl</text><line style="stroke:#181818;stroke-width:0.5;" x1="164" x2="529" y1="381.7031" y2="381.7031"/><line style="stroke:#181818;stroke-width:0.5;" x1="164" x2="529" y1="389.7031" y2="389.7031"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="191" x="169" y="408.2363">+List&lt;ProductAllView&gt; findAll()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="315" x="169" y="425.8457">+Optional&lt;Product&gt; findOne(final Long productId)</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="355" x="169" y="443.4551">+List&lt;ProductNameView&gt; findByName(final String name)</text></g><!--MD5=[69ce3c6b883a2646f437ad939e5c094d]
+link ProductService to ProductServiceImpl--><g id="link_ProductService_ProductServiceImpl"><path codeLine="42" d="M194.05,225.14 C223.25,257.47 262.2,300.62 293.42,335.2 " fill="none" id="ProductService-to-ProductServiceImpl" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="296.8,338.95,293.7525,329.5845,293.4552,335.2335,287.8061,334.9362,296.8,338.95" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="28" x="232.5" y="269.4951">uses</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="192.7855" y="246.8744">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="282.9838" y="328.2913">1</text></g><!--MD5=[8250a30276222dc00cfbc9bc4aa3f957]
+link ProductController to ProductService--><g id="link_ProductController_ProductService"><path codeLine="45" d="M151.5,68.34 C151.5,84.51 151.5,104.96 151.5,123.69 " fill="none" id="ProductController-to-ProductService" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="151.5,128.92,155.5,119.92,151.5,123.92,147.5,119.92,151.5,128.92" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[73caebc41e404c509f58ee88b63ecfa8]
+link ProductServiceImpl to ProductRepository--><g id="link_ProductServiceImpl_ProductRepository"><path codeLine="46" d="M346.5,451.15 C346.5,479.81 346.5,514.6 346.5,542.68 " fill="none" id="ProductServiceImpl-to-ProductRepository" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="346.5,547.84,350.5,538.84,346.5,542.84,342.5,538.84,346.5,547.84" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[bd1d3beaf9e1cc8bc587a0b06ae41ee6]
+link ProductService to Product--><g id="link_ProductService_Product"><path codeLine="47" d="M133.17,225.14 C124.85,246.52 114.7,272.63 104.88,297.87 " fill="none" id="ProductService-to-Product" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="103.06,302.57,110.0541,295.6359,104.875,297.9111,102.5998,292.7319,103.06,302.57" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[4439f5d5effeb6407f9401a7c03d55b3]
+@startuml
+'https://plantuml.com/class-diagram
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ProductController {
++ResponseEntity<Product> getProduct
+}
+
+class Product {
+-name
+-productId
+-Sku
+-description
++getName()
++getProductId()
++getSku()
++getDescription()
+}
+
+
+
+class ProductService {
+    + findAll()
+    + findOne(Long id)
+    + findByName(String name)
+}
+
+interface ProductRepository <<interface>> {
+List<ProductAllView>findAllProducts()
+List<ProductNameView>findByName(name)
+}
+
+interface ProductServiceImpl <<interface>> {
+    +List<ProductAllView> findAll()
+    +Optional<Product> findOne(final Long productId)
+    +List<ProductNameView> findByName(final String name)
+
+}
+
+
+ProductService "1" -down-> "1" ProductServiceImpl:  uses
+
+
+ProductController ..> ProductService
+ProductServiceImpl ..> ProductRepository
+ProductService ..> Product
+
+
+
+@enduml
+
+@startuml
+
+hide circle
+skinparam classAttributeIconSize 0
+
+class ProductController {
++ResponseEntity<Product> getProduct
+}
+
+class Product {
+-name
+-productId
+-Sku
+-description
++getName()
++getProductId()
++getSku()
++getDescription()
+}
+
+
+
+class ProductService {
+    + findAll()
+    + findOne(Long id)
+    + findByName(String name)
+}
+
+interface ProductRepository <<interface>> {
+List<ProductAllView>findAllProducts()
+List<ProductNameView>findByName(name)
+}
+
+interface ProductServiceImpl <<interface>> {
+    +List<ProductAllView> findAll()
+    +Optional<Product> findOne(final Long productId)
+    +List<ProductNameView> findByName(final String name)
+
+}
+
+
+ProductService "1" -down-> "1" ProductServiceImpl:  uses
+
+
+ProductController ..> ProductService
+ProductServiceImpl ..> ProductRepository
+ProductService ..> Product
+
+
+
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 14:29:17 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

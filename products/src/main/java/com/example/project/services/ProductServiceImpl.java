@@ -5,8 +5,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.example.project.model.AggregatedRating;
 import com.example.project.model.ProductDTO;
@@ -15,6 +17,7 @@ import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<ProductAllView> findAll() {
@@ -35,10 +40,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findOne(final Long productId) {
+    public Optional<Product> findOne(final Long productId) throws IOException, InterruptedException {
         Optional<Product> optionalProduct = repository.findById(productId);
 
         if (optionalProduct.isEmpty()){
+
+            /*
+            String url = "http://localhost:8084/api/products/" + productId;
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            optionalProduct = mapper.readValue(response.body(), new TypeReference<Optional<Product>>() {});
+
+             */
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
@@ -46,8 +69,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public  List<ProductNameView> findBySku(final String sku) {
-        return repository.findBySku(sku);
+    public  List<ProductNameView> findBySku(final String sku) throws IOException, InterruptedException {
+        List<ProductNameView> product = repository.findBySku(sku);
+
+        if (product.isEmpty()) {
+            String url = "http://localhost:8084/api/products/sku/" + sku;
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> response = client.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+            ObjectMapper mapper = new ObjectMapper();
+
+           // product = mapper.readValue(response.body(), new TypeReference<List<ProductNameView>>(){});
+
+        }
+
+        return product;
     }
 
     @Override

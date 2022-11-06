@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="431px" preserveAspectRatio="none" style="width:484px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 484 431" width="484px" zoomAndPan="magnify"><defs/><g><rect fill="#FFFFFF" height="247.8125" style="stroke:#181818;stroke-width:1.0;" width="10" x="82.5" y="92.6094"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="433.5" y="114.9609"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="433.5" y="201.0156"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="433.5" y="294.0703"/><rect height="79.0547" style="stroke:#000000;stroke-width:1.5;fill:none;" width="468.5" x="10" y="160.3125"/><rect height="79.0547" style="stroke:#000000;stroke-width:1.5;fill:none;" width="468.5" x="10" y="253.3672"/><line style="stroke:#181818;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="87" x2="87" y1="82.6094" y2="349.4219"/><line style="stroke:#181818;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="438.5" x2="438.5" y1="82.6094" y2="349.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="20" y="79.5332">registered Customer</text><ellipse cx="87.5" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M87.5,21.5 L87.5,48.5 M74.5,29.5 L100.5,29.5 M87.5,48.5 L74.5,63.5 M87.5,48.5 L100.5,63.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="20" y="362.9551">registered Customer</text><ellipse cx="87.5" cy="374.5313" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M87.5,382.5313 L87.5,409.5313 M74.5,390.5313 L100.5,390.5313 M87.5,409.5313 L74.5,424.5313 M87.5,409.5313 L100.5,424.5313 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60" x="408.5" y="50"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46" x="415.5" y="71.5332">System</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60" x="408.5" y="348.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46" x="415.5" y="369.9551">System</text><rect fill="#FFFFFF" height="247.8125" style="stroke:#181818;stroke-width:1.0;" width="10" x="82.5" y="92.6094"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="433.5" y="114.9609"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="433.5" y="201.0156"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="433.5" y="294.0703"/><polygon fill="#181818" points="421.5,110.9609,431.5,114.9609,421.5,118.9609,425.5,114.9609" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="92.5" x2="427.5" y1="114.9609" y2="114.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="99.5" y="110.1045">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="191" x="110.5" y="110.1045">asks to show catalog of products</text><polygon fill="#181818" points="103.5,141.3125,93.5,145.3125,103.5,149.3125,99.5,145.3125" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="97.5" x2="437.5" y1="145.3125" y2="145.3125"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="109.5" y="140.4561">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="147" x="120.5" y="140.4561">return catalog of products</text><path d="M10,160.3125 L184,160.3125 L184,168.6641 L174,178.6641 L10,178.6641 L10,160.3125 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="79.0547" style="stroke:#000000;stroke-width:1.5;" width="468.5" x="10" y="160.3125"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="129" x="25" y="174.8076">alt (search by name)</text><polygon fill="#181818" points="421.5,197.0156,431.5,201.0156,421.5,205.0156,425.5,201.0156" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="92.5" x2="427.5" y1="201.0156" y2="201.0156"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="99.5" y="196.1592">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="293" x="110.5" y="196.1592">Asks to search the product by name in the catalog</text><polygon fill="#181818" points="103.5,227.3672,93.5,231.3672,103.5,235.3672,99.5,231.3672" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="97.5" x2="437.5" y1="231.3672" y2="231.3672"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="109.5" y="226.5107">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="184" x="120.5" y="226.5107">returns the results of the search</text><path d="M10,253.3672 L179,253.3672 L179,261.7188 L169,271.7188 L10,271.7188 L10,253.3672 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="79.0547" style="stroke:#000000;stroke-width:1.5;" width="468.5" x="10" y="253.3672"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="124" x="25" y="267.8623">alt (search by code)</text><polygon fill="#181818" points="421.5,290.0703,431.5,294.0703,421.5,298.0703,425.5,294.0703" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="92.5" x2="427.5" y1="294.0703" y2="294.0703"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="99.5" y="289.2139">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="311" x="110.5" y="289.2139">Asks to search the product by bar code in the catalog</text><polygon fill="#181818" points="103.5,320.4219,93.5,324.4219,103.5,328.4219,99.5,324.4219" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="97.5" x2="437.5" y1="324.4219" y2="324.4219"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="109.5" y="319.5654">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="184" x="120.5" y="319.5654">returns the results of the search</text><!--MD5=[a02b86fffd6f6005b963b5f044d21ff3]
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "registered Customer" as Customer
+participant "System" as System
+
+activate Customer
+
+Customer -> System: asks to show catalog of products
+System - -> Customer: return catalog of products
+group alt (search by name)
+Customer -> System: Asks to search the product by name in the catalog
+System - -> Customer: returns the results of the search
+end alt
+group alt (search by code)
+Customer -> System: Asks to search the product by bar code in the catalog
+System - -> Customer: returns the results of the search
+end alt
+
+
+
+@enduml
+
+@startuml
+
+autoactivate on
+autonumber
+
+actor "registered Customer" as Customer
+participant "System" as System
+
+activate Customer
+
+Customer -> System: asks to show catalog of products
+System - -> Customer: return catalog of products
+group alt (search by name)
+Customer -> System: Asks to search the product by name in the catalog
+System - -> Customer: returns the results of the search
+end alt
+group alt (search by code)
+Customer -> System: Asks to search the product by bar code in the catalog
+System - -> Customer: returns the results of the search
+end alt
+
+
+
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 14:29:17 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

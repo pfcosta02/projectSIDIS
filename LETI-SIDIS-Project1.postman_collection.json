@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"bruna@mail.com\",\r\n    \"password\":\"54321\"\r\n}",
+							"raw": "{\r\n    \"username\":\"rfnm@mail.com\",\r\n    \"password\":\"12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -87,31 +87,6 @@
 			"name": "Product Images",
 			"item": [
 				{
-					"name": "Public",
-					"item": [
-						{
-							"name": "Get photo",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{products}}{{baseUrl}}/products/2/photo/martelo.jpg",
-									"host": [
-										"{{products}}{{baseUrl}}"
-									],
-									"path": [
-										"products",
-										"2",
-										"photo",
-										"martelo.jpg"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Private",
 					"item": [
 						{
@@ -134,7 +109,7 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/Rafael/Documents/Faculdade/PSOFT/psoft-project-g2/src/main/resources/martelo.jpg"
+											"src": "/C:/Users/pedro/Desktop/ISEP/SIDIS/projectSIDIS/products/src/main/resources/martelo.jpg"
 										}
 									]
 								},
@@ -169,12 +144,12 @@
 										{
 											"key": "files",
 											"type": "file",
-											"src": "/C:/Users/pedro/Desktop/ISEP/PSOFT/psoft-project-g2/src/main/resources/martelo.jpg"
+											"src": "/C:/Users/pedro/Desktop/ISEP/SIDIS/projectSIDIS/products/src/main/resources/martelo.jpg"
 										},
 										{
 											"key": "files",
 											"type": "file",
-											"src": "/C:/Users/pedro/Desktop/ISEP/PSOFT/psoft-project-g2/src/main/resources/martelo-bola-8011.jpg"
+											"src": "/C:/Users/pedro/Desktop/ISEP/SIDIS/projectSIDIS/products/src/main/resources/martelo-bola-8011.jpg"
 										}
 									]
 								},
@@ -300,6 +275,25 @@
 										"products",
 										"name",
 										"Martelo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Product Rating",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{products}}{{baseUrl}}/products/1/rating",
+									"host": [
+										"{{products}}{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										"1",
+										"rating"
 									]
 								}
 							},

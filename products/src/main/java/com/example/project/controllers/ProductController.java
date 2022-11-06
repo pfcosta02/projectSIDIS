@@ -50,7 +50,7 @@ public class ProductController {
 
     @Operation(summary = "Search for a product by his ID")
     @GetMapping(value = "/{productId}")
-    public ResponseEntity<Product> getProduct(@PathVariable("productId") final Long productId) {
+    public ResponseEntity<Product> getProduct(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
         final var product = service.findOne(productId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
@@ -59,7 +59,7 @@ public class ProductController {
 
     @Operation(summary = "Search for a product by his sku")
     @GetMapping(value = "/sku/{sku}")
-    public Iterable<ProductNameView> findBySku(@PathVariable(value = "sku" )String sku)  {
+    public Iterable<ProductNameView> findBySku(@PathVariable(value = "sku" )String sku) throws IOException, InterruptedException {
        return service.findBySku(sku);
     }
 
