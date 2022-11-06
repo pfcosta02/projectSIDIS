@@ -14,11 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-    @Query("SELECT f.productId AS productId, f.name AS name FROM Product f" )
-    List<ProductAllView> findAllProducts();
+    @Query("SELECT f FROM Product f" )
+    List<Product> findAllProducts();
 
-    @Query("SELECT f.productId AS productId, f.name AS name, f.description AS description, f.sku AS sku FROM Product f WHERE f.name = ?1")
-    List<ProductNameView> findByName(String name);
+    @Query("SELECT f FROM Product f WHERE f.name = ?1")
+    Optional<Product> findByName(String name);
 
     @Query("SELECT f AS sku FROM Product f WHERE f.sku = ?1")
     Optional<Product> findBySku(String sku);

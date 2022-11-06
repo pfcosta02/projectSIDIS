@@ -3,6 +3,7 @@ package com.example.project.services;
 import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface VoteService {
@@ -15,7 +16,7 @@ public interface VoteService {
     Vote create(Vote resource);
     Vote create(Long id, Vote resource);
 
-    List<Vote> findVotesReview(Long reviewId);
+    List<VoteDTO> findVotesReview(Long reviewId) throws IOException, InterruptedException;
     // void deleteById(Long id, long parseLong);
 
 }

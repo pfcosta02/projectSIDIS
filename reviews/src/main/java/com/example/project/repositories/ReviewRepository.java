@@ -17,7 +17,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
     @Query("SELECT f FROM Review f ORDER BY f.dataTime")
 
     */
-    Optional<Review> findById(Long reviewId);
 
     @Transactional
     @Modifying

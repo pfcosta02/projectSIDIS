@@ -12,10 +12,9 @@ import com.example.project.views.ProductNameView;
 
 public interface ProductService {
 
-    List<ProductAllView> findAll();
-    Optional<Product> findOne(Long productId) throws IOException, InterruptedException;
+    List<ProductDTO> findAll() throws IOException, InterruptedException;
     Optional<ProductDTO> findBySku(String sku) throws IOException, InterruptedException;
-    List<ProductNameView> findByName(String name);
+    Optional<ProductDTO> findByName(String name) throws IOException, InterruptedException;
     Product create(Product product);
     AggregatedRating getProductRating(String productSku) throws IOException, InterruptedException;
     void addImage(String filename, Long id);

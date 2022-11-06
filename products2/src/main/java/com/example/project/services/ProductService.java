@@ -13,11 +13,10 @@ import org.springframework.http.ResponseEntity;
 
 public interface ProductService {
 
-    List<ProductAllView> findAll();
-    Optional<Product> findOne(Long productId);
+    List<ProductDTO> findAll();
     Optional<ProductDTO> findBySku(String sku);
-    List<ProductNameView> findByName(String name);
+    Optional<ProductDTO> findByName(String name);
     Product create(Product product);
-    AggregatedRating getProductRating(Long productId) throws IOException, InterruptedException;
+    AggregatedRating getProductRating(String sku) throws IOException, InterruptedException;
     void addImage(String filename, Long id);
 }

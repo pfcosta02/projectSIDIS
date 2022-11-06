@@ -44,17 +44,8 @@ public class ProductController {
 
     @Operation(summary = "Shows catalog of products")
     @GetMapping
-    public List<ProductAllView> findAll() {
+    public List<ProductDTO> findAll() {
         return service.findAll();
-    }
-
-    @Operation(summary = "Search for a product by his ID")
-    @GetMapping(value = "/{productId}")
-    public ResponseEntity<Product> getProduct(@PathVariable("productId") final Long productId) {
-        final var product = service.findOne(productId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
-
-        return ResponseEntity.ok().eTag(Long.toString(product.getVersion())).body(product);
     }
 
     @Operation(summary = "Search for a product by his sku")
@@ -68,8 +59,11 @@ public class ProductController {
 
     @Operation(summary = "Search for a product by his name")
     @GetMapping(value = "/name/{productName}")
-    public Iterable<ProductNameView> findByName(@PathVariable(value =  "productName" )String productName) {
-        return service.findByName(productName);
+    public ResponseEntity<ProductDTO> findByName(@PathVariable(value =  "productName" )String productName) {
+        final var product = service.findByName(productName)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+
+        return ResponseEntity.ok().body(product);
     }
 
     @Operation(summary = "Create a product")
@@ -111,12 +105,12 @@ public class ProductController {
 
     @Operation(summary = "Search for a rating of a product")
     @GetMapping(value = "/{productId}/rating")
-    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
+    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final String sku) throws IOException, InterruptedException {
 
-        final var product = service.findOne(productId)
+        final var product = service.findBySku(sku)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
-        AggregatedRating aggregatedRating = service.getProductRating(productId);
+        AggregatedRating aggregatedRating = service.getProductRating(sku);
 
         return ResponseEntity.ok().body(aggregatedRating);
     }

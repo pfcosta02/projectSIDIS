@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+
+actor "Customer" as Customer
+participant "System" as System
+
+activate Customer
+
+Customer -> System: Asks to show all my reviews
+System --> Customer: Return all reviews of the costumer and their status
+
+
+@enduml

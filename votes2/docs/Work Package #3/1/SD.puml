@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+autoactivate on
+autonumber
+
+
+participant ":Customer" as Customer
+participant ":ReviewController" as Controller
+participant ":ReviewService" as Service
+participant ":ReviewRepository" as Repository
+participant ":Review" as Review
+
+activate Customer
+
+group alt (if vote is a like)
+Customer -> Controller : PATCH upvote(reviewId)
+Controller -> Service : upvote(reviewId)
+end alt
+group alt (if vote is a dislike)
+Customer -> Controller : PATCH downvote(reviewId)
+Controller -> Service : downvote(reviewId)
+end alt
+Service -> Repository : findById(reviewId)
+Repository --> Service : review
+Service -> Repository: save(review)
+Repository --> Service: success
+Service --> Controller : success
+Controller --> Customer : success
+
+@enduml

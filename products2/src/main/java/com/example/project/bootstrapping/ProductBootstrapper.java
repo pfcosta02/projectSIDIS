@@ -29,8 +29,8 @@ public class ProductBootstrapper implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (productRepo.findByName("Access Point").isEmpty()) {
-            Product f1 = new Product("Access Point");
+        if (productRepo.findByName("Access_Point").isEmpty()) {
+            Product f1 = new Product("Access_Point");
             f1.setDescription("dispositivo de rede que permite levar o sinal de Internet a áreas em que a cobertura original proporcionada por um roteador é limitada");
             f1.setSku("987456123A");
             productRepo.save(f1);

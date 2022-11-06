@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="337px" preserveAspectRatio="none" style="width:645px;height:337px;background:#FFFFFF;" version="1.1" viewBox="0 0 645 337" width="645px" zoomAndPan="magnify"><defs/><g><rect fill="#FFFFFF" height="212.4609" style="stroke:#181818;stroke-width:1.0;" width="10" x="157.5" y="69.9609"/><rect fill="#FFFFFF" height="151.7578" style="stroke:#181818;stroke-width:1.0;" width="10" x="311.5" y="100.3125"/><rect fill="#FFFFFF" height="91.0547" style="stroke:#181818;stroke-width:1.0;" width="10" x="455.5" y="130.6641"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="566.5" y="161.0156"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="46" x2="46" y1="37.6094" y2="300.4219"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="162" x2="162" y1="37.6094" y2="300.4219"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="316.5" x2="316.5" y1="37.6094" y2="300.4219"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="460" x2="460" y1="37.6094" y2="300.4219"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="571" x2="571" y1="37.6094" y2="300.4219"/><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83" x="5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="12" y="26.5332">:Moderator</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83" x="5" y="299.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="12" y="320.9551">:Moderator</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129" x="98" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="115" x="105" y="26.5332">:ProductController</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129" x="98" y="299.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="115" x="105" y="320.9551">:ProductController</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="259.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="266.5" y="26.5332">:ProductService</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="259.5" y="299.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="266.5" y="320.9551">:ProductService</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="427" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="53" x="434" y="26.5332">:Product</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="427" y="299.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="53" x="434" y="320.9551">:Product</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="135" x="504" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="121" x="511" y="26.5332">:ProductRepository</text><rect fill="#E2E2F0" height="31.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="135" x="504" y="299.4219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="121" x="511" y="320.9551">:ProductRepository</text><rect fill="#FFFFFF" height="212.4609" style="stroke:#181818;stroke-width:1.0;" width="10" x="157.5" y="69.9609"/><rect fill="#FFFFFF" height="151.7578" style="stroke:#181818;stroke-width:1.0;" width="10" x="311.5" y="100.3125"/><rect fill="#FFFFFF" height="91.0547" style="stroke:#181818;stroke-width:1.0;" width="10" x="455.5" y="130.6641"/><rect fill="#FFFFFF" height="30.3516" style="stroke:#181818;stroke-width:1.0;" width="10" x="566.5" y="161.0156"/><polygon fill="#181818" points="145.5,65.9609,155.5,69.9609,145.5,73.9609,149.5,69.9609" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="46.5" x2="151.5" y1="69.9609" y2="69.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="53.5" y="65.1045">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="64.5" y="65.1045">GET product()</text><polygon fill="#181818" points="299.5,96.3125,309.5,100.3125,299.5,104.3125,303.5,100.3125" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="167.5" x2="305.5" y1="100.3125" y2="100.3125"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="174.5" y="95.4561">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="114" x="185.5" y="95.4561">getProduct(product)</text><polygon fill="#181818" points="443.5,126.6641,453.5,130.6641,443.5,134.6641,447.5,130.6641" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="321.5" x2="449.5" y1="130.6641" y2="130.6641"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="328.5" y="125.8076">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="104" x="339.5" y="125.8076">newFrom(product)</text><polygon fill="#181818" points="554.5,157.0156,564.5,161.0156,554.5,165.0156,558.5,161.0156" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="465.5" x2="560.5" y1="161.0156" y2="161.0156"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="472.5" y="156.1592">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="52" x="483.5" y="156.1592">findOne()</text><polygon fill="#181818" points="476.5,187.3672,466.5,191.3672,476.5,195.3672,472.5,191.3672" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="470.5" x2="570.5" y1="191.3672" y2="191.3672"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="482.5" y="186.5107">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="493.5" y="186.5107">success</text><polygon fill="#181818" points="332.5,217.7188,322.5,221.7188,332.5,225.7188,328.5,221.7188" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="326.5" x2="459.5" y1="221.7188" y2="221.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="338.5" y="216.8623">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="349.5" y="216.8623">success</text><polygon fill="#181818" points="178.5,248.0703,168.5,252.0703,178.5,256.0703,174.5,252.0703" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="172.5" x2="315.5" y1="252.0703" y2="252.0703"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="184.5" y="247.2139">7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="195.5" y="247.2139">success</text><polygon fill="#181818" points="57.5,278.4219,47.5,282.4219,57.5,286.4219,53.5,282.4219" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="51.5" x2="161.5" y1="282.4219" y2="282.4219"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="63.5" y="277.5654">8</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="49" x="74.5" y="277.5654">success</text><!--MD5=[f40b08e25a12d533d3e31978bab02f94]
+@startuml
+'https://plantuml.com/sequence-diagram
+autoactivate on
+autonumber
+
+participant ":Moderator" as Moderator
+participant ":ProductController" as Controller
+participant ":ProductService" as Service
+participant ":Product" as Product
+participant ":ProductRepository" as Repository
+
+Moderator -> Controller : GET product()
+Controller -> Service : getProduct(product)
+Service -> Product : newFrom(product)
+Product -> Repository : findOne()
+Repository - -> Product : success
+Product - -> Service : success
+Service - -> Controller : success
+Controller - -> Moderator : success
+
+@enduml
+
+@startuml
+autoactivate on
+autonumber
+
+participant ":Moderator" as Moderator
+participant ":ProductController" as Controller
+participant ":ProductService" as Service
+participant ":Product" as Product
+participant ":ProductRepository" as Repository
+
+Moderator -> Controller : GET product()
+Controller -> Service : getProduct(product)
+Service -> Product : newFrom(product)
+Product -> Repository : findOne()
+Repository - -> Product : success
+Product - -> Service : success
+Service - -> Controller : success
+Controller - -> Moderator : success
+
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 14:29:17 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

@@ -5,6 +5,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,20 +32,17 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductAllView> findAll() {
-        return repository.findAllProducts();
-    }
+    public List<ProductDTO> findAll() {
+        List<Product> allProducts = repository.findAllProducts();
+        List<ProductDTO> allProductsDto = new ArrayList<>();
 
-    @Override
-    public Optional<Product> findOne(final Long productId) {
-        Optional<Product> optionalProduct = repository.findById(productId);
-
-        if (optionalProduct.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        for(int i=0; i < allProducts.size(); i++) {
+            ProductDTO product = new ProductDTO(allProducts.get(i).getProductId(), allProducts.get(i).getName(), allProducts.get(i).getSku(), allProducts.get(i).getDescription(), allProducts.get(i).getSetOfImages());
+            allProductsDto.add(product);
         }
-
-        return optionalProduct;
+        return allProductsDto;
     }
+
 
     @Override
     public Optional<ProductDTO> findBySku(final String sku) {
@@ -62,8 +60,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductNameView> findByName(final String name) {
-        return repository.findByName(name);
+    public Optional<ProductDTO> findByName(final String name) {
+        final var optionalProduct = repository.findByName(name);
+
+        if (optionalProduct.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
+
+        Product p = optionalProduct.get();
+
+        ProductDTO dto = new ProductDTO(p.getProductId(), p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
+
+        return Optional.of(dto);
     }
 
     @Override
@@ -87,9 +95,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public AggregatedRating getProductRating(Long productId) throws IOException, InterruptedException {
+    public AggregatedRating getProductRating(String sku) throws IOException, InterruptedException {
 
-        String url = "http://localhost:8082/api/reviews/product/" + productId + "/date";
+        String url = "http://localhost:8082/api/reviews/product/" + sku + "/date";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
