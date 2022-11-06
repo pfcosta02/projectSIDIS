@@ -11,9 +11,9 @@ public interface ReviewService {
 
     Iterable<Review> findAll();
 
-    Iterable<Review> findApprovedReviews(Long productId);
+    Iterable<Review> findApprovedReviews(String productSku);
 
-    Iterable<Review> findApprovedReviewsByDate(Long productId);
+    Iterable<Review> findApprovedReviewsByDate(String productSku);
 
     Iterable<Review> findAllPending();
 

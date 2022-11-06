@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e8f5270a-1546-4619-a552-b2dbe3f5e9d7",
+		"_postman_id": "80599d17-072e-4c4f-915a-05b4f7f5fbb8",
 		"name": "LETI-SIDIS-Project1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17817487"
+		"_exporter_id": "19169546"
 	},
 	"item": [
 		{
@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"rfnm@mail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"raw": "{\r\n    \"username\":\"pfcosta02@mail.com\",\r\n    \"password\":\"pass123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -376,14 +376,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/product/1/date/votes",
+									"raw": "{{reviews}}{{baseUrl}}/reviews/product/123456789A/date/votes",
 									"host": [
 										"{{reviews}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
 										"product",
-										"1",
+										"123456789A",
 										"date",
 										"votes"
 									]
@@ -397,14 +397,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/product/1/date",
+									"raw": "{{reviews}}{{baseUrl}}/reviews/product/123456789A/date",
 									"host": [
 										"{{reviews}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
 										"product",
-										"1",
+										"123456789A",
 										"date"
 									]
 								}
@@ -417,13 +417,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/2",
+									"raw": "{{reviews}}{{baseUrl}}/reviews/1",
 									"host": [
 										"{{reviews}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"2"
+										"1"
 									]
 								}
 							},
@@ -577,13 +577,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/3",
+									"raw": "{{reviews}}{{baseUrl}}/reviews/1",
 									"host": [
 										"{{reviews}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"3"
+										"1"
 									]
 								}
 							},

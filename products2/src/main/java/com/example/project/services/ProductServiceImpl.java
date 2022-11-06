@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.project.model.Product;
@@ -46,8 +47,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public  List<ProductNameView> findBySku(final String sku) {
-        return repository.findBySku(sku);
+    public Optional<ProductDTO> findBySku(final String sku) {
+        final var optionalProduct = repository.findBySku(sku);
+
+        if (optionalProduct.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
+
+        Product p = optionalProduct.get();
+
+        ProductDTO dto = new ProductDTO(p.getProductId(), p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
+
+        return Optional.of(dto);
     }
 
     @Override

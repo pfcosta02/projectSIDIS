@@ -14,9 +14,9 @@ public interface ProductService {
 
     List<ProductAllView> findAll();
     Optional<Product> findOne(Long productId) throws IOException, InterruptedException;
-    List<ProductNameView> findBySku(String sku) throws IOException, InterruptedException;
+    Optional<ProductDTO> findBySku(String sku) throws IOException, InterruptedException;
     List<ProductNameView> findByName(String name);
     Product create(Product product);
-    AggregatedRating getProductRating(Long productId) throws IOException, InterruptedException;
+    AggregatedRating getProductRating(String productSku) throws IOException, InterruptedException;
     void addImage(String filename, Long id);
 }

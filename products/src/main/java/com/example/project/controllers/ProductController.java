@@ -59,8 +59,11 @@ public class ProductController {
 
     @Operation(summary = "Search for a product by his sku")
     @GetMapping(value = "/sku/{sku}")
-    public Iterable<ProductNameView> findBySku(@PathVariable(value = "sku" )String sku) throws IOException, InterruptedException {
-       return service.findBySku(sku);
+    public ResponseEntity<ProductDTO> findBySku(@PathVariable(value = "sku" )String sku) throws IOException, InterruptedException {
+        final var product = service.findBySku(sku)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+
+        return ResponseEntity.ok().body(product);
     }
 
     @Operation(summary = "Search for a product by his name")
@@ -107,13 +110,13 @@ public class ProductController {
     }
 
     @Operation(summary = "Search for a rating of a product")
-    @GetMapping(value = "/{productId}/rating")
-    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
+    @GetMapping(value = "/{productSku}/rating")
+    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productSku") final String productSku) throws IOException, InterruptedException {
 
-        final var product = service.findOne(productId)
+        final var product = service.findBySku(productSku)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
-        AggregatedRating aggregatedRating = service.getProductRating(productId);
+        AggregatedRating aggregatedRating = service.getProductRating(productSku);
 
         return ResponseEntity.ok().body(aggregatedRating);
     }

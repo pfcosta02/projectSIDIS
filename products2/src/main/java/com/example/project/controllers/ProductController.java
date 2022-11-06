@@ -59,8 +59,11 @@ public class ProductController {
 
     @Operation(summary = "Search for a product by his sku")
     @GetMapping(value = "/sku/{sku}")
-    public Iterable<ProductNameView> findBySku(@PathVariable(value = "sku" )String sku)  {
-       return service.findBySku(sku);
+    public ResponseEntity<ProductDTO> findBySku(@PathVariable(value = "sku" )String sku)  {
+        final var product = service.findBySku(sku)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+
+        return ResponseEntity.ok().body(product);
     }
 
     @Operation(summary = "Search for a product by his name")

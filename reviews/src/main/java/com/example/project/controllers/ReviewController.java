@@ -43,10 +43,10 @@ public class    ReviewController {
 
 
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
-    @GetMapping(value = "/product/{productId}/date/votes")
-    public Iterable<Review> getApprovedReviews(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
+    @GetMapping(value = "/product/{productSku}/date/votes")
+    public Iterable<Review> getApprovedReviews(@PathVariable("productSku") final String productSku) throws IOException, InterruptedException {
 
-        String url = "http://localhost:8081/api/products/" + productId;
+        String url = "http://localhost:8081/api/products/sku/" + productSku;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -61,15 +61,15 @@ public class    ReviewController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
-        return service.findApprovedReviews(productId);
+        return service.findApprovedReviews(productSku);
     }
 
 
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
-    @GetMapping(value = "/product/{productId}/date")
-    public Iterable<Review> findApprovedReviewsByDate(@PathVariable("productId") final Long productId) throws IOException, InterruptedException {
+    @GetMapping(value = "/product/{productSku}/date")
+    public Iterable<Review> findApprovedReviewsByDate(@PathVariable("productSku") final String productSku) throws IOException, InterruptedException {
 
-        String url = "http://localhost:8081/api/products/" + productId;
+        String url = "http://localhost:8081/api/products/sku/" + productSku;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -84,7 +84,7 @@ public class    ReviewController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
-        return service.findApprovedReviewsByDate(productId);
+        return service.findApprovedReviewsByDate(productSku);
     }
 
 
@@ -134,7 +134,7 @@ public class    ReviewController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Review> create(@Valid @RequestBody final Review resource) throws IOException, InterruptedException {
 
-        String url = "http://localhost:8081/api/products/" + resource.getProductId();
+        String url = "http://localhost:8081/api/products/sku/" + resource.getProductSku();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

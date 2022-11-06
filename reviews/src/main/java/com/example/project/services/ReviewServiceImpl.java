@@ -24,13 +24,13 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Iterable<Review> findApprovedReviews(final Long productId) {
-        return repository.findApprovedReviews(productId);
+    public Iterable<Review> findApprovedReviews(final String productSku) {
+        return repository.findApprovedReviews(productSku);
     }
 
     @Override
-    public Iterable<Review> findApprovedReviewsByDate(final Long productId) {
-        return repository.findApprovedReviewsByDate(productId);
+    public Iterable<Review> findApprovedReviewsByDate(final String productSku) {
+        return repository.findApprovedReviewsByDate(productSku);
     }
 
     @Override

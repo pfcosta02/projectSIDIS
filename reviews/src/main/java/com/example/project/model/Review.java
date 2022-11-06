@@ -52,8 +52,8 @@ public class Review implements Serializable {
     @Column (name = "status")
     private String status;
 
-    @Column (name = "productId")
-    private Long productId;
+    @Column (name = "productSku")
+    private String productSku;
 
     @Column (name = "customerId")
     private Long customerId;
@@ -105,8 +105,8 @@ public class Review implements Serializable {
         } else {
             obj.addDataTime();
         }
-        if (resource.getProductId() != null) {
-            obj.setProductId(resource.productId);
+        if (resource.getProductSku() != null) {
+            obj.setProductSku(resource.productSku);
         }
         if (resource.getCustomerId() != null) {
             obj.setCustomerId(resource.customerId);
@@ -140,8 +140,8 @@ public class Review implements Serializable {
         return reviewId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getProductSku() {
+        return productSku;
     }
 
     public Long getCustomerId() {
@@ -208,8 +208,8 @@ public class Review implements Serializable {
         this.status = status;
     }
 
-    public void setProductId(Long id) {
-        this.productId = id;
+    public void setProductSku(String sku) {
+        this.productSku = sku;
     }
 
     public void setCustomerId(Long id) {

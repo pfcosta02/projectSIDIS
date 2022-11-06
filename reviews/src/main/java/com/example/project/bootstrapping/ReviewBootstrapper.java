@@ -37,7 +37,7 @@ public class ReviewBootstrapper implements CommandLineRunner {
             f1.setDataTime("06-06-2002 23:30:00");
             f1.setFunnyFact();
             f1.setStatus("Pending");
-            f1.setProductId(1L);
+            f1.setProductSku("123456789A");
             f1.setCustomerId(5L);
             reviewRepo.save(f1);
         }

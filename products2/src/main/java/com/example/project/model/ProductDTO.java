@@ -1,49 +1,26 @@
 package com.example.project.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class ProductDTO {
-    private String sku;
-    private String name;
-    private String description;
-    private List<String> images;
+    public final Long productId;
+    public final String sku;
+    public final String name;
+    public final String description;
+    public List<String> images;
 
-    public ProductDTO(String sku, String name, String description, List<String> images) {
+    public ProductDTO (@JsonProperty("productId") Long productId,
+                       @JsonProperty("name") String name,
+                       @JsonProperty("sku") String sku,
+                       @JsonProperty("description") String description,
+                       @JsonProperty("images") List<String> images) {
+        this.productId = productId;
         this.sku = sku;
-        this.name = name;
         this.description = description;
+        this.name = name;
         this.images = images;
     }
 
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
 }

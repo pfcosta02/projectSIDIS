@@ -27,12 +27,12 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
     Iterable<Review> findAll();
 
     @Modifying
-    @Query("SELECT f FROM Review f WHERE f.status = 'Approved' AND f.productId = ?1 ORDER BY ABS(f.downVote + f.upVote) DESC, f.dataTime DESC")
-    Iterable<Review> findApprovedReviews(Long productId);
+    @Query("SELECT f FROM Review f WHERE f.status = 'Approved' AND f.productSku = ?1 ORDER BY ABS(f.downVote + f.upVote) DESC, f.dataTime DESC")
+    Iterable<Review> findApprovedReviews(String productSku);
 
     @Modifying
-    @Query("SELECT f FROM Review f WHERE f.status = 'Approved' AND f.productId = ?1 ORDER BY f.dataTime DESC")
-    Iterable<Review> findApprovedReviewsByDate(Long productId);
+    @Query("SELECT f FROM Review f WHERE f.status = 'Approved' AND f.productSku = ?1 ORDER BY f.dataTime DESC")
+    Iterable<Review> findApprovedReviewsByDate(String productSku);
 
     @Modifying
     @Query("SELECT f FROM Review f WHERE f.status = 'Pending'")

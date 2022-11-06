@@ -44,24 +44,6 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optionalProduct = repository.findById(productId);
 
         if (optionalProduct.isEmpty()){
-
-            /*
-            String url = "http://localhost:8084/api/products/" + productId;
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            optionalProduct = mapper.readValue(response.body(), new TypeReference<Optional<Product>>() {});
-
-             */
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
@@ -69,10 +51,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public  List<ProductNameView> findBySku(final String sku) throws IOException, InterruptedException {
-        List<ProductNameView> product = repository.findBySku(sku);
+    public Optional<ProductDTO> findBySku(final String sku) throws IOException, InterruptedException {
+        final var optionalProduct = repository.findBySku(sku);
 
-        if (product.isEmpty()) {
+        if (optionalProduct.isEmpty()){
             String url = "http://localhost:8084/api/products/sku/" + sku;
 
             HttpClient client = HttpClient.newHttpClient();
@@ -83,13 +65,22 @@ public class ProductServiceImpl implements ProductService {
             HttpResponse<String> response = client.send(request,
                     HttpResponse.BodyHandlers.ofString());
 
+            if(response.statusCode() != 200) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+            }
+
             ObjectMapper mapper = new ObjectMapper();
 
-           // product = mapper.readValue(response.body(), new TypeReference<List<ProductNameView>>(){});
+            ProductDTO dto = mapper.readValue(response.body(), ProductDTO.class);
 
+            return Optional.of(dto);
         }
 
-        return product;
+        Product p = optionalProduct.get();
+
+        ProductDTO dto = new ProductDTO(p.getProductId(),p.getSku(), p.getName(), p.getDescription(), p.getSetOfImages());
+
+        return Optional.of(dto);
     }
 
     @Override
@@ -118,9 +109,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public AggregatedRating getProductRating(Long productId) throws IOException, InterruptedException {
+    public AggregatedRating getProductRating(String productSku) throws IOException, InterruptedException {
 
-        String url = "http://localhost:8082/api/reviews/product/" + productId + "/date";
+        String url = "http://localhost:8082/api/reviews/product/" + productSku + "/date";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
