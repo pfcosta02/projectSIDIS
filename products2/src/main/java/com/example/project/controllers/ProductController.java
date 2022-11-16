@@ -42,77 +42,40 @@ public class ProductController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @Operation(summary = "Shows catalog of products")
-    @GetMapping
-    public List<ProductDTO> findAll() {
-        return service.findAll();
-    }
-
-    @Operation(summary = "Search for a product by his sku")
-    @GetMapping(value = "/sku/{sku}")
-    public ResponseEntity<ProductDTO> findBySku(@PathVariable(value = "sku" )String sku)  {
-        final var product = service.findBySku(sku)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
-
-        return ResponseEntity.ok().body(product);
-    }
-
-    @Operation(summary = "Search for a product by his name")
-    @GetMapping(value = "/name/{productName}")
-    public ResponseEntity<ProductDTO> findByName(@PathVariable(value =  "productName" )String productName) {
-        final var product = service.findByName(productName)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
-
-        return ResponseEntity.ok().body(product);
-    }
-
     @Operation(summary = "Create a product")
     @RolesAllowed(Role.ADMIN)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody final Product productId) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody final Product productId) throws IOException, InterruptedException {
         final var product = service.create(productId);
         return ResponseEntity.ok().eTag(Long.toString(product.getVersion())).body(product);
     }
 
     @Operation(summary = "Uploads a photo of a product")
     @RolesAllowed(Role.ADMIN)
-    @PostMapping("/{productId}/photo")
+    @PostMapping("/{sku}/photo")
     @ResponseStatus(HttpStatus.CREATED)
-    public UploadFileResponse uploadFile(@PathVariable("productId") final Long productId,
+    public UploadFileResponse uploadFile(@PathVariable("productSku") final String sku,
                                          @RequestParam("file") final MultipartFile file) {
 
-        final String fileName = fileStorageService.storeFile(productId.toString(), file);
+        final String fileName = fileStorageService.storeFile(sku, file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(fileName)
                 .toUriString();
         fileDownloadUri = fileDownloadUri.replace("/photos/", "/photo/");
 
         // TODO save info of the file on the database
-        service.addImage(fileName,productId);
+        service.addImage(fileName,sku);
 
         return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
 
     @Operation(summary = "Uploads a set of photos of a product")
     @RolesAllowed(Role.ADMIN)
-    @PostMapping("/{productId}/photos")
+    @PostMapping("/{sku}/photos")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<UploadFileResponse> uploadMultipleFiles(@PathVariable("productId") final Long productId,
+    public List<UploadFileResponse> uploadMultipleFiles(@PathVariable("productSku") final String sku,
                                                         @RequestParam("files") final MultipartFile[] files) {
-        return Arrays.asList(files).stream().map(f -> uploadFile(productId, f)).collect(Collectors.toList());
+        return Arrays.asList(files).stream().map(f -> uploadFile(sku, f)).collect(Collectors.toList());
     }
-
-    @Operation(summary = "Search for a rating of a product")
-    @GetMapping(value = "/{productId}/rating")
-    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final String sku) {
-
-        final var product = service.findBySku(sku)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
-
-        AggregatedRating aggregatedRating = service.getProductRating(sku);
-
-        return ResponseEntity.ok().body(aggregatedRating);
-    }
-
 }

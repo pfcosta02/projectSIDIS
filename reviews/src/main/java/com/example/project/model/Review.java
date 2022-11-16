@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime; // Import the LocalDateTime class
 import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+import java.util.UUID;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,6 +33,9 @@ public class Review implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long reviewId;
+
+    @Column (name = "GUID")
+    private UUID uuid;
 
     @Column (name = "text")
     @Size(min = 1, max = 100)
@@ -83,6 +87,7 @@ public class Review implements Serializable {
     }
     public Review(long reviewId) {
         this.reviewId = reviewId;
+        this.uuid = UUID.randomUUID();
     }
 
     /**
@@ -111,6 +116,11 @@ public class Review implements Serializable {
         if (resource.getCustomerId() != null) {
             obj.setCustomerId(resource.customerId);
         }
+
+        if (resource.getUuid() == null) {
+            obj.setUuid(UUID.randomUUID());
+        }
+
         obj.setStatus("Pending");
         obj.setUpVote(0);
         obj.setDownVote(0);
@@ -214,6 +224,14 @@ public class Review implements Serializable {
 
     public void setCustomerId(Long id) {
         this.customerId = id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public void addDataTime() {

@@ -5,11 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 public class ReviewDTO {
 
 
     public Long reviewId;
+    public UUID uuid;
     public Integer rating;
     public Integer upVote;
     public Integer downVote;
@@ -21,8 +23,9 @@ public class ReviewDTO {
 
     public ReviewDTO(){}
 
-    public ReviewDTO(Long reviewId, Integer rating, Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long customerId, String funnyFact) {
+    public ReviewDTO(Long reviewId, UUID uuid, Integer rating, Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long customerId, String funnyFact) {
         this.reviewId = reviewId;
+        this.uuid = uuid;
         this.rating = rating;
         this.upVote = upVote;
         this.downVote = downVote;

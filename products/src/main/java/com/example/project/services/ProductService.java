@@ -12,10 +12,6 @@ import com.example.project.views.ProductNameView;
 
 public interface ProductService {
 
-    List<ProductDTO> findAll();
-    Optional<ProductDTO> findBySku(String sku);
-    Optional<ProductDTO> findByName(String name);
-    Product create(Product product);
-    AggregatedRating getProductRating(String productSku);
-    void addImage(String filename, Long id);
+    Product create(Product product) throws IOException, InterruptedException;
+    void addImage(String filename, String sku) throws IOException, InterruptedException;
 }
