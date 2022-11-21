@@ -57,6 +57,13 @@ public class    ReviewController {
         return service.findApprovedReviews(productSku);
     }
 
+    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
+    @GetMapping(value = "/product/{productSku}/date/votes/anotherApp")
+    public List<ReviewDTO> getApprovedReviewsAnotherApp(@PathVariable("productSku") final String productSku) {
+
+        return service.findApprovedReviewsAll(productSku);
+    }
+
 
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
     @GetMapping(value = "/product/{productSku}/date")
@@ -65,12 +72,26 @@ public class    ReviewController {
         return service.findApprovedReviewsByDate(productSku);
     }
 
+    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
+    @GetMapping(value = "/product/{productSku}/date/anotherApp")
+    public List<ReviewDTO> findApprovedReviewsByDateAnotherApp(@PathVariable("productSku") final String productSku) {
+
+        return service.findApprovedReviewsByDateAll(productSku);
+    }
+
 
     @Operation(summary = "Gets Pending Review")
     @GetMapping(value = "/pending")
     @RolesAllowed(Role.MODERATOR)
-    public List<ReviewDTO> getPendingReviews() {
-        return service.findAllPending();
+    public List<ReviewDTO> getPendingReviews(final WebRequest request) {
+        return service.findAllPending(request);
+    }
+
+    @Operation(summary = "Gets Pending Review")
+    @GetMapping(value = "/pending/anotherApp")
+    @RolesAllowed(Role.MODERATOR)
+    public List<ReviewDTO> getPendingReviewsAnotherApp() {
+        return service.findAllPendingAll();
     }
 
     @Operation(summary = "Gets Reviews of a client")
@@ -79,6 +100,14 @@ public class    ReviewController {
     public List<ReviewDTO> findMyReviews(@PathVariable("id") final Long customerId,final WebRequest request) {
 
         return service.findMyReviews(customerId,request);
+    }
+
+    @Operation(summary = "Gets Reviews of a client")
+    @GetMapping(value = "/customer/{id}/anotherApp")
+    @RolesAllowed(Role.CUSTOMER)
+    public List<ReviewDTO> findMyReviewsAnotherApp(@PathVariable("id") final Long customerId,final WebRequest request) {
+
+        return service.findMyReviewsAll(customerId,request);
     }
 
     @Operation(summary = "Find a review by their ID")

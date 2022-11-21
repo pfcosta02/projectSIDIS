@@ -12,12 +12,16 @@ import org.springframework.web.context.request.WebRequest;
 public interface ReviewService {
 
     List<ReviewDTO> findApprovedReviews(String productSku);
+    List<ReviewDTO> findApprovedReviewsAll(String productSku);
 
     List<ReviewDTO> findApprovedReviewsByDate(String productSku);
+    List<ReviewDTO> findApprovedReviewsByDateAll(String productSku);
 
     List<ReviewDTO> findAllPending(WebRequest request2);
+    List<ReviewDTO> findAllPendingAll();
 
     List<ReviewDTO> findMyReviews(Long id, WebRequest request);
+    List<ReviewDTO> findMyReviewsAll(Long id, WebRequest request);
 
     Optional<Review> findOne(Long id);
 
