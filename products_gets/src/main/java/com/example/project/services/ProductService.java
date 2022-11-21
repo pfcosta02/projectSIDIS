@@ -13,8 +13,11 @@ import com.example.project.views.ProductNameView;
 public interface ProductService {
 
     List<ProductDTO> findAll();
+    List<ProductDTO> findAllAnotherApp();
     Optional<ProductDTO> findBySku(String sku);
+    Optional<ProductDTO> findBySkuAnotherApp(String sku);
     Optional<ProductDTO> findByName(String name);
-    AggregatedRating getProductRating(String productSku);
+    Optional<ProductDTO> findByNameAnotherApp(String name);
+    AggregatedRating getProductRating(String sku);
 
 }

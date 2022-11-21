@@ -48,10 +48,25 @@ public class ProductController {
         return service.findAll();
     }
 
+    @Operation(summary = "Shows catalog of products")
+    @GetMapping(value = "/all")
+    public List<ProductDTO> findAllAnotherApp() {
+        return service.findAllAnotherApp();
+    }
+
     @Operation(summary = "Search for a product by his sku")
     @GetMapping(value = "/sku/{sku}")
-    public ResponseEntity<ProductDTO> findBySku(@PathVariable(value = "sku" )String sku)  {
+    public ResponseEntity<ProductDTO> findBySku(@PathVariable(value = "sku" )String sku) {
         final var product = service.findBySku(sku)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+
+        return ResponseEntity.ok().body(product);
+    }
+
+    @Operation(summary = "Search for a product by his sku")
+    @GetMapping(value = "/oasku/{sku}")
+    public ResponseEntity<ProductDTO> findBySkuAnotherApp(@PathVariable(value = "sku" )String sku) {
+        final var product = service.findBySkuAnotherApp(sku)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
         return ResponseEntity.ok().body(product);
@@ -66,14 +81,23 @@ public class ProductController {
         return ResponseEntity.ok().body(product);
     }
 
-    @Operation(summary = "Search for a rating of a product")
-    @GetMapping(value = "/{productId}/rating")
-    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productId") final String sku) {
-
-        final var product = service.findBySku(sku)
+    @Operation(summary = "Search for a product by his name")
+    @GetMapping(value = "/oaname/{productName}")
+    public ResponseEntity<ProductDTO> findByNameAnotherApp(@PathVariable(value =  "productName" )String productName) {
+        final var product = service.findByNameAnotherApp(productName)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
-        AggregatedRating aggregatedRating = service.getProductRating(sku);
+        return ResponseEntity.ok().body(product);
+    }
+
+    @Operation(summary = "Search for a rating of a product")
+    @GetMapping(value = "/{productSku}/rating")
+    public ResponseEntity<AggregatedRating> getProductRating(@PathVariable("productSku") final String productSku) {
+
+        final var product = service.findBySku(productSku)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
+
+        AggregatedRating aggregatedRating = service.getProductRating(productSku);
 
         return ResponseEntity.ok().body(aggregatedRating);
     }

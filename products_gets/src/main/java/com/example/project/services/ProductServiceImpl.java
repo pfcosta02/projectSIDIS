@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         try {
-            String url = "http://localhost:8091/api/products";
+            String url = "http://localhost:8091/api/products/all";
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -73,6 +73,17 @@ public class ProductServiceImpl implements ProductService {
         return allProductsDto;
     }
 
+    @Override
+    public List<ProductDTO> findAllAnotherApp() {
+        List<Product> allProducts = repository.findAllProducts();
+        List<ProductDTO> allProductsDto = new ArrayList<>();
+
+        for(int i=0; i < allProducts.size(); i++) {
+            ProductDTO product = new ProductDTO(allProducts.get(i).getName(), allProducts.get(i).getSku(), allProducts.get(i).getDescription(), allProducts.get(i).getSetOfImages());
+            allProductsDto.add(product);
+        }
+        return allProductsDto;
+    }
 
     @Override
     public Optional<ProductDTO> findBySku(final String sku) {
@@ -80,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
 
         if (optionalProduct.isEmpty()){
             try {
-                String url = "http://localhost:8091/api/products/sku/" + sku;
+                String url = "http://localhost:8091/api/products/oasku/" + sku;
 
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
@@ -108,7 +119,22 @@ public class ProductServiceImpl implements ProductService {
 
         Product p = optionalProduct.get();
 
-        ProductDTO dto = new ProductDTO(p.getSku(), p.getName(), p.getDescription(), p.getSetOfImages());
+        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
+
+        return Optional.of(dto);
+    }
+
+    @Override
+    public Optional<ProductDTO> findBySkuAnotherApp(final String sku) {
+        final var optionalProduct = repository.findBySku(sku);
+
+        if (optionalProduct.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
+        }
+
+        Product p = optionalProduct.get();
+
+        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
 
         return Optional.of(dto);
     }
@@ -119,7 +145,7 @@ public class ProductServiceImpl implements ProductService {
 
         if (optionalProduct.isEmpty()){
             try {
-                String url = "http://localhost:8091/api/products/name/" + name;
+                String url = "http://localhost:8091/api/products/oaname/" + name;
 
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
@@ -143,6 +169,21 @@ public class ProductServiceImpl implements ProductService {
                 e.printStackTrace();
             }
 
+        }
+
+        Product p = optionalProduct.get();
+
+        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
+
+        return Optional.of(dto);
+    }
+
+    @Override
+    public Optional<ProductDTO> findByNameAnotherApp(final String name) {
+        final var optionalProduct = repository.findByName(name);
+
+        if (optionalProduct.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
         Product p = optionalProduct.get();
