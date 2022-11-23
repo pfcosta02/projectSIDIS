@@ -19,6 +19,7 @@ public interface ReviewService {
 
     List<ReviewDTO> findAllPending(WebRequest request2);
     List<ReviewDTO> findAllPendingAll();
+
     List<ReviewDTO> findMyReviews(Long id, WebRequest request);
     List<ReviewDTO> findMyReviewsAll(Long id, WebRequest request);
 

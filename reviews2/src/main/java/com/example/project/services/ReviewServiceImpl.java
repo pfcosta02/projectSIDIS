@@ -123,14 +123,6 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<ReviewDTO> findApprovedReviewsByDate(final String productSku) {
-        List<Review> allReviews = repository.findApprovedReviewsByDate(productSku);
-        List<ReviewDTO> allReviewsDto = new ArrayList<>();
-
-        for(int i=0; i < allReviews.size(); i++) {
-            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(), allReviews.get(i).getUuid(), allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
-            allReviewsDto.add(product);
-        }
-
         try {
             String url = "http://localhost:8090/api/products/sku/" + productSku;
 
@@ -149,6 +141,14 @@ public class ReviewServiceImpl implements ReviewService {
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+        }
+
+        List<Review> allReviews = repository.findApprovedReviewsByDate(productSku);
+        List<ReviewDTO> allReviewsDto = new ArrayList<>();
+
+        for(int i=0; i < allReviews.size(); i++) {
+            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(), allReviews.get(i).getUuid(), allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
+            allReviewsDto.add(product);
         }
 
         try {
@@ -181,14 +181,6 @@ public class ReviewServiceImpl implements ReviewService {
     }
     @Override
     public List<ReviewDTO> findApprovedReviewsByDateAll(final String productSku) {
-        List<Review> allReviews = repository.findApprovedReviewsByDate(productSku);
-        List<ReviewDTO> allReviewsDto = new ArrayList<>();
-
-        for(int i=0; i < allReviews.size(); i++) {
-            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(),allReviews.get(i).getUuid(),allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
-            allReviewsDto.add(product);
-        }
-
         try {
             String url = "http://localhost:8090/api/products/sku/" + productSku;
 
@@ -207,6 +199,14 @@ public class ReviewServiceImpl implements ReviewService {
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+        }
+
+        List<Review> allReviews = repository.findApprovedReviewsByDate(productSku);
+        List<ReviewDTO> allReviewsDto = new ArrayList<>();
+
+        for(int i=0; i < allReviews.size(); i++) {
+            ReviewDTO product = new ReviewDTO(allReviews.get(i).getReviewId(),allReviews.get(i).getUuid(),allReviews.get(i).getRating(),allReviews.get(i).getUpVote(),allReviews.get(i).getDownVote(),allReviews.get(i).getDataTime(),allReviews.get(i).getStatus(),allReviews.get(i).getProductSku(),allReviews.get(i).getCustomerId(),allReviews.get(i).getFunnyFact());
+            allReviewsDto.add(product);
         }
 
         return allReviewsDto;
