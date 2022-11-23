@@ -49,76 +49,6 @@ public class    ReviewController {
     @Autowired
     private JwtDecoder jwtDecoder;
 
-
-    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
-    @GetMapping(value = "/product/{productSku}/date/votes")
-    public List<ReviewDTO> getApprovedReviews(@PathVariable("productSku") final String productSku) {
-
-        return service.findApprovedReviews(productSku);
-    }
-
-    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
-    @GetMapping(value = "/product/{productSku}/date/votes/anotherApp")
-    public List<ReviewDTO> getApprovedReviewsAnotherApp(@PathVariable("productSku") final String productSku) {
-
-        return service.findApprovedReviewsAll(productSku);
-    }
-
-
-    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
-    @GetMapping(value = "/product/{productSku}/date")
-    public List<ReviewDTO> findApprovedReviewsByDate(@PathVariable("productSku") final String productSku) {
-
-        return service.findApprovedReviewsByDate(productSku);
-    }
-
-    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
-    @GetMapping(value = "/product/{productSku}/date/anotherApp")
-    public List<ReviewDTO> findApprovedReviewsByDateAnotherApp(@PathVariable("productSku") final String productSku) {
-
-        return service.findApprovedReviewsByDateAll(productSku);
-    }
-
-
-    @Operation(summary = "Gets Pending Review")
-    @GetMapping(value = "/pending")
-    @RolesAllowed(Role.MODERATOR)
-    public List<ReviewDTO> getPendingReviews(final WebRequest request) {
-        return service.findAllPending(request);
-    }
-
-    @Operation(summary = "Gets Pending Review")
-    @GetMapping(value = "/pending/anotherApp")
-    @RolesAllowed(Role.MODERATOR)
-    public List<ReviewDTO> getPendingReviewsAnotherApp() {
-        return service.findAllPendingAll();
-    }
-
-    @Operation(summary = "Gets Reviews of a client")
-    @GetMapping(value = "/customer/{id}")
-    @RolesAllowed(Role.CUSTOMER)
-    public List<ReviewDTO> findMyReviews(@PathVariable("id") final Long customerId,final WebRequest request) {
-
-        return service.findMyReviews(customerId,request);
-    }
-
-    @Operation(summary = "Gets Reviews of a client")
-    @GetMapping(value = "/customer/{id}/anotherApp")
-    @RolesAllowed(Role.CUSTOMER)
-    public List<ReviewDTO> findMyReviewsAnotherApp(@PathVariable("id") final Long customerId,final WebRequest request) {
-
-        return service.findMyReviewsAll(customerId,request);
-    }
-
-    @Operation(summary = "Find a review by their ID")
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Review> findById(@PathVariable("id") final Long reviewId) {
-        final var review = service.findOne(reviewId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
-
-        return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
-    }
-
     @Operation(summary = "Creates a Review")
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
@@ -168,39 +98,4 @@ public class    ReviewController {
         service.deleteById(reviewId, Long.parseLong(ifMatchValue));
         return ResponseEntity.noContent().build();
     }
-
-    @Operation(summary = "UpVotes")
-    @GetMapping(value = "/votes/{reviewId}")
-    public ResponseEntity<Review> getVotes(@PathVariable("reviewId") final Long reviewId) {
-
-        final var review = service.findOne(reviewId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
-        try{
-            String url = "http://localhost:8083/api/votes/" + reviewId;
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() != 200) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review has no votes");
-            }
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            List<VoteDTO> votes = mapper.readValue(response.body(), new TypeReference<List<VoteDTO>>() {});
-
-            service.getVotes(review, votes);
-
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-
-        return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
-    }
-
 }
