@@ -15,7 +15,6 @@ public interface VoteService {
     Vote create(Vote resource);
     Vote create(Long id, Vote resource);
 
-    List<VoteDTO> findVotesReview(Long reviewId);
     // void deleteById(Long id, long parseLong);
 
 }

@@ -32,16 +32,4 @@ public class VoteServiceImpl implements VoteService {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<VoteDTO> findVotesReview(Long reviewId) {
-        List<Vote> allVotes = repository.findVotesReview(reviewId);
-        List<VoteDTO> allVotesDto = new ArrayList<>();
-
-        for(int i=0; i < allVotes.size(); i++) {
-            VoteDTO vote = new VoteDTO(allVotes.get(i).getVote(), allVotes.get(i).getReviewId(), allVotes.get(i).getCustomerId());
-            allVotesDto.add(vote);
-        }
-
-        return allVotesDto;
-    }
 }

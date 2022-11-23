@@ -39,12 +39,10 @@ public class VoteController {
     @Autowired
     private JwtDecoder jwtDecoder;
 
-    @Operation(summary = "Make a vote in a review")
-    @RolesAllowed(Role.CUSTOMER)
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource,final WebRequest request2) throws IOException, InterruptedException {
-        String url = "http://localhost:8093/api/reviews/" + resource.getReviewId();
+    @Operation(summary = "Shows catalog of reviews")
+    @GetMapping(value = "/{reviewId}")
+    public List<VoteDTO> findVotesReview(@PathVariable("reviewId") final Long reviewId) throws IOException, InterruptedException {
+        String url = "http://localhost:8093/api/reviews/" + reviewId;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -54,22 +52,17 @@ public class VoteController {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-
         if (response.statusCode() != 200) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
         }
 
-        final String auth = request2.getHeader("Authorization");
+        return service.findVotesReview(reviewId);
+    }
 
-        String newToken = auth.replace("Bearer ", "");
-        Jwt decodedToken = this.jwtDecoder.decode(newToken);
-        String subject = (String) decodedToken.getClaims().get("sub");
-        Long userId = Long.valueOf(subject.split(",")[0]);
-
-        resource.setCustomerId(userId);
-
-        final var vote = service.create(resource);
-        return ResponseEntity.ok().eTag(Long.toString(vote.getVersion())).body(vote);
+    @Operation(summary = "Shows catalog of reviews")
+    @GetMapping(value = "/{reviewId}/anotherapp")
+    public List<VoteDTO> findVotesReviewAnotherApp(@PathVariable("reviewId") final Long reviewId) {
+        return service.findVotesReviewAnotherApp(reviewId);
     }
 
 }

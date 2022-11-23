@@ -39,36 +39,4 @@ public class VoteServiceImpl implements VoteService {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<VoteDTO> findVotesReview(Long reviewId) throws IOException, InterruptedException {
-        List<Vote> allVotes = repository.findVotesReview(reviewId);
-        List<VoteDTO> allVotesDto = new ArrayList<>();
-
-        for(int i=0; i < allVotes.size(); i++) {
-            VoteDTO vote = new VoteDTO(allVotes.get(i).getVote(), allVotes.get(i).getReviewId(), allVotes.get(i).getCustomerId());
-            allVotesDto.add(vote);
-        }
-
-        String url = "http://localhost:8085/api/votes/" + reviewId;
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        if(response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        List<VoteDTO> votes = mapper.readValue(response.body(), new TypeReference<List<VoteDTO>>() {});
-
-        for(int i=0; i < votes.size(); i++) {
-            allVotesDto.add(votes.get(i));
-        }
-        return allVotesDto;
-    }
 }

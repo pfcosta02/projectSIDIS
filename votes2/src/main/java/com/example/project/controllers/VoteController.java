@@ -39,32 +39,12 @@ public class VoteController {
     @Autowired
     private JwtDecoder jwtDecoder;
 
-    @Operation(summary = "Shows catalog of reviews")
-    @GetMapping(value = "/{reviewId}")
-    public List<VoteDTO> findVotesReview(@PathVariable("reviewId") final Long reviewId) throws IOException, InterruptedException {
-        String url = "http://localhost:8082/api/reviews/" + reviewId;
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
-        }
-
-        return service.findVotesReview(reviewId);
-    }
-
     @Operation(summary = "Make a vote in a review")
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource,final WebRequest request2) throws IOException, InterruptedException {
-        String url = "http://localhost:8082/api/reviews/" + resource.getReviewId();
+        String url = "http://localhost:8093/api/reviews/" + resource.getReviewId();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

@@ -126,7 +126,7 @@ public class    ReviewController {
         final var review = service.findOne(reviewId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
         try{
-            String url = "http://localhost:8083/api/votes/" + reviewId;
+            String url = "http://localhost:8095/api/votes/" + reviewId;
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
