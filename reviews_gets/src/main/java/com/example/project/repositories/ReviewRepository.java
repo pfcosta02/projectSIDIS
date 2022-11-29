@@ -1,6 +1,7 @@
 package com.example.project.repositories;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.example.project.views.ReviewView;
 import org.springframework.data.jpa.repository.Modifying;
@@ -37,4 +38,7 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     @Query("SELECT f FROM Review f WHERE f.customerId = ?1")
     List<Review> findMyReviews(Long customerId);
+
+    @Query("SELECT f FROM Review f WHERE f.uuid = ?1")
+    Optional<Review> findByUUID(UUID uuid);
 }

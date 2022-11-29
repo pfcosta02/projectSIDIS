@@ -7,6 +7,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.example.project.exceptions.MyResourceNotFoundException;
 import com.example.project.model.ReviewDTO;
@@ -271,6 +272,60 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Optional<Review> findOne(final Long reviewId) {
         return repository.findById(reviewId);
+    }
+
+    @Override
+    public Optional<ReviewDTO> findByUUID(final UUID uuid) {
+        final var optionalReview = repository.findByUUID(uuid);
+
+        if (optionalReview.isEmpty()) {
+            try {
+                String url = "http://localhost:8094/api/reviews/" + uuid + "/anotherApp";
+
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .build();
+
+                HttpResponse<String> response = client.send(request,
+                        HttpResponse.BodyHandlers.ofString());
+
+                if(response.statusCode() != 200) {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
+                }
+
+                ObjectMapper mapper = new ObjectMapper();
+
+                ReviewDTO dto = mapper.readValue(response.body(), ReviewDTO.class);
+
+                return Optional.of(dto);
+
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Review p = optionalReview.get();
+
+        ReviewDTO dto = new ReviewDTO(p.getReviewId(), p.getUuid(), p.getRating(), p.getUpVote(), p.getDownVote(), p.getDataTime(), p.getStatus(), p.getProductSku(), p.getCustomerId(), p.getFunnyFact());
+
+        return Optional.of(dto);
+    }
+
+
+    @Override
+    public Optional<ReviewDTO> findByUUIDAll(final UUID uuid) {
+        final var optionalReview = repository.findByUUID(uuid);
+
+        if (optionalReview.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
+        }
+
+        Review p = optionalReview.get();
+
+        ReviewDTO dto = new ReviewDTO(p.getReviewId(), p.getUuid(), p.getRating(), p.getUpVote(), p.getDownVote(), p.getDataTime(), p.getStatus(), p.getProductSku(), p.getCustomerId(), p.getFunnyFact());
+
+        return Optional.of(dto);
     }
 
     @Override

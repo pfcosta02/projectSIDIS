@@ -24,4 +24,5 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     Optional<Product> findBySku(String sku);
 
 
+
 }

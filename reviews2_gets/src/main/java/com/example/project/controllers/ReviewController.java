@@ -34,6 +34,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Reviews", description = "Endpoints for managing reviews")
 @RestController
@@ -117,6 +118,26 @@ public class    ReviewController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
 
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
+    }
+
+
+    @Operation(summary = "Find a review by their UUID")
+    @GetMapping(value = "/{uuid}")
+    public ResponseEntity<ReviewDTO> findByUUID(@PathVariable("uuid") final UUID uuid) {
+        final var review = service.findByUUID(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
+
+        return ResponseEntity.ok().body(review);
+    }
+
+
+    @Operation(summary = "Find a review by their UUID")
+    @GetMapping(value = "/{uuid}/anotherApp")
+    public ResponseEntity<ReviewDTO> findByUUIDAnotherApp(@PathVariable("uuid") final UUID uuid) {
+        final var review = service.findByUUIDAll(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
+
+        return ResponseEntity.ok().body(review);
     }
 
     @Operation(summary = "UpVotes")
