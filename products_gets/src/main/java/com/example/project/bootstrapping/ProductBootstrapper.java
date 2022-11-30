@@ -27,7 +27,6 @@ public class ProductBootstrapper implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepo;
 
-    @Override
     public void run(String... args) throws Exception {
         if (productRepo.findByName("Martelo").isEmpty()) {
             Product f1 = new Product("Martelo");

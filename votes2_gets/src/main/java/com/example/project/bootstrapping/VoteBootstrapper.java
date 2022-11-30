@@ -37,7 +37,7 @@ public class VoteBootstrapper implements CommandLineRunner {
         if (voteRepo.findById(2L).isEmpty()) {
             Vote f1 = new Vote();
             f1.setCustomerId(3L);
-            f1.setVote("UpVote");
+            f1.setVote("DownVote");
             f1.setReviewId(1L);
             voteRepo.save(f1);
         }

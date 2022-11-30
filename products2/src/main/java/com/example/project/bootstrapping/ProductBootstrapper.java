@@ -27,13 +27,19 @@ public class ProductBootstrapper implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepo;
 
-    @Override
     public void run(String... args) throws Exception {
-        if (productRepo.findByName("Access_Point").isEmpty()) {
-            Product f1 = new Product("Access_Point");
-            f1.setDescription("dispositivo de rede que permite levar o sinal de Internet a áreas em que a cobertura original proporcionada por um roteador é limitada");
-            f1.setSku("987456123A");
+        if (productRepo.findByName("Martelo").isEmpty()) {
+            Product f1 = new Product("Martelo");
+            f1.setDescription("Aço carbono");
+            f1.setSku("123456789A");
             productRepo.save(f1);
+        }
+
+        if (productRepo.findByName("Maçarico").isEmpty()) {
+            Product f2 = new Product("Maçarico");
+            f2.setDescription("O melhor fogo que irá ver");
+            f2.setSku("9876543210");
+            productRepo.save(f2);
         }
     }
 

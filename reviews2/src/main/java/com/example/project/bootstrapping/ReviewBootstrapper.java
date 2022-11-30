@@ -30,14 +30,14 @@ public class ReviewBootstrapper implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (reviewRepo.findById(1L).isEmpty()) {
             Review f1 = new Review(1L);
-            f1.setText("Muito Bom");
-            f1.setRating(5);
+            f1.setText("Bom");
+            f1.setRating(4);
             f1.setUpVote(0);
             f1.setDownVote(0);
             f1.setDataTime("06-11-2022 23:30:00");
             f1.setFunnyFact();
             f1.setStatus("Pending");
-            f1.setProductSku("987456123A");
+            f1.setProductSku("123456789A");
             f1.setCustomerId(3L);
             reviewRepo.save(f1);
         }
