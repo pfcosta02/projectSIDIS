@@ -8,6 +8,5 @@ import java.util.List;
 public interface VoteService {
 
     List<VoteDTO> findVotesReview(Long reviewId);
-    List<VoteDTO> findVotesReviewAnotherApp(Long reviewId);
 
 }

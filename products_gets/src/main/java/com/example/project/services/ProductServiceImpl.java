@@ -6,23 +6,19 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.example.project.model.AggregatedRating;
 import com.example.project.model.ProductDTO;
 import com.example.project.model.ReviewDTO;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.project.model.Product;
@@ -44,88 +40,11 @@ public class ProductServiceImpl implements ProductService {
             allProductsDto.add(product);
         }
 
-        try {
-            String url = "http://localhost:8091/api/products/all";
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-            if(response.statusCode() != 200) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-            }
-
-            ObjectMapper mapper = new ObjectMapper();
-            List<ProductDTO> products = mapper.readValue(response.body(), new TypeReference<List<ProductDTO>>() {});
-
-            for(int i=0; i < products.size(); i++) {
-                allProductsDto.add(products.get(i));
-            }
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return allProductsDto;
-    }
-
-    @Override
-    public List<ProductDTO> findAllAnotherApp() {
-        List<Product> allProducts = repository.findAllProducts();
-        List<ProductDTO> allProductsDto = new ArrayList<>();
-
-        for(int i=0; i < allProducts.size(); i++) {
-            ProductDTO product = new ProductDTO(allProducts.get(i).getName(), allProducts.get(i).getSku(), allProducts.get(i).getDescription(), allProducts.get(i).getSetOfImages());
-            allProductsDto.add(product);
-        }
         return allProductsDto;
     }
 
     @Override
     public Optional<ProductDTO> findBySku(final String sku) {
-        final var optionalProduct = repository.findBySku(sku);
-
-        if (optionalProduct.isEmpty()){
-            try {
-                String url = "http://localhost:8091/api/products/oasku/" + sku;
-
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(url))
-                        .build();
-
-                HttpResponse<String> response = client.send(request,
-                        HttpResponse.BodyHandlers.ofString());
-
-                if(response.statusCode() != 200) {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-                }
-
-                ObjectMapper mapper = new ObjectMapper();
-
-                ProductDTO dto = mapper.readValue(response.body(), ProductDTO.class);
-
-                return Optional.of(dto);
-
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        Product p = optionalProduct.get();
-
-        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
-
-        return Optional.of(dto);
-    }
-
-    @Override
-    public Optional<ProductDTO> findBySkuAnotherApp(final String sku) {
         final var optionalProduct = repository.findBySku(sku);
 
         if (optionalProduct.isEmpty()){
@@ -141,45 +60,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public  Optional<ProductDTO> findByName(final String name) {
-        final var optionalProduct = repository.findByName(name);
-
-        if (optionalProduct.isEmpty()){
-            try {
-                String url = "http://localhost:8091/api/products/oaname/" + name;
-
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(url))
-                        .build();
-
-                HttpResponse<String> response = client.send(request,
-                        HttpResponse.BodyHandlers.ofString());
-
-                if(response.statusCode() != 200) {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-                }
-
-                ObjectMapper mapper = new ObjectMapper();
-
-                ProductDTO dto = mapper.readValue(response.body(), ProductDTO.class);
-
-                return Optional.of(dto);
-
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        Product p = optionalProduct.get();
-
-        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
-
-        return Optional.of(dto);
-    }
-
-    @Override
-    public Optional<ProductDTO> findByNameAnotherApp(final String name) {
         final var optionalProduct = repository.findByName(name);
 
         if (optionalProduct.isEmpty()){

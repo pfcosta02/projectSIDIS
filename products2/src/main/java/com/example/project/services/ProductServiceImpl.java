@@ -31,21 +31,14 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository repository;
 
     @Override
-    public Product create(final Product product) throws IOException, InterruptedException {
+    public Product create(final Product product) {
         // construct a new object based on data received by the service to ensure domain
         // invariants are met
-        String url = "http://localhost:8091/api/products/sku/" + product.getSku();
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
+        final var optionalProduct = repository.findBySku(product.getSku());
 
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() == 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product already exists");
+        if(optionalProduct.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Product already exists");
         }
 
         final Product obj = Product.newFrom(product);

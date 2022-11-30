@@ -39,44 +39,6 @@ public class VoteServiceImpl implements VoteService {
             allVotesDto.add(vote);
         }
 
-        try {
-            String url = "http://localhost:8095/api/votes/" + reviewId + "/anotherapp";
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-            if(response.statusCode() != 200) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-            }
-
-            ObjectMapper mapper = new ObjectMapper();
-            List<VoteDTO> votes = mapper.readValue(response.body(), new TypeReference<List<VoteDTO>>() {});
-
-            for(int i=0; i < votes.size(); i++) {
-                allVotesDto.add(votes.get(i));
-            }
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return allVotesDto;
-    }
-
-    public List<VoteDTO> findVotesReviewAnotherApp(Long reviewId) {
-        List<Vote> allVotes = repository.findVotesReview(reviewId);
-        List<VoteDTO> allVotesDto = new ArrayList<>();
-
-        for(int i=0; i < allVotes.size(); i++) {
-            VoteDTO vote = new VoteDTO(allVotes.get(i).getVote(), allVotes.get(i).getReviewId(), allVotes.get(i).getCustomerId());
-            allVotesDto.add(vote);
-        }
-
         return allVotesDto;
     }
 }

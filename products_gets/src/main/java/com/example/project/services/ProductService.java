@@ -9,15 +9,12 @@ import com.example.project.model.Product;
 import com.example.project.model.ProductDTO;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
+import org.springframework.http.ResponseEntity;
 
 public interface ProductService {
 
     List<ProductDTO> findAll();
-    List<ProductDTO> findAllAnotherApp();
     Optional<ProductDTO> findBySku(String sku);
-    Optional<ProductDTO> findBySkuAnotherApp(String sku);
     Optional<ProductDTO> findByName(String name);
-    Optional<ProductDTO> findByNameAnotherApp(String name);
     AggregatedRating getProductRating(String sku);
-
 }

@@ -59,10 +59,4 @@ public class VoteController {
         return service.findVotesReview(reviewId);
     }
 
-    @Operation(summary = "Shows catalog of reviews")
-    @GetMapping(value = "/{reviewId}/anotherapp")
-    public List<VoteDTO> findVotesReviewAnotherApp(@PathVariable("reviewId") final Long reviewId) {
-        return service.findVotesReviewAnotherApp(reviewId);
-    }
-
 }

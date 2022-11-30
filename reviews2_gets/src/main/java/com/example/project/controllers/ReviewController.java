@@ -58,28 +58,12 @@ public class    ReviewController {
         return service.findApprovedReviews(productSku);
     }
 
-    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data and number of votes")
-    @GetMapping(value = "/product/{productSku}/date/votes/anotherApp")
-    public List<ReviewDTO> getApprovedReviewsAnotherApp(@PathVariable("productSku") final String productSku) {
-
-        return service.findApprovedReviewsAll(productSku);
-    }
-
-
     @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
     @GetMapping(value = "/product/{productSku}/date")
     public List<ReviewDTO> findApprovedReviewsByDate(@PathVariable("productSku") final String productSku) {
 
         return service.findApprovedReviewsByDate(productSku);
     }
-
-    @Operation(summary = "Gets Approved Reviews for a Product Sorted by data")
-    @GetMapping(value = "/product/{productSku}/date/anotherApp")
-    public List<ReviewDTO> findApprovedReviewsByDateAnotherApp(@PathVariable("productSku") final String productSku) {
-
-        return service.findApprovedReviewsByDateAll(productSku);
-    }
-
 
     @Operation(summary = "Gets Pending Review")
     @GetMapping(value = "/pending")
@@ -88,27 +72,12 @@ public class    ReviewController {
         return service.findAllPending(request);
     }
 
-    @Operation(summary = "Gets Pending Review")
-    @GetMapping(value = "/pending/anotherApp")
-    @RolesAllowed(Role.MODERATOR)
-    public List<ReviewDTO> getPendingReviewsAnotherApp() {
-        return service.findAllPendingAll();
-    }
-
     @Operation(summary = "Gets Reviews of a client")
     @GetMapping(value = "/customer/{id}")
     @RolesAllowed(Role.CUSTOMER)
     public List<ReviewDTO> findMyReviews(@PathVariable("id") final Long customerId,final WebRequest request) {
 
         return service.findMyReviews(customerId,request);
-    }
-
-    @Operation(summary = "Gets Reviews of a client")
-    @GetMapping(value = "/customer/{id}/anotherApp")
-    @RolesAllowed(Role.CUSTOMER)
-    public List<ReviewDTO> findMyReviewsAnotherApp(@PathVariable("id") final Long customerId,final WebRequest request) {
-
-        return service.findMyReviewsAll(customerId,request);
     }
 
     @Operation(summary = "Find a review by their ID")
@@ -120,21 +89,10 @@ public class    ReviewController {
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
 
-
     @Operation(summary = "Find a review by their UUID")
     @GetMapping(value = "/{uuid}")
     public ResponseEntity<ReviewDTO> findByUUID(@PathVariable("uuid") final UUID uuid) {
         final var review = service.findByUUID(uuid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
-
-        return ResponseEntity.ok().body(review);
-    }
-
-
-    @Operation(summary = "Find a review by their UUID")
-    @GetMapping(value = "/{uuid}/anotherApp")
-    public ResponseEntity<ReviewDTO> findByUUIDAnotherApp(@PathVariable("uuid") final UUID uuid) {
-        final var review = service.findByUUIDAll(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
 
         return ResponseEntity.ok().body(review);

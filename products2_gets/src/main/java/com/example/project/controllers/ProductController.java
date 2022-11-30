@@ -48,11 +48,6 @@ public class ProductController {
         return service.findAll();
     }
 
-    @Operation(summary = "Shows catalog of products")
-    @GetMapping(value = "/all")
-    public List<ProductDTO> findAllAnotherApp() {
-        return service.findAllAnotherApp();
-    }
 
     @Operation(summary = "Search for a product by his sku")
     @GetMapping(value = "/sku/{sku}")
@@ -63,28 +58,10 @@ public class ProductController {
         return ResponseEntity.ok().body(product);
     }
 
-    @Operation(summary = "Search for a product by his sku")
-    @GetMapping(value = "/oasku/{sku}")
-    public ResponseEntity<ProductDTO> findBySkuAnotherApp(@PathVariable(value = "sku" )String sku) {
-        final var product = service.findBySkuAnotherApp(sku)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
-
-        return ResponseEntity.ok().body(product);
-    }
-
     @Operation(summary = "Search for a product by his name")
     @GetMapping(value = "/name/{productName}")
     public ResponseEntity<ProductDTO> findByName(@PathVariable(value =  "productName" )String productName) {
         final var product = service.findByName(productName)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
-
-        return ResponseEntity.ok().body(product);
-    }
-
-    @Operation(summary = "Search for a product by his name")
-    @GetMapping(value = "/oaname/{productName}")
-    public ResponseEntity<ProductDTO> findByNameAnotherApp(@PathVariable(value =  "productName" )String productName) {
-        final var product = service.findByNameAnotherApp(productName)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
 
         return ResponseEntity.ok().body(product);
