@@ -12,7 +12,7 @@ public class Receiver {
     @Autowired
     private ProductService service;
 
-    @RabbitListener(queues = "products_One")
+    @RabbitListener(queues = "products_Two")
     public void consumeMessage(Product product) {
         final var product2 = service.create(product);
         System.out.println("Message returned:" + product);

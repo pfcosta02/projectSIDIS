@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,12 +43,18 @@ public class ProductController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    public String exchange = "products_two_sidis";
+
     @Operation(summary = "Create a product")
     @RolesAllowed(Role.ADMIN)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody final Product productId) throws IOException, InterruptedException {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody final Product productId){
         final var product = service.create(productId);
+        amqpTemplate.convertAndSend(exchange,"", product);
         return ResponseEntity.ok().eTag(Long.toString(product.getVersion())).body(product);
     }
 

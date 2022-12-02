@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
-    String productsQueue = "products_Two";
+    String productsQueue = "products_One";
 
     String productsGetOneQueue = "products_Get_One";
 
     String productsGetTwoQueue = "products_Get_Two";
 
-    String exchange = "products_one_sidis";
+    String exchange = "products_two_sidis";
 
     @Bean
     Queue productQueue() {
@@ -61,7 +61,10 @@ public class Config {
     @Bean
     public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setDefaultReceiveQueue("products_Two");
         rabbitTemplate.setMessageConverter(messageConverter());
+        rabbitTemplate.setReplyAddress("products_Two");
+        rabbitTemplate.setUseDirectReplyToContainer(false);
         return rabbitTemplate;
     }
 

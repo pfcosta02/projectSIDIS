@@ -13,6 +13,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface ProductService {
 
-    Product create(Product product) throws IOException, InterruptedException;
+    Product create(Product product);
     void addImage(String filename, String sku);
 }
