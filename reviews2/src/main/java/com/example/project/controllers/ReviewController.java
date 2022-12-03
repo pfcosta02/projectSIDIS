@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,11 @@ public class    ReviewController {
     @Autowired
     private JwtDecoder jwtDecoder;
 
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    public String exchange = "reviews_two_sidis";
+
     @Operation(summary = "Creates a Review")
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
@@ -65,7 +71,7 @@ public class    ReviewController {
         resource.setCustomerId(userId);
 
         final var review = service.create(resource);
-
+        amqpTemplate.convertAndSend(exchange,"", review);
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
 
