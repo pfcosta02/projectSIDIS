@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6ac35f37-4486-4179-95e1-0575c76d7cd0",
+		"_postman_id": "c3561fd0-219e-49d3-ab95-83b09c59886c",
 		"name": "LETI-SIDIS-Project1 TESTES",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19169546"
+		"_exporter_id": "17817487"
 	},
 	"item": [
 		{
@@ -70,20 +70,29 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('sku', _.random (100000000,999999999));"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{products}}{{baseUrl}}/products/sku/AB12345678",
+							"raw": "{{products_get}}{{baseUrl}}/products/sku/{{sku}}",
 							"host": [
-								"{{products}}{{baseUrl}}"
+								"{{products_get}}{{baseUrl}}"
 							],
 							"path": [
 								"products",
 								"sku",
-								"AB12345678"
+								"{{sku}}"
 							]
 						}
 					},
@@ -111,7 +120,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Samsung S22 Ultra\",\r\n    \"description\": \"Smartphone Samsung S22 Ultra 524GB\",\r\n    \"sku\": \"AB12345678\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Samsung S22 Ultra\",\r\n    \"description\": \"Smartphone Samsung S22 Ultra 524GB\",\r\n    \"sku\": \"{{sku}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -119,9 +128,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{products}}{{baseUrl}}/products",
+							"raw": "{{product_cmd}}{{baseUrl}}/products",
 							"host": [
-								"{{products}}{{baseUrl}}"
+								"{{product_cmd}}{{baseUrl}}"
 							],
 							"path": [
 								"products"
@@ -151,14 +160,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{products}}{{baseUrl}}/products/sku/AB12345678",
+							"raw": "{{products_get}}{{baseUrl}}/products/sku/{{sku}}",
 							"host": [
-								"{{products}}{{baseUrl}}"
+								"{{products_get}}{{baseUrl}}"
 							],
 							"path": [
 								"products",
 								"sku",
-								"AB12345678"
+								"{{sku}}"
 							]
 						}
 					},
@@ -185,14 +194,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{products2}}{{baseUrl}}/products/sku/AB12345678",
+							"raw": "{{products2_get}}{{baseUrl}}/products/sku/{{sku}}",
 							"host": [
-								"{{products2}}{{baseUrl}}"
+								"{{products2_get}}{{baseUrl}}"
 							],
 							"path": [
 								"products",
 								"sku",
-								"AB12345678"
+								"{{sku}}"
 							]
 						}
 					},
@@ -297,19 +306,29 @@
 										],
 										"type": "text/javascript"
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var uuid = require('uuid');\r",
+											"postman.setEnvironmentVariable('uuid', uuid.v4());"
+										],
+										"type": "text/javascript"
+									}
 								}
 							],
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/2",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"2"
+										"{{uuid}}"
 									]
 								}
 							},
@@ -338,7 +357,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"123456789A\"\r\n}",
+									"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"123456789A\",\r\n    \"uuid\": \"{{uuid}}\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -346,9 +365,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews",
+									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_cmd}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews"
@@ -379,13 +398,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/2",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"2"
+										"{{uuid}}"
 									]
 								}
 							},
@@ -419,13 +438,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/2",
+									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/{{uuid}}",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_cmd}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"2"
+										"{{uuid}}"
 									]
 								}
 							},
@@ -453,13 +472,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/2",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"2"
+										"{{uuid}}"
 									]
 								}
 							},
@@ -567,9 +586,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/pending",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/pending",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
@@ -616,9 +635,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/1",
+									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/1",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_cmd}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
@@ -650,9 +669,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/pending",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/pending",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
@@ -766,9 +785,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{reviews}}{{baseUrl}}/reviews/1",
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/1",
 							"host": [
-								"{{reviews}}{{baseUrl}}"
+								"{{reviews_get}}{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
@@ -819,9 +838,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{votes}}{{baseUrl}}/votes",
+							"raw": "{{votes_cmd}}{{baseUrl}}/votes",
 							"host": [
-								"{{votes}}{{baseUrl}}"
+								"{{votes_cmd}}{{baseUrl}}"
 							],
 							"path": [
 								"votes"
@@ -852,9 +871,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{reviews}}{{baseUrl}}/reviews/votes/1",
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/votes/1",
 							"host": [
-								"{{reviews}}{{baseUrl}}"
+								"{{reviews_get}}{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
@@ -887,9 +906,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{reviews}}{{baseUrl}}/reviews/1",
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/1",
 							"host": [
-								"{{reviews}}{{baseUrl}}"
+								"{{reviews_get}}{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
@@ -900,6 +919,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "uuid",
+			"value": ""
 		}
 	]
 }
