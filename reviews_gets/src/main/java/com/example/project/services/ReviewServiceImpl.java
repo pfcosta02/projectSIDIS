@@ -117,7 +117,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public Optional<ReviewDTO> findByUUID(final UUID uuid) {
+    public Optional<Review> findByUUID(final UUID uuid) {
         final var optionalReview = repository.findByUUID(uuid);
 
         if (optionalReview.isEmpty()) {
@@ -126,9 +126,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review p = optionalReview.get();
 
-        ReviewDTO dto = new ReviewDTO(p.getReviewId(), p.getUuid(), p.getRating(), p.getUpVote(), p.getDownVote(), p.getDataTime(), p.getStatus(), p.getProductSku(), p.getCustomerId(), p.getFunnyFact());
-
-        return Optional.of(dto);
+        return optionalReview;
     }
 
     @Override

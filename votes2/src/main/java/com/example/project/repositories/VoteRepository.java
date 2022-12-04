@@ -11,7 +11,7 @@ import java.util.List;
 public interface VoteRepository extends CrudRepository<Vote, Long> {
 
     @Modifying
-    @Query("SELECT f FROM Vote f WHERE f.reviewId = ?1 ")
+    @Query("SELECT f FROM Vote f WHERE f.uuid = ?1 ")
     List<Vote> findVotesReview(Long reviewId);
 
 }

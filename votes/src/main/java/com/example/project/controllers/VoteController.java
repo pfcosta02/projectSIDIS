@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +40,17 @@ public class VoteController {
     @Autowired
     private JwtDecoder jwtDecoder;
 
+    @Autowired
+    private AmqpTemplate amqpTemplate;
+
+    public String exchange = "vote_one_sidis";
+
     @Operation(summary = "Make a vote in a review")
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource,final WebRequest request2) throws IOException, InterruptedException {
-        String url = "http://localhost:8093/api/reviews/" + resource.getReviewId();
+        String url = "http://localhost:8093/api/reviews/" + resource.getUuid();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -69,6 +75,7 @@ public class VoteController {
         resource.setCustomerId(userId);
 
         final var vote = service.create(resource);
+        amqpTemplate.convertAndSend(exchange, "", vote);
         return ResponseEntity.ok().eTag(Long.toString(vote.getVersion())).body(vote);
     }
 

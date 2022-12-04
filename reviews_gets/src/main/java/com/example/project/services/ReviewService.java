@@ -22,7 +22,7 @@ public interface ReviewService {
 
     Optional<Review> findOne(Long id);
 
-    Optional<ReviewDTO> findByUUID(UUID uuid);
+    Optional<Review> findByUUID(UUID uuid);
 
     void getVotes(Review review, List<VoteDTO> votes);
 }

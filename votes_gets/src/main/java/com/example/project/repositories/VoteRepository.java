@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface VoteRepository extends CrudRepository<Vote, Long> {
 
     @Modifying
-    @Query("SELECT f FROM Vote f WHERE f.reviewId = ?1 ")
-    List<Vote> findVotesReview(Long reviewId);
+    @Query("SELECT f FROM Vote f WHERE f.uuid = ?1 ")
+    List<Vote> findVotesReview(UUID reviewUuid);
 
 }

@@ -80,18 +80,9 @@ public class    ReviewController {
         return service.findMyReviews(customerId,request);
     }
 
-    @Operation(summary = "Find a review by their ID")
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Review> findById(@PathVariable("id") final Long reviewId) {
-        final var review = service.findOne(reviewId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
-
-        return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
-    }
-
     @Operation(summary = "Find a review by their UUID")
     @GetMapping(value = "/{uuid}")
-    public ResponseEntity<ReviewDTO> findByUUID(@PathVariable("uuid") final UUID uuid) {
+    public ResponseEntity<Review> findByUUID(@PathVariable("uuid") final UUID uuid) {
         final var review = service.findByUUID(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
 
@@ -99,13 +90,13 @@ public class    ReviewController {
     }
 
     @Operation(summary = "UpVotes")
-    @GetMapping(value = "/votes/{reviewId}")
-    public ResponseEntity<Review> getVotes(@PathVariable("reviewId") final Long reviewId) {
+    @GetMapping(value = "/votes/{reviewuuid}")
+    public ResponseEntity<Review> getVotes(@PathVariable("reviewUuid") final UUID reviewUuid) {
 
-        final var review = service.findOne(reviewId)
+        final var review = service.findByUUID(reviewUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
         try{
-            String url = "http://localhost:8095/api/votes/" + reviewId;
+            String url = "http://localhost:8095/api/votes/" + reviewUuid;
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()

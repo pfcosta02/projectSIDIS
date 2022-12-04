@@ -25,6 +25,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Votes", description = "Endpoints for managing votes")
 @RestController
@@ -40,9 +41,9 @@ public class VoteController {
     private JwtDecoder jwtDecoder;
 
     @Operation(summary = "Shows catalog of reviews")
-    @GetMapping(value = "/{reviewId}")
-    public List<VoteDTO> findVotesReview(@PathVariable("reviewId") final Long reviewId) throws IOException, InterruptedException {
-        String url = "http://localhost:8093/api/reviews/" + reviewId;
+    @GetMapping(value = "/{uuid}")
+    public List<VoteDTO> findVotesReview(@PathVariable("uuid") final UUID uuid) throws IOException, InterruptedException {
+        String url = "http://localhost:8093/api/reviews/" + uuid;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -56,7 +57,7 @@ public class VoteController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
         }
 
-        return service.findVotesReview(reviewId);
+        return service.findVotesReview(uuid);
     }
 
 }

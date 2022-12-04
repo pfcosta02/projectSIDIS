@@ -44,7 +44,7 @@ public class VoteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource,final WebRequest request2) throws IOException, InterruptedException {
-        String url = "http://localhost:8093/api/reviews/" + resource.getReviewId();
+        String url = "http://localhost:8093/api/reviews/" + resource.getUuid();
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

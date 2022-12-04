@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import java.io.IOException;
+import java.util.UUID;
 
 @Entity
 public class Vote {
@@ -18,8 +19,8 @@ public class Vote {
     @Column (name = "vote")
     private String vote;
 
-    @Column (name = "reviewId")
-    private Long reviewId;
+    @Column (name = "GUID")
+    private UUID uuid;
 
     @Column (name = "customerId")
     private Long customerId;
@@ -30,9 +31,9 @@ public class Vote {
     public Vote() {
     }
 
-    public Vote(String vote, Long reviewId, Long customerId) {
+    public Vote(String vote, UUID uuid, Long customerId) {
         this.vote = vote;
-        this.reviewId = reviewId;
+        this.uuid = uuid;
         this.customerId = customerId;
     }
 
@@ -46,8 +47,8 @@ public class Vote {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Vote");
             }
         }
-        if (resource.getReviewId() != null) {
-            obj.setReviewId(resource.reviewId);
+        if (resource.getUuid() != null) {
+            obj.setReviewId(resource.uuid);
         }
         if (resource.getCustomerId() != null) {
             obj.setCustomerId(resource.customerId);
@@ -73,12 +74,12 @@ public class Vote {
         this.vote = vote;
     }
 
-    public Long getReviewId() {
-        return reviewId;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setReviewId(Long reviewId) {
-        this.reviewId = reviewId;
+    public void setReviewId(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public Long getCustomerId() {

@@ -2,6 +2,7 @@ package com.example.project.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.example.project.model.Review;
 import com.example.project.model.ReviewDTO;
@@ -27,16 +28,16 @@ public interface ReviewService {
      * @return
      */
     Review create(Long id, Review resource);
-    void deleteById(Long id, long parseLong);
+    void deleteById(UUID uuid, long parseLong);
 
     /**
      * Partial updates an existing Foo.
      *
-     * @param id
+     * @param uuid
      * @param resource  "patch document"
      * @param parseLong
      * @return
      */
-    Review partialUpdate(Long id, Review resource, long parseLong);
+    Review partialUpdate(UUID uuid, Review resource, long parseLong);
 }
 

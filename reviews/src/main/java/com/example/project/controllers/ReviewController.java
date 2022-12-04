@@ -35,6 +35,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Reviews", description = "Endpoints for managing reviews")
 @RestController
@@ -77,9 +78,9 @@ public class    ReviewController {
 
     @Operation(summary = "Partially updates an existing review")
     @RolesAllowed(Role.MODERATOR)
-    @PatchMapping(value = "/{id}")
+    @PatchMapping(value = "/{uuid}")
     public ResponseEntity<Review> partialUpdate(final WebRequest request,
-                                             @PathVariable("id") @Parameter(description = "The id of the review to update") final Long id,
+                                             @PathVariable("uuid") @Parameter(description = "The uuid of the review to update") final UUID uuid,
                                              @Valid @RequestBody final Review resource) {
         final String ifMatchValue = request.getHeader("If-Match");
         if (ifMatchValue == null || ifMatchValue.isEmpty()) {
@@ -87,21 +88,21 @@ public class    ReviewController {
                     "You must issue a conditional PATCH using 'if-match'");
         }
 
-        final var review = service.partialUpdate(id, resource, Long.parseLong(ifMatchValue));
+        final var review = service.partialUpdate(uuid, resource, Long.parseLong(ifMatchValue));
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
 
 
     @Operation(summary = "Customer can delete one of his reviews - available only if reviews has no votes")
     @RolesAllowed(Role.CUSTOMER)
-    @DeleteMapping(value = "/{reviewId}")
-    public ResponseEntity<Review> deleteReview(final WebRequest request, @PathVariable("reviewId") final Long reviewId) {
+    @DeleteMapping(value = "/{uuid}")
+    public ResponseEntity<Review> deleteReview(final WebRequest request, @PathVariable("uuid") final UUID uuid) {
         final String ifMatchValue = request.getHeader("If-Match");
         if (ifMatchValue == null || ifMatchValue.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "You must issue a conditional DELETE using 'if-match'");
         }
-        service.deleteById(reviewId, Long.parseLong(ifMatchValue));
+        service.deleteById(uuid, Long.parseLong(ifMatchValue));
         return ResponseEntity.noContent().build();
     }
 

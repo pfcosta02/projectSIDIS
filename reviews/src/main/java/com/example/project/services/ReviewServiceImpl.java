@@ -7,6 +7,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.example.project.exceptions.MyResourceNotFoundException;
 import com.example.project.model.ReviewDTO;
@@ -64,10 +65,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review partialUpdate(final Long id, final Review resource, final long desiredVersion) {
+    public Review partialUpdate(final UUID uuid, final Review resource, final long desiredVersion) {
         // first let's check if the object exists so we don't create a new object with
         // save
-        final var review = repository.findById(id)
+        final var review = repository.findByUUID(uuid)
                 .orElseThrow(() -> new MyResourceNotFoundException("Cannot update an object that does not yet exist"));
 
         // since we got the object from the database we can check the version in memory
@@ -81,7 +82,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void deleteById(final Long id, final long desiredVersion) {
-        repository.deleteByIdIfMatch(id, desiredVersion);
+    public void deleteById(final UUID uuid, final long desiredVersion) {
+        repository.deleteByIdIfMatch(uuid, desiredVersion);
     }
 }

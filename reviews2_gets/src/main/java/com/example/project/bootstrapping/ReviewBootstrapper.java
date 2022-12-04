@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import com.example.project.model.Review;
 import com.example.project.repositories.ReviewRepository;
 
+import java.util.UUID;
+
 /**
  * Spring will load and execute all components that implement the interface
  * CommandLinerunner on startup, so we will use that as a way to bootstrap some
@@ -34,6 +36,8 @@ public class ReviewBootstrapper implements CommandLineRunner {
             f1.setRating(4);
             f1.setUpVote(0);
             f1.setDownVote(0);
+            UUID uuid=UUID.fromString("fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe");
+            f1.setUuid(uuid);
             f1.setDataTime("06-11-2022 23:30:00");
             f1.setFunnyFact();
             f1.setStatus("Pending");

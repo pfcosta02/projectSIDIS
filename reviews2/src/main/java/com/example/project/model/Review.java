@@ -118,6 +118,8 @@ public class Review implements Serializable {
         }
         if (resource.getUuid() == null) {
             obj.setUuid(UUID.randomUUID());
+        } else {
+            obj.setUuid(resource.uuid);
         }
         obj.setStatus("Pending");
         obj.setUpVote(0);

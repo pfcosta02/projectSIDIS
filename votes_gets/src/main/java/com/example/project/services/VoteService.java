@@ -4,9 +4,10 @@ import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface VoteService {
 
-    List<VoteDTO> findVotesReview(Long reviewId);
+    List<VoteDTO> findVotesReview(UUID reviewId);
 
 }

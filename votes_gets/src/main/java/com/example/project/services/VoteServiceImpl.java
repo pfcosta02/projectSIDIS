@@ -23,6 +23,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Service
 public class VoteServiceImpl implements VoteService {
 
@@ -30,12 +32,12 @@ public class VoteServiceImpl implements VoteService {
     private VoteRepository repository;
 
     @Override
-    public List<VoteDTO> findVotesReview(Long reviewId) {
+    public List<VoteDTO> findVotesReview(UUID reviewId) {
         List<Vote> allVotes = repository.findVotesReview(reviewId);
         List<VoteDTO> allVotesDto = new ArrayList<>();
 
         for(int i=0; i < allVotes.size(); i++) {
-            VoteDTO vote = new VoteDTO(allVotes.get(i).getVote(), allVotes.get(i).getReviewId(), allVotes.get(i).getCustomerId());
+            VoteDTO vote = new VoteDTO(allVotes.get(i).getVote(), allVotes.get(i).getUuid(), allVotes.get(i).getCustomerId());
             allVotesDto.add(vote);
         }
 

@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 /**
  * Spring will load and execute all components that implement the interface
  * CommandLinerunner on startup, so we will use that as a way to bootstrap some
@@ -31,14 +33,16 @@ public class VoteBootstrapper implements CommandLineRunner {
             Vote f1 = new Vote();
             f1.setCustomerId(3L);
             f1.setVote("UpVote");
-            f1.setReviewId(1L);
+            UUID uuid=UUID.fromString("fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe");
+            f1.setReviewId(uuid);
             voteRepo.save(f1);
         }
         if (voteRepo.findById(2L).isEmpty()) {
             Vote f1 = new Vote();
             f1.setCustomerId(3L);
             f1.setVote("DownVote");
-            f1.setReviewId(1L);
+            UUID uuid=UUID.fromString("fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe");
+            f1.setReviewId(uuid);
             voteRepo.save(f1);
         }
 
