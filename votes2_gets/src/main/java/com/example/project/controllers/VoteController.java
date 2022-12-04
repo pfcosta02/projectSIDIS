@@ -42,21 +42,7 @@ public class VoteController {
 
     @Operation(summary = "Shows catalog of reviews")
     @GetMapping(value = "/{uuid}")
-    public List<VoteDTO> findVotesReview(@PathVariable("uuid") final UUID uuid) throws IOException, InterruptedException {
-        String url = "http://localhost:8093/api/reviews/" + uuid;
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
-        }
-
+    public List<VoteDTO> findVotesReview(@PathVariable("uuid") final UUID uuid) {
         return service.findVotesReview(uuid);
     }
 

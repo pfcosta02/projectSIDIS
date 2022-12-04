@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface VoteService {
 
-    List<VoteDTO> findVotesReview(UUID reviewId);
+    List<VoteDTO> findVotesReview(UUID uuid);
 
 }

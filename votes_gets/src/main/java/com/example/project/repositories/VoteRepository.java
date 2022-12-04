@@ -13,6 +13,6 @@ public interface VoteRepository extends CrudRepository<Vote, Long> {
 
     @Modifying
     @Query("SELECT f FROM Vote f WHERE f.uuid = ?1 ")
-    List<Vote> findVotesReview(UUID reviewUuid);
+    List<Vote> findVotesReview(UUID uuid);
 
 }

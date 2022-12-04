@@ -41,23 +41,9 @@ public class VoteController {
     private JwtDecoder jwtDecoder;
 
     @Operation(summary = "Shows catalog of reviews")
-    @GetMapping(value = "/{reviewUuid}")
-    public List<VoteDTO> findVotesReview(@PathVariable("reviewuuid") final UUID reviewUuid) throws IOException, InterruptedException {
-        String url = "http://localhost:8093/api/reviews/" + reviewUuid;
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        if (response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
-        }
-
-        return service.findVotesReview(reviewUuid);
+    @GetMapping(value = "/{uuid}")
+    public List<VoteDTO> findVotesReview(@PathVariable("uuid") final UUID uuid){
+        return service.findVotesReview(uuid);
     }
 
 }

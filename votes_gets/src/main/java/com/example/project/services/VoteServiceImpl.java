@@ -32,8 +32,8 @@ public class VoteServiceImpl implements VoteService {
     private VoteRepository repository;
 
     @Override
-    public List<VoteDTO> findVotesReview(UUID reviewId) {
-        List<Vote> allVotes = repository.findVotesReview(reviewId);
+    public List<VoteDTO> findVotesReview(UUID uuid) {
+        List<Vote> allVotes = repository.findVotesReview(uuid);
         List<VoteDTO> allVotesDto = new ArrayList<>();
 
         for(int i=0; i < allVotes.size(); i++) {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Version;
+import java.util.UUID;
 
 public class VoteDTO {
 
@@ -12,7 +13,7 @@ public class VoteDTO {
 
     public String vote;
 
-    public int reviewId;
+    public UUID uuid;
 
     public int customerId;
 
@@ -20,9 +21,9 @@ public class VoteDTO {
 
     public VoteDTO(){}
 
-    public VoteDTO(int id, String vote, int reviewId, int customerId, int version) {
+    public VoteDTO(int id, String vote, UUID uuid, int customerId, int version) {
         this.vote = vote;
-        this.reviewId = reviewId;
+        this.uuid = uuid;
         this.customerId = customerId;
         this.id = id;
         this.version = version;
