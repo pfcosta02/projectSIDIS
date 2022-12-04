@@ -21,8 +21,8 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Review f WHERE f.reviewId = ?1 AND f.version = ?2 AND ABS(f.upVote + f.downVote) = 0" )
-    void deleteByIdIfMatch(Long reviewId, long desiredVersion);
+    @Query("DELETE FROM Review f WHERE f.uuid = ?1 AND f.version = ?2 AND ABS(f.upVote + f.downVote) = 0" )
+    void deleteByIdIfMatch(UUID uuid, long desiredVersion);
 
     @Modifying
     @Query("SELECT f FROM Review f WHERE f.status = 'Approved' AND f.productSku = ?1 ORDER BY ABS(f.downVote + f.upVote) DESC, f.dataTime DESC")

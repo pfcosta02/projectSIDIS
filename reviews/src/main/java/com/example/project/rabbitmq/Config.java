@@ -17,6 +17,22 @@ public class Config {
 
     String exchange = "reviews_one_sidis";
 
+    String updateReview = "update_reviews_Two";
+
+    String updateReviewGetsOne = "update_reviews_Get_One";
+
+    String updateReviewGetsTwo = "update_reviews_Get_Two";
+
+    String exchangeUpdate = "update_reviews_one_sidis";
+
+    String deleteQueue = "delete_reviews_Two";
+
+    String deleteGetOneQueue = "delete_reviews_Get_One";
+
+    String deleteGetTwoQueue = "delete_reviews_Get_Two";
+
+    String exchangeDelete = "delete_reviews_one_sidis";
+
     @Bean
     Queue reviewsQueue() {
         return new Queue(reviewsQueue, false);
@@ -50,6 +66,78 @@ public class Config {
     @Bean
     Binding reviewsGetTwoBinding(Queue rGetTwo, FanoutExchange exchange) {
         return BindingBuilder.bind(rGetTwo).to(exchange);
+    }
+
+    // update
+    @Bean
+    Queue updateQueue() {
+        return new Queue(updateReview, false);
+    }
+
+    @Bean
+    Queue updateGetOne() {
+        return new Queue(updateReviewGetsOne, false);
+    }
+
+    @Bean
+    Queue updateGetTwo() {
+        return new Queue(updateReviewGetsTwo, false);
+    }
+
+    @Bean
+    FanoutExchange updateExchange() {
+        return new FanoutExchange(exchangeUpdate);
+    }
+
+    @Bean
+    Binding updateReviewsBinding(Queue updateQueue, FanoutExchange updateExchange) {
+        return BindingBuilder.bind(updateQueue).to(updateExchange);
+    }
+
+    @Bean
+    Binding updateReviewsGetOneBinding(Queue updateGetOne, FanoutExchange updateExchange) {
+        return BindingBuilder.bind(updateGetOne).to(updateExchange);
+    }
+
+    @Bean
+    Binding updateReviewsGetTwoBinding(Queue updateGetTwo, FanoutExchange updateExchange) {
+        return BindingBuilder.bind(updateGetTwo).to(updateExchange);
+    }
+
+    // delete
+    @Bean
+    Queue deleteQueue() {
+        return new Queue(deleteQueue, false);
+    }
+
+    @Bean
+    Queue deleteGetOne() {
+        return new Queue(deleteGetOneQueue, false);
+    }
+
+    @Bean
+    Queue deleteGetTwo() {
+        return new Queue(deleteGetTwoQueue, false);
+    }
+
+    @Bean
+    FanoutExchange deleteExchange() {
+        return new FanoutExchange(exchangeDelete);
+    }
+
+    @Bean
+    Binding deleteReviewsBinding(Queue deleteQueue, FanoutExchange deleteExchange) {
+        return BindingBuilder.bind(deleteQueue).to(deleteExchange);
+    }
+
+    @Bean
+    Binding deleteReviewsGetOneBinding(Queue deleteGetOne, FanoutExchange deleteExchange) {
+        return BindingBuilder.bind(deleteGetOne).to(deleteExchange);
+    }
+
+    @Bean
+    Binding deleteReviewsGetTwoBinding(Queue deleteGetTwo, FanoutExchange deleteExchange) {
+        return BindingBuilder.bind(deleteGetTwo).to(deleteExchange);
     }
 
     @Bean

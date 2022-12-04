@@ -56,6 +56,10 @@ public class    ReviewController {
 
     public String exchange = "reviews_one_sidis";
 
+    public String exchangeDelete = "delete_reviews_one_sidis";
+
+    public String exchangeUpdate = "update_reviews_one_sidis";
+
     @Operation(summary = "Creates a Review")
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
@@ -89,9 +93,9 @@ public class    ReviewController {
         }
 
         final var review = service.partialUpdate(uuid, resource, Long.parseLong(ifMatchValue));
+        amqpTemplate.convertAndSend(exchangeUpdate, "", review);
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
-
 
     @Operation(summary = "Customer can delete one of his reviews - available only if reviews has no votes")
     @RolesAllowed(Role.CUSTOMER)
@@ -103,6 +107,7 @@ public class    ReviewController {
                     "You must issue a conditional DELETE using 'if-match'");
         }
         service.deleteById(uuid, Long.parseLong(ifMatchValue));
+        amqpTemplate.convertAndSend(exchangeDelete, "", uuid);
         return ResponseEntity.noContent().build();
     }
 
