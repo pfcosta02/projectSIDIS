@@ -36,7 +36,7 @@ public class ReviewDTO {
 
     public String status;
 
-    public Long productId;
+    public String productSku;
 
     public Long customerId;
 
@@ -46,14 +46,14 @@ public class ReviewDTO {
 
     public ReviewDTO(){}
 
-    public ReviewDTO(Long reviewId, String text, Integer rating,Integer upVote, Integer downVote, String dataTime, String status, Long prod, Long cust, String funnyFact, Long version) {
+    public ReviewDTO(Long reviewId, String text, Integer rating,Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long cust, String funnyFact, Long version) {
         this.reviewId = reviewId;
         this.text = text;
         this.rating = rating;
         this.upVote = upVote;
         this.downVote = downVote;
         this.dataTime = dataTime;
-        this.productId = prod;
+        this.productSku = productSku;
         this.customerId = cust;
         this.status = status;
         this.funnyFact = funnyFact;
@@ -64,8 +64,8 @@ public class ReviewDTO {
         return reviewId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getProductSku() {
+        return productSku;
     }
 
     public Long getCustomerId() {
@@ -132,8 +132,8 @@ public class ReviewDTO {
         this.status = status;
     }
 
-    public void setProductId(Long id) {
-        this.productId = id;
+    public void setProductSku(String sku) {
+        this.productSku = sku;
     }
 
     public void setCustomerId(Long id) {

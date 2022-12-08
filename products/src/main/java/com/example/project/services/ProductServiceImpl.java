@@ -52,32 +52,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addImage(String filename, String sku) {
+        final var optionalProduct = repository.findBySku(sku);
 
-        try {
-            String url = "http://localhost:8090/api/products/sku/" + sku;
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() != 200) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product does not exists");
-            }
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            Product product = mapper.readValue(response.body(), Product.class);
-
-            product.addImages(filename);
-            repository.save(product);
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
+        if(optionalProduct.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product dont exists");
         }
 
+        optionalProduct.get().addImages(filename);
+        repository.save(optionalProduct.get());
     }
 
 }
