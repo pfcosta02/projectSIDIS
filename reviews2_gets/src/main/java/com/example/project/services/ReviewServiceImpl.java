@@ -10,8 +10,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.example.project.exceptions.MyResourceNotFoundException;
+import com.example.project.model.Product;
 import com.example.project.model.ReviewDTO;
 import com.example.project.model.VoteDTO;
+import com.example.project.repositories.ProductRepository;
 import com.example.project.views.ReviewView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,27 +31,16 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ReviewRepository repository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public List<ReviewDTO> findApprovedReviews(final String productSku) {
 
-        try {
-            String url = "http://localhost:8090/api/products/sku/" + productSku;
+        Optional<Product> optionalProduct = productRepository.findBySku(productSku);
 
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-
-            if(response.statusCode() != 200) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-            }
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        if(optionalProduct.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
         List<Review> allReviews = repository.findApprovedReviews(productSku);
@@ -65,24 +56,10 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<ReviewDTO> findApprovedReviewsByDate(final String productSku) {
-        try {
-            String url = "http://localhost:8090/api/products/sku/" + productSku;
+        Optional<Product> optionalProduct = productRepository.findBySku(productSku);
 
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-
-            if(response.statusCode() != 200) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
-            }
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        if(optionalProduct.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found");
         }
 
         List<Review> allReviews = repository.findApprovedReviewsByDate(productSku);
