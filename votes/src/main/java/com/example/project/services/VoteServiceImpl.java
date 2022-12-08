@@ -1,7 +1,9 @@
 package com.example.project.services;
 
+import com.example.project.model.Review;
 import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
+import com.example.project.repositories.ReviewRepository;
 import com.example.project.repositories.VoteRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,8 +30,18 @@ public class VoteServiceImpl implements VoteService {
     @Autowired
     private VoteRepository repository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     @Override
     public Vote create(final Vote resource) {
+
+        final var optionalReview = reviewRepository.findByUUID(resource.getUuid());
+
+        if(optionalReview.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review dont exists");
+        }
+
         final Vote obj = Vote.newFrom(resource);
         return repository.save(obj);
     }

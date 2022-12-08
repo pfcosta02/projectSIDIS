@@ -49,21 +49,7 @@ public class VoteController {
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource,final WebRequest request2) throws IOException, InterruptedException {
-        String url = "http://localhost:8093/api/reviews/" + resource.getUuid();
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-
-        if (response.statusCode() != 200) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found");
-        }
+    public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource,final WebRequest request2) {
 
         final String auth = request2.getHeader("Authorization");
 

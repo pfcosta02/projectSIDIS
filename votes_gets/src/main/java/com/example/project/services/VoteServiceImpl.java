@@ -1,7 +1,9 @@
 package com.example.project.services;
 
+import com.example.project.model.Review;
 import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
+import com.example.project.repositories.ReviewRepository;
 import com.example.project.repositories.VoteRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,6 +25,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,8 +34,18 @@ public class VoteServiceImpl implements VoteService {
     @Autowired
     private VoteRepository repository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     @Override
     public List<VoteDTO> findVotesReview(UUID uuid) {
+
+        Optional<Review> optionalReview = reviewRepository.findByUUID(uuid);
+
+        if(optionalReview.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review dont exists");
+        }
+
         List<Vote> allVotes = repository.findVotesReview(uuid);
         List<VoteDTO> allVotesDto = new ArrayList<>();
 
