@@ -9,47 +9,37 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
-    String voteQueue = "vote_One";
-
-    String voteGetOneQueue = "vote_Get_One";
-
-    String voteGetTwoQueue = "vote_Get_Two";
-
-    String exchange = "vote_two_sidis";
 
     @Bean
-    Queue voteQueue() {
-        return new Queue(voteQueue, false);
+    public Queue autoDeleteQueue1() {
+        return new AnonymousQueue();
     }
 
     @Bean
-    Queue vGetOne() {
-        return new Queue(voteGetOneQueue, false);
+    public FanoutExchange fanout() {
+        return new FanoutExchange("vote_fanout");
     }
 
     @Bean
-    Queue vGetTwo() {
-        return new Queue(voteGetTwoQueue, false);
+    public Queue autoDeleteQueue2() {
+        return new AnonymousQueue();
     }
 
     @Bean
-    FanoutExchange exchange() {
-        return new FanoutExchange(exchange);
+    public FanoutExchange reviewFanout() {
+        return new FanoutExchange("review_create_fanout");
     }
 
     @Bean
-    Binding voteBinding(Queue voteQueue, FanoutExchange exchange) {
-        return BindingBuilder.bind(voteQueue).to(exchange);
+    public Binding binding1(FanoutExchange fanout,
+                            Queue autoDeleteQueue1) {
+        return BindingBuilder.bind(autoDeleteQueue1).to(fanout);
     }
 
     @Bean
-    Binding voteGetOneBinding(Queue vGetOne, FanoutExchange exchange) {
-        return BindingBuilder.bind(vGetOne).to(exchange);
-    }
-
-    @Bean
-    Binding voteGetTwoBinding(Queue vGetTwo, FanoutExchange exchange) {
-        return BindingBuilder.bind(vGetTwo).to(exchange);
+    public Binding binding2(FanoutExchange reviewFanout,
+                            Queue autoDeleteQueue2) {
+        return BindingBuilder.bind(autoDeleteQueue2).to(reviewFanout);
     }
 
     @Bean

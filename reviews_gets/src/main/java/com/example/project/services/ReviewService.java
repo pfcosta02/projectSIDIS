@@ -24,6 +24,6 @@ public interface ReviewService {
 
     Optional<Review> findByUUID(UUID uuid);
 
-    void getVotes(Review review, List<VoteDTO> votes);
+    void getVotes(Review review);
 }
 

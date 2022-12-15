@@ -43,7 +43,7 @@ public class VoteController {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    public String exchange = "vote_two_sidis";
+    public String exchange = "vote_fanout";
 
     @Operation(summary = "Make a vote in a review")
     @RolesAllowed(Role.CUSTOMER)

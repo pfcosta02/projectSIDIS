@@ -46,7 +46,7 @@ public class ProductController {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    public String exchange = "products_two_sidis";
+    public String exchange = "product_fanout";
 
     @Operation(summary = "Create a product")
     @RolesAllowed(Role.ADMIN)

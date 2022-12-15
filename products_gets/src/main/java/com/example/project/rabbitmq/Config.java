@@ -11,6 +11,38 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
 
     @Bean
+    public Queue autoDeleteQueue1() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public FanoutExchange fanout() {
+        return new FanoutExchange("product_fanout");
+    }
+
+    @Bean
+    public Queue autoDeleteQueue2() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public FanoutExchange reviewFanout() {
+        return new FanoutExchange("review_create_fanout");
+    }
+
+    @Bean
+    public Binding binding1(FanoutExchange fanout,
+                            Queue autoDeleteQueue1) {
+        return BindingBuilder.bind(autoDeleteQueue1).to(fanout);
+    }
+
+    @Bean
+    public Binding binding2(FanoutExchange reviewFanout,
+                            Queue autoDeleteQueue2) {
+        return BindingBuilder.bind(autoDeleteQueue2).to(reviewFanout);
+    }
+
+    @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
@@ -21,5 +53,4 @@ public class Config {
         rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
     }
-
 }

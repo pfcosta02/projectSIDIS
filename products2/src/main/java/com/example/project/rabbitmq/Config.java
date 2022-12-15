@@ -10,47 +10,36 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
 
-    String productsQueue = "products_One";
-
-    String productsGetOneQueue = "products_Get_One";
-
-    String productsGetTwoQueue = "products_Get_Two";
-
-    String exchange = "products_two_sidis";
-
     @Bean
-    Queue productQueue() {
-        return new Queue(productsQueue, false);
+    public Queue autoDeleteQueue1() {
+        return new AnonymousQueue();
     }
 
     @Bean
-    Queue pGetOne() {
-        return new Queue(productsGetOneQueue, false);
+    public FanoutExchange fanout() {
+        return new FanoutExchange("product_fanout");
     }
 
     @Bean
-    Queue pGetTwo() {
-        return new Queue(productsGetTwoQueue, false);
+    public Queue autoDeleteQueue2() {
+        return new AnonymousQueue();
     }
 
     @Bean
-    FanoutExchange exchange() {
-        return new FanoutExchange(exchange);
+    public FanoutExchange reviewFanout() {
+        return new FanoutExchange("review_create_fanout");
     }
 
     @Bean
-    Binding productBinding(Queue productQueue, FanoutExchange exchange) {
-        return BindingBuilder.bind(productQueue).to(exchange);
+    public Binding binding1(FanoutExchange fanout,
+                            Queue autoDeleteQueue1) {
+        return BindingBuilder.bind(autoDeleteQueue1).to(fanout);
     }
 
     @Bean
-    Binding productGetOneBinding(Queue pGetOne, FanoutExchange exchange) {
-        return BindingBuilder.bind(pGetOne).to(exchange);
-    }
-
-    @Bean
-    Binding productGetTwoBinding(Queue pGetTwo, FanoutExchange exchange) {
-        return BindingBuilder.bind(pGetTwo).to(exchange);
+    public Binding binding2(FanoutExchange reviewFanout,
+                            Queue autoDeleteQueue2) {
+        return BindingBuilder.bind(autoDeleteQueue2).to(reviewFanout);
     }
 
     @Bean
@@ -61,11 +50,7 @@ public class Config {
     @Bean
     public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setDefaultReceiveQueue("products_Two");
         rabbitTemplate.setMessageConverter(messageConverter());
-        rabbitTemplate.setReplyAddress("products_Two");
-        rabbitTemplate.setUseDirectReplyToContainer(false);
         return rabbitTemplate;
     }
-
 }

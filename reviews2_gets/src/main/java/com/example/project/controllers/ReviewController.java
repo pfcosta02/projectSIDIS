@@ -91,34 +91,12 @@ public class    ReviewController {
 
     @Operation(summary = "UpVotes")
     @GetMapping(value = "/votes/{reviewuuid}")
-    public ResponseEntity<Review> getVotes(@PathVariable("reviewUuid") final UUID reviewUuid) {
+    public ResponseEntity<Review> getVotes(@PathVariable("reviewuuid") final UUID reviewUuid) {
 
         final var review = service.findByUUID(reviewUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review Not Found"));
-        try{
-            String url = "http://localhost:8095/api/votes/" + reviewUuid;
 
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() != 200) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review has no votes");
-            }
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            List<VoteDTO> votes = mapper.readValue(response.body(), new TypeReference<List<VoteDTO>>() {});
-
-            service.getVotes(review, votes);
-
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
+        service.getVotes(review);
 
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }

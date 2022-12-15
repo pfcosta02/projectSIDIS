@@ -38,7 +38,7 @@ public class VoteServiceImpl implements VoteService {
 
         final var optionalReview = reviewRepository.findByUUID(resource.getUuid());
 
-        if(optionalReview.isPresent()) {
+        if(optionalReview.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review dont exists");
         }
 

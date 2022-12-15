@@ -1,6 +1,5 @@
 package com.example.project.rabbitmq;
-
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -10,6 +9,38 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
+
+    @Bean
+    public Queue autoDeleteQueue1() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public FanoutExchange fanout() {
+        return new FanoutExchange("vote_fanout");
+    }
+
+    @Bean
+    public Queue autoDeleteQueue2() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public FanoutExchange reviewFanout() {
+        return new FanoutExchange("review_create_fanout");
+    }
+
+    @Bean
+    public Binding binding1(FanoutExchange fanout,
+                            Queue autoDeleteQueue1) {
+        return BindingBuilder.bind(autoDeleteQueue1).to(fanout);
+    }
+
+    @Bean
+    public Binding binding2(FanoutExchange reviewFanout,
+                            Queue autoDeleteQueue2) {
+        return BindingBuilder.bind(autoDeleteQueue2).to(reviewFanout);
+    }
 
     @Bean
     public MessageConverter messageConverter() {
@@ -22,5 +53,4 @@ public class Config {
         rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
     }
-
 }

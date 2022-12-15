@@ -10,10 +10,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.example.project.exceptions.MyResourceNotFoundException;
-import com.example.project.model.Product;
-import com.example.project.model.ReviewDTO;
-import com.example.project.model.VoteDTO;
+import com.example.project.model.*;
 import com.example.project.repositories.ProductRepository;
+import com.example.project.repositories.VoteRepository;
 import com.example.project.views.ReviewView;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.example.project.model.Review;
 import com.example.project.repositories.ReviewRepository;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,6 +31,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private VoteRepository voteRepository;
 
     @Override
     public List<ReviewDTO> findApprovedReviews(final String productSku) {
@@ -142,13 +143,21 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void getVotes(Review review, List<VoteDTO> votes) {
+    public void getVotes(Review review) {
 
-        for (int i = 0; i < votes.size(); i++) {
-            if(votes.size() != review.getUpVote() + review.getDownVote()) {
-                if(votes.get(i).vote.equals("UpVote")){
+        List<Vote> allVotes = voteRepository.findVotesReview(review.getUuid());
+        List<VoteDTO> allVotesDTO = new ArrayList<>();
+
+        for(int i=0; i < allVotes.size(); i++) {
+            VoteDTO vote = new VoteDTO(allVotes.get(i).getId(),allVotes.get(i).getVote(),allVotes.get(i).getUuid(),allVotes.get(i).getCustomerId(),allVotes.get(i).getVersion());
+            allVotesDTO.add(vote);
+        }
+
+        for (int i = 0; i < allVotesDTO.size(); i++) {
+            if(allVotesDTO.size() != review.getUpVote() + review.getDownVote()) {
+                if(allVotesDTO.get(i).vote.equals("UpVote")){
                     review.setUpVote(review.getUpVote()+1);
-                } else if (votes.get(i).vote.equals("DownVote")) {
+                } else if (allVotesDTO.get(i).vote.equals("DownVote")) {
                     review.setDownVote(review.getDownVote()+1);
                 }
             }

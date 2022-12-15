@@ -54,11 +54,11 @@ public class    ReviewController {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    public String exchange = "reviews_two_sidis";
+    public String exchange = "review_create_fanout";
 
-    public String exchangeDelete = "delete_reviews_one_sidis";
+    public String exchangeDelete = "review_delete_fanout";
 
-    public String exchangeUpdate = "update_reviews_one_sidis";
+    public String exchangeUpdate = "review_update_fanout";
 
     @Operation(summary = "Creates a Review")
     @RolesAllowed(Role.CUSTOMER)

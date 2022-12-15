@@ -9,19 +9,19 @@ import java.util.UUID;
 
 public class VoteDTO {
 
-    public int id;
+    public Long id;
 
     public String vote;
 
     public UUID uuid;
 
-    public int customerId;
+    public Long customerId;
 
-    public int version;
+    public Long version;
 
     public VoteDTO(){}
 
-    public VoteDTO(int id, String vote, UUID uuid, int customerId, int version) {
+    public VoteDTO(Long id, String vote, UUID uuid, Long customerId, Long version) {
         this.vote = vote;
         this.uuid = uuid;
         this.customerId = customerId;
