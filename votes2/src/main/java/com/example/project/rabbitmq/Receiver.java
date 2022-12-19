@@ -41,7 +41,7 @@ public class Receiver {
     }
 
 
-    @RabbitListener(queues = "#{autoDeleteQueue1.name}")
+    @RabbitListener(queues = "#{autoDeleteQueue2.name}")
     public void consumeMessageCreate(Review review) {
 
         Optional<Review> optional = reviewRepository.findByUUID(review.getUuid());
