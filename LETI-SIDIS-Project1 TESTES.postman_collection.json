@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "c3561fd0-219e-49d3-ab95-83b09c59886c",
-		"name": "LETI-SIDIS-Project1 TESTES",
+		"_postman_id": "89c7b3e6-1642-42ae-a606-a86e7e9b8e3e",
+		"name": "LETI-SIDIS-Project TESTES",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17817487"
 	},
@@ -10,7 +10,48 @@
 			"name": "Test Products",
 			"item": [
 				{
-					"name": "Login Admin Copy",
+					"name": "POST product unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Product\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(403);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Samsung S22 Ultra\",\r\n    \"description\": \"Smartphone Samsung S22 Ultra 524GB\",\r\n    \"sku\": \"{{sku}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{product_cmd}}{{baseUrl}}/products",
+							"host": [
+								"{{product_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
 					"event": [
 						{
 							"listen": "test",
@@ -63,7 +104,7 @@
 								"exec": [
 									"pm.test(\"Check Product exists\", function(){\r",
 									"\r",
-									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(404);\r",
 									"\r",
 									"});\r",
 									""
@@ -99,7 +140,7 @@
 					"response": []
 				},
 				{
-					"name": "POST product Copy",
+					"name": "POST product",
 					"event": [
 						{
 							"listen": "test",
@@ -131,6 +172,47 @@
 							"raw": "{{product_cmd}}{{baseUrl}}/products",
 							"host": [
 								"{{product_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST duplicated product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Product\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(409);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Samsung S22 Ultra\",\r\n    \"description\": \"Smartphone Samsung S22 Ultra 524GB\",\r\n    \"sku\": \"{{sku}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{product2_cmd}}{{baseUrl}}/products",
+							"host": [
+								"{{product2_cmd}}{{baseUrl}}"
 							],
 							"path": [
 								"products"
@@ -206,518 +288,49 @@
 						}
 					},
 					"response": []
-				}
-			],
-			"auth": {
-				"type": "bearer",
-				"bearer": [
-					{
-						"key": "token",
-						"value": "{{token}}",
-						"type": "string"
-					}
-				]
-			},
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
 				},
 				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Test Reviews",
-			"item": [
-				{
-					"name": "Test CRUD Review",
-					"item": [
-						{
-							"name": "Login Customer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Authtenticates\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"    let token = postman.getResponseHeader(\"Authorization\");\r",
-											"    pm.environment.set(\"token\", token);    \r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"username\":\"bruna@mail.com\",\r\n    \"password\":\"54321\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}{{baseUrl}}/public/login",
-									"host": [
-										"{{host}}{{baseUrl}}"
-									],
-									"path": [
-										"public",
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "GET Single Review",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Check Review exists\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"var uuid = require('uuid');\r",
-											"postman.setEnvironmentVariable('uuid', uuid.v4());"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
-									"host": [
-										"{{reviews_get}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews",
-										"{{uuid}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "POST review",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Create Review\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"123456789A\",\r\n    \"uuid\": \"{{uuid}}\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews",
-									"host": [
-										"{{reviews_cmd}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "GET Single Review After POST",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Check Review was Created\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
-									"host": [
-										"{{reviews_get}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews",
-										"{{uuid}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "DELETE Review",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Delete Review\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(204);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "If-Match",
-										"value": "0",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/{{uuid}}",
-									"host": [
-										"{{reviews_cmd}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews",
-										"{{uuid}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "GET Single Review After DELETE",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Check Review was Deleted\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
-									"host": [
-										"{{reviews_get}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews",
-										"{{uuid}}"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "string"
-							}
-						]
-					},
+					"name": "POST review unauthorized",
 					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
 								"exec": [
+									"pm.test(\"Create Review\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
 									""
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "Test Edit Review",
-					"item": [
-						{
-							"name": "Login Moderator",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Authtenticates\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"    let token = postman.getResponseHeader(\"Authorization\");\r",
-											"    pm.environment.set(\"token\", token);    \r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"username\":\"pfcosta02@mail.com\",\r\n    \"password\":\"pass123\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host}}{{baseUrl}}/public/login",
-									"host": [
-										"{{host}}{{baseUrl}}"
-									],
-									"path": [
-										"public",
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "GET pending reviews",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Get all pending Reviews\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{reviews_get}}{{baseUrl}}/reviews/pending",
-									"host": [
-										"{{reviews_get}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews",
-										"pending"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Accept or Reject Review",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Accept one Review\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "If-Match",
-										"value": "0",
-										"type": "text"
-									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"status\":\"Approved\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/1",
-									"host": [
-										"{{reviews_cmd}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "GET pending reviews Copy",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Check if accepted review dont appear\", function(){\r",
-											"\r",
-											"    pm.response.to.have.status(200);\r",
-											"\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{reviews_get}}{{baseUrl}}/reviews/pending",
-									"host": [
-										"{{reviews_get}}{{baseUrl}}"
-									],
-									"path": [
-										"reviews",
-										"pending"
-									]
-								}
-							},
-							"response": []
+								"type": "text/javascript"
+							}
 						}
 					],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{token}}",
-								"type": "string"
-							}
-						]
-					},
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"{{sku}}\",\r\n    \"uuid\": \"{{uuid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
 						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
+						"url": {
+							"raw": "{{reviews_cmd}}{{baseUrl}}/reviews",
+							"host": [
+								"{{reviews_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews"
+							]
 						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Test Votes",
-			"item": [
+					},
+					"response": []
+				},
 				{
 					"name": "Login Customer",
 					"event": [
@@ -772,6 +385,92 @@
 								"exec": [
 									"pm.test(\"Check Review exists\", function(){\r",
 									"\r",
+									"    pm.response.to.have.status(404);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"postman.setEnvironmentVariable('uuid', uuid.v4());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
+							"host": [
+								"{{reviews_get}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Review\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"{{sku}}\",\r\n    \"uuid\": \"{{uuid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{reviews_cmd}}{{baseUrl}}/reviews",
+							"host": [
+								"{{reviews_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Single Review After POST APP 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check Review was Created\", function(){\r",
+									"\r",
 									"    pm.response.to.have.status(200);\r",
 									"\r",
 									"});\r",
@@ -785,13 +484,429 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{reviews_get}}{{baseUrl}}/reviews/1",
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
 							"host": [
 								"{{reviews_get}}{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
-								"1"
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Single Review After POST APP 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check Review was Created\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reviews2_get}}{{baseUrl}}/reviews/{{uuid}}",
+							"host": [
+								"{{reviews2_get}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept or Reject Review unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Accept one Review\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"Approved\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/{{uuid}}",
+							"host": [
+								"{{reviews_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Moderator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Authtenticates\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let token = postman.getResponseHeader(\"Authorization\");\r",
+									"    pm.environment.set(\"token\", token);    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"pfcosta02@mail.com\",\r\n    \"password\":\"pass123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/login",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET pending reviews",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get all pending Reviews\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/pending",
+							"host": [
+								"{{reviews_get}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept or Reject Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Accept one Review\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"Approved\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/{{uuid}}",
+							"host": [
+								"{{reviews_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET pending reviews APP 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check if accepted review dont appear\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/pending",
+							"host": [
+								"{{reviews_get}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET pending reviews APP 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check if accepted review dont appear\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reviews2_get}}{{baseUrl}}/reviews/pending",
+							"host": [
+								"{{reviews2_get}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"pending"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make a vote unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Vote\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"vote\": \"UpVote\",\r\n     \"reviewId\": \"{{uuid}}\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{votes_cmd}}{{baseUrl}}/votes",
+							"host": [
+								"{{votes_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Review unauthorized",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete Review\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(403);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/{{uuid}}",
+							"host": [
+								"{{reviews_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Authtenticates\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let token = postman.getResponseHeader(\"Authorization\");\r",
+									"    pm.environment.set(\"token\", token);    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"bruna@mail.com\",\r\n    \"password\":\"54321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/login",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"login"
 							]
 						}
 					},
@@ -830,7 +945,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\r\n     \"vote\": \"UpVote\",\r\n     \"reviewId\": \"1\"\r\n }",
+							"raw": " {\r\n     \"vote\": \"UpVote\",\r\n     \"reviewId\": \"{{uuid}}\"\r\n }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -850,7 +965,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Review Votes",
+					"name": "GET Review Votes APP 1",
 					"event": [
 						{
 							"listen": "test",
@@ -871,27 +986,27 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{reviews_get}}{{baseUrl}}/reviews/votes/1",
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/votes/{{uuid}}",
 							"host": [
 								"{{reviews_get}}{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
 								"votes",
-								"1"
+								"{{uuid}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET Single Review After Vote",
+					"name": "GET Review Votes APP 2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Check Review exists\", function(){\r",
+									"pm.test(\"Get Review Votes\", function(){\r",
 									"\r",
 									"    pm.response.to.have.status(200);\r",
 									"\r",
@@ -906,17 +1021,156 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{reviews_get}}{{baseUrl}}/reviews/1",
+							"raw": "{{reviews2_get}}{{baseUrl}}/reviews/votes/{{uuid}}",
+							"host": [
+								"{{reviews2_get}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"votes",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete Review\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(204);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/{{uuid}}",
+							"host": [
+								"{{reviews_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Single Review After DELETE APP 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check Review was Deleted\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(404);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reviews_get}}{{baseUrl}}/reviews/{{uuid}}",
 							"host": [
 								"{{reviews_get}}{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
-								"1"
+								"{{uuid}}"
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GET Single Review After DELETE APP 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Check Review was Deleted\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(404);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{reviews2_get}}{{baseUrl}}/reviews/{{uuid}}",
+							"host": [
+								"{{reviews2_get}}{{baseUrl}}"
+							],
+							"path": [
+								"reviews",
+								"{{uuid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
