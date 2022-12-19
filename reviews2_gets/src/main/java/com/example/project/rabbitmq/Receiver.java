@@ -59,7 +59,7 @@ public class Receiver {
 
     @RabbitListener(queues = "#{autoDeleteQueue3.name}")
     public void deleteReview(UUID uuid) {
-        repository.deleteByIdIfMatch(uuid,0);
+        repository.deleteByIdIfMatch(uuid,1);
 
         System.out.println("Review deleted:" + uuid);
     }
