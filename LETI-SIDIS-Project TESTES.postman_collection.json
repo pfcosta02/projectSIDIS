@@ -965,6 +965,58 @@
 					"response": []
 				},
 				{
+					"name": "Make a vote Bad Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create Vote\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(400);\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"vote\": \"sidis\",\r\n     \"reviewId\": \"{{uuid}}\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{votes_cmd}}{{baseUrl}}/votes",
+							"host": [
+								"{{votes_cmd}}{{baseUrl}}"
+							],
+							"path": [
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET Review Votes APP 1",
 					"event": [
 						{
