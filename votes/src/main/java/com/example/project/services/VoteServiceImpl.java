@@ -3,6 +3,7 @@ package com.example.project.services;
 import com.example.project.model.Review;
 import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
+import com.example.project.rabbitmq.Sender;
 import com.example.project.repositories.ReviewRepository;
 import com.example.project.repositories.VoteRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -33,6 +34,11 @@ public class VoteServiceImpl implements VoteService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Autowired
+    private Sender sender;
+
+    public String exchange = "vote_fanout";
+
     @Override
     public Vote create(final Vote resource) {
 
@@ -43,6 +49,8 @@ public class VoteServiceImpl implements VoteService {
         }
 
         final Vote obj = Vote.newFrom(resource);
+        sender.send(exchange, obj);
+
         return repository.save(obj);
     }
 

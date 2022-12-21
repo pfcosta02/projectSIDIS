@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.project.rabbitmq.Sender;
 import com.example.project.usermanagement.model.Role;
 import com.example.project.services.FileStorageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,18 +39,12 @@ public class ProductController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
-
-    public String exchange = "product_fanout";
-
     @Operation(summary = "Create a product")
     @RolesAllowed(Role.ADMIN)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Product> createProduct(@Valid @RequestBody final Product productId) {
         final var product = service.create(productId);
-        amqpTemplate.convertAndSend(exchange, "", product);
         return ResponseEntity.status(HttpStatus.CREATED).eTag(Long.toString(product.getVersion())).body(product);
     }
 

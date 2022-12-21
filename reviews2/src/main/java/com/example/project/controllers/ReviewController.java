@@ -2,6 +2,7 @@ package com.example.project.controllers;
 
 import com.example.project.model.ReviewDTO;
 import com.example.project.model.VoteDTO;
+import com.example.project.rabbitmq.Sender;
 import com.example.project.usermanagement.model.Role;
 import com.example.project.views.ReviewView;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,15 +52,6 @@ public class    ReviewController {
     @Autowired
     private JwtDecoder jwtDecoder;
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
-
-    public String exchange = "review_create_fanout";
-
-    public String exchangeDelete = "review_delete_fanout";
-
-    public String exchangeUpdate = "review_update_fanout";
-
     @Operation(summary = "Creates a Review")
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
@@ -76,7 +68,7 @@ public class    ReviewController {
         resource.setCustomerId(userId);
 
         final var review = service.create(resource);
-        amqpTemplate.convertAndSend(exchange, "", review);
+
         return ResponseEntity.status(HttpStatus.CREATED).eTag(Long.toString(review.getVersion())).body(review);
     }
 
@@ -93,7 +85,7 @@ public class    ReviewController {
         }
 
         final var review = service.partialUpdate(uuid, resource, Long.parseLong(ifMatchValue));
-        amqpTemplate.convertAndSend(exchangeUpdate, "", review);
+
         return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
     }
 
@@ -107,7 +99,7 @@ public class    ReviewController {
                     "You must issue a conditional DELETE using 'if-match'");
         }
         service.deleteById(uuid, Long.parseLong(ifMatchValue));
-        amqpTemplate.convertAndSend(exchangeDelete, "", uuid);
+
         return ResponseEntity.noContent().build();
     }
 

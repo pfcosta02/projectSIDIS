@@ -14,5 +14,5 @@ import org.springframework.http.ResponseEntity;
 public interface ProductService {
 
     Product create(Product product);
-    void addImage(String filename, String sku);
+    void addImage(String filename, String sku) throws IOException, InterruptedException;
 }

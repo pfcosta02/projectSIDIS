@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import com.example.project.model.AggregatedRating;
 import com.example.project.model.ProductDTO;
 import com.example.project.model.ReviewDTO;
+import com.example.project.rabbitmq.Sender;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,6 +35,11 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Autowired
+    private Sender sender;
+
+    public String exchange = "product_fanout";
+
     @Override
     public Product create(final Product product) {
         // construct a new object based on data received by the service to ensure domain
@@ -46,6 +52,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         final Product obj = Product.newFrom(product);
+
+        sender.send(exchange,obj);
 
         return repository.save(obj);
     }

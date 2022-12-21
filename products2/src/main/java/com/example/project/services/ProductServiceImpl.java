@@ -6,19 +6,23 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.example.project.model.AggregatedRating;
 import com.example.project.model.ProductDTO;
 import com.example.project.model.ReviewDTO;
+import com.example.project.rabbitmq.Sender;
 import com.example.project.views.ProductAllView;
 import com.example.project.views.ProductNameView;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.project.model.Product;
@@ -29,6 +33,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private Sender sender;
+
+    public String exchange = "product_fanout";
 
     @Override
     public Product create(final Product product) {
@@ -42,6 +51,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         final Product obj = Product.newFrom(product);
+
+        sender.send(exchange,obj);
 
         return repository.save(obj);
     }
@@ -57,6 +68,5 @@ public class ProductServiceImpl implements ProductService {
         optionalProduct.get().addImages(filename);
         repository.save(optionalProduct.get());
     }
-
 
 }

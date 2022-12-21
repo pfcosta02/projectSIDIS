@@ -2,6 +2,7 @@ package com.example.project.controllers;
 
 import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
+import com.example.project.rabbitmq.Sender;
 import com.example.project.services.VoteService;
 import com.example.project.usermanagement.model.Role;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,11 +41,6 @@ public class VoteController {
     @Autowired
     private JwtDecoder jwtDecoder;
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
-
-    public String exchange = "vote_fanout";
-
     @Operation(summary = "Make a vote in a review")
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
@@ -61,7 +57,7 @@ public class VoteController {
         resource.setCustomerId(userId);
 
         final var vote = service.create(resource);
-        amqpTemplate.convertAndSend(exchange, "", vote);
+
         return ResponseEntity.status(HttpStatus.CREATED).eTag(Long.toString(vote.getVersion())).body(vote);
     }
 

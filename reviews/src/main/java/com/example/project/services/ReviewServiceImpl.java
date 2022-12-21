@@ -13,6 +13,7 @@ import com.example.project.exceptions.MyResourceNotFoundException;
 import com.example.project.model.Product;
 import com.example.project.model.ReviewDTO;
 import com.example.project.model.VoteDTO;
+import com.example.project.rabbitmq.Sender;
 import com.example.project.repositories.ProductRepository;
 import com.example.project.views.ReviewView;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,6 +35,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private Sender sender;
+
+    public String exchange = "review_create_fanout";
+
+    public String exchangeDelete = "review_delete_fanout";
+
+    public String exchangeUpdate = "review_update_fanout";
+
     @Override
     public Review create(final Review resource) {
         // construct a new object based on data received by the service to ensure domain
@@ -46,6 +56,8 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         final Review obj = Review.newFrom(resource);
+
+        sender.send(exchange, obj);
 
         return repository.save(obj);
     }
@@ -68,6 +80,8 @@ public class ReviewServiceImpl implements ReviewService {
         // and apply the patch
         review.applyPatch(resource, desiredVersion);
 
+        sender.update(exchangeUpdate, review);
+
         // in the meantime some other user might have changed this object on the
         // database, so concurrency control will still be applied when we try to save
         // this updated object
@@ -77,5 +91,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteById(final UUID uuid, final long desiredVersion) {
         repository.deleteByIdIfMatch(uuid, desiredVersion);
+        sender.delete(exchangeDelete, uuid);
     }
 }
