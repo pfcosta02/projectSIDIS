@@ -62,7 +62,7 @@ public class VoteController {
 
         final var vote = service.create(resource);
         amqpTemplate.convertAndSend(exchange, "", vote);
-        return ResponseEntity.ok().eTag(Long.toString(vote.getVersion())).body(vote);
+        return ResponseEntity.status(HttpStatus.CREATED).eTag(Long.toString(vote.getVersion())).body(vote);
     }
 
 }

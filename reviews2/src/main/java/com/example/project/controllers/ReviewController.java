@@ -77,7 +77,7 @@ public class    ReviewController {
 
         final var review = service.create(resource);
         amqpTemplate.convertAndSend(exchange, "", review);
-        return ResponseEntity.ok().eTag(Long.toString(review.getVersion())).body(review);
+        return ResponseEntity.status(HttpStatus.CREATED).eTag(Long.toString(review.getVersion())).body(review);
     }
 
     @Operation(summary = "Partially updates an existing review")

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "89c7b3e6-1642-42ae-a606-a86e7e9b8e3e",
+		"_postman_id": "4637be45-0273-4dbe-ad45-00f71b3f2482",
 		"name": "LETI-SIDIS-Project TESTES",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17817487"
+		"_exporter_id": "19169546"
 	},
 	"item": [
 		{
@@ -21,6 +21,15 @@
 									"    pm.response.to.have.status(403);\r",
 									"\r",
 									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('sku', _.random (100000000,999999999));"
 								],
 								"type": "text/javascript"
 							}
@@ -148,7 +157,7 @@
 								"exec": [
 									"pm.test(\"Create Product\", function(){\r",
 									"\r",
-									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(201);\r",
 									"\r",
 									"});"
 								],
@@ -429,7 +438,7 @@
 								"exec": [
 									"pm.test(\"Create Review\", function(){\r",
 									"\r",
-									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(201);\r",
 									"\r",
 									"});\r",
 									""
@@ -921,7 +930,7 @@
 								"exec": [
 									"pm.test(\"Create Vote\", function(){\r",
 									"\r",
-									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(201);\r",
 									"\r",
 									"});\r",
 									""

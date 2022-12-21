@@ -50,7 +50,7 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@Valid @RequestBody final Product productId) {
         final var product = service.create(productId);
         amqpTemplate.convertAndSend(exchange, "", product);
-        return ResponseEntity.ok().eTag(Long.toString(product.getVersion())).body(product);
+        return ResponseEntity.status(HttpStatus.CREATED).eTag(Long.toString(product.getVersion())).body(product);
     }
 
     @Operation(summary = "Uploads a photo of a product")
