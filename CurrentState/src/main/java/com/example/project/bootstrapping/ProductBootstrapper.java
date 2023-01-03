@@ -1,15 +1,12 @@
 package com.example.project.bootstrapping;
 
 
-import com.example.project.rabbitmq.Rpc;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import com.example.project.model.Product;
+import com.example.project.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import com.example.project.model.Product;
 
 /**
  * Spring will load and execute all components that implement the interface
@@ -27,12 +24,22 @@ import com.example.project.model.Product;
 public class ProductBootstrapper implements CommandLineRunner {
 // setName setDescription setSku
     @Autowired
-    private Rpc rpc;
+    private ProductRepository productRepo;
 
-    @Override
-    @Scheduled(fixedDelay = 1000, initialDelay = 500)
-    public void run(String... args) {
-        rpc.helper();
+    public void run(String... args) throws Exception {
+        if (productRepo.findByName("Martelo").isEmpty()) {
+            Product f1 = new Product("Martelo");
+            f1.setDescription("Aço carbono");
+            f1.setSku("123456789A");
+            productRepo.save(f1);
+        }
+
+        if (productRepo.findByName("Maçarico").isEmpty()) {
+            Product f2 = new Product("Maçarico");
+            f2.setDescription("O melhor fogo que irá ver");
+            f2.setSku("9876543210");
+            productRepo.save(f2);
+        }
     }
 
 }

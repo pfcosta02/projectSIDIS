@@ -1,16 +1,9 @@
 package com.example.project.model;
 
-import java.awt.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import net.minidev.json.annotate.JsonIgnore;
-import org.hibernate.StaleObjectStateException;
+import java.util.List;
 
 @Schema(description = "A Product")
 @Entity
@@ -50,12 +43,6 @@ public class Product {
         this.name = name;
         this.description = description;
         this.sku = sku;
-    }
-
-    public Product(String sku, String description, String name) {
-        this.sku = sku;
-        this.name = name;
-        this.description = description;
     }
 
     public Long getProductId() {
