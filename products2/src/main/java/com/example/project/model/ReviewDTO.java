@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime; // Import the LocalDateTime class
 import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+import java.util.UUID;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,6 +24,7 @@ import org.hibernate.StaleObjectStateException;
 public class ReviewDTO {
 
     public Long reviewId;
+    public UUID uuid;
 
     public String text;
 
@@ -36,7 +38,7 @@ public class ReviewDTO {
 
     public String status;
 
-    public Long productId;
+    public String productSku;
 
     public Long customerId;
 
@@ -46,14 +48,15 @@ public class ReviewDTO {
 
     public ReviewDTO(){}
 
-    public ReviewDTO(Long reviewId, String text, Integer rating,Integer upVote, Integer downVote, String dataTime, String status, Long prod, Long cust, String funnyFact, Long version) {
+    public ReviewDTO(Long reviewId, UUID uuid, String text, Integer rating,Integer upVote, Integer downVote, String dataTime, String status, String prod, Long cust, String funnyFact, Long version) {
         this.reviewId = reviewId;
+        this.uuid = uuid;
         this.text = text;
         this.rating = rating;
         this.upVote = upVote;
         this.downVote = downVote;
         this.dataTime = dataTime;
-        this.productId = prod;
+        this.productSku = prod;
         this.customerId = cust;
         this.status = status;
         this.funnyFact = funnyFact;
@@ -64,8 +67,8 @@ public class ReviewDTO {
         return reviewId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getProductSku() {
+        return productSku;
     }
 
     public Long getCustomerId() {
@@ -132,12 +135,19 @@ public class ReviewDTO {
         this.status = status;
     }
 
-    public void setProductId(Long id) {
-        this.productId = id;
+    public void setProductSku(String productSku) {
+        this.productSku = productSku;
     }
 
     public void setCustomerId(Long id) {
         this.customerId = id;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 }

@@ -6,7 +6,6 @@ import com.example.project.model.Vote;
 import com.example.project.repositories.ProductRepository;
 import com.example.project.repositories.ReviewRepository;
 import com.example.project.repositories.VoteRepository;
-import com.example.project.services.ReviewService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

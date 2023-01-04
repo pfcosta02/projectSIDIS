@@ -1,38 +1,134 @@
 package com.example.project.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
 import java.util.UUID;
 
 public class ReviewDTO {
 
-
     public Long reviewId;
     public UUID uuid;
+
+    public String text;
+
     public Integer rating;
+
     public Integer upVote;
+
     public Integer downVote;
+
     public String dataTime;
+
     public String status;
+
     public String productSku;
+
     public Long customerId;
+
     public String funnyFact;
+
+    public Long version;
 
     public ReviewDTO(){}
 
-    public ReviewDTO(Long reviewId, UUID uuid, Integer rating, Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long customerId, String funnyFact) {
+    public ReviewDTO(Long reviewId, UUID uuid, String text, Integer rating, Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long cust, String funnyFact, Long version) {
         this.reviewId = reviewId;
         this.uuid = uuid;
+        this.text = text;
         this.rating = rating;
         this.upVote = upVote;
         this.downVote = downVote;
         this.dataTime = dataTime;
-        this.status = status;
         this.productSku = productSku;
-        this.customerId = customerId;
+        this.customerId = cust;
+        this.status = status;
         this.funnyFact = funnyFact;
+        this.version = version;
+    }
+
+    public Long getReviewId() {
+        return reviewId;
+    }
+
+    public String getProductSku() {
+        return productSku;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public Integer getUpVote() {
+        return upVote;
+    }
+
+    public Integer getDownVote() {
+        return downVote;
+    }
+
+    public String getDataTime() {
+        return dataTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public String getFunnyFact() {
+        return funnyFact;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setFunnyFact(String funnyFact){
+        this.funnyFact = funnyFact;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public void setUpVote(Integer upVote) {
+        this.upVote = upVote;
+    }
+
+    public void setDownVote(Integer downVote) {
+        this.downVote = downVote;
+    }
+
+    public void setDataTime(String dataTime) {
+        this.dataTime = dataTime;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setProductSku(String sku) {
+        this.productSku = sku;
+    }
+
+    public void setCustomerId(Long id) {
+        this.customerId = id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 }
