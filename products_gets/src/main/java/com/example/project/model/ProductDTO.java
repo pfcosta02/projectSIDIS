@@ -9,9 +9,8 @@ public class ProductDTO {
     public final String name;
     public final String description;
 
-    public ProductDTO (
+    public ProductDTO (@JsonProperty("sku") String sku,
                        @JsonProperty("name") String name,
-                       @JsonProperty("sku") String sku,
                        @JsonProperty("description") String description) {
         this.sku = sku;
         this.description = description;

@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> allProductsDto = new ArrayList<>();
 
         for(int i=0; i < allProducts.size(); i++) {
-            ProductDTO product = new ProductDTO(allProducts.get(i).getName(), allProducts.get(i).getSku(), allProducts.get(i).getDescription());
+            ProductDTO product = new ProductDTO(allProducts.get(i).getSku(), allProducts.get(i).getName(), allProducts.get(i).getDescription());
             allProductsDto.add(product);
         }
 
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product p = optionalProduct.get();
 
-        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription());
+        ProductDTO dto = new ProductDTO(p.getSku(), p.getName(), p.getDescription());
 
         return Optional.of(dto);
     }
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product p = optionalProduct.get();
 
-        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription());
+        ProductDTO dto = new ProductDTO(p.getSku(), p.getName(), p.getDescription());
 
         return Optional.of(dto);
     }
