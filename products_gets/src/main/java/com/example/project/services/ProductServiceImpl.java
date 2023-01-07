@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> allProductsDto = new ArrayList<>();
 
         for(int i=0; i < allProducts.size(); i++) {
-            ProductDTO product = new ProductDTO(allProducts.get(i).getName(), allProducts.get(i).getSku(), allProducts.get(i).getDescription(), allProducts.get(i).getSetOfImages());
+            ProductDTO product = new ProductDTO(allProducts.get(i).getName(), allProducts.get(i).getSku(), allProducts.get(i).getDescription());
             allProductsDto.add(product);
         }
 
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product p = optionalProduct.get();
 
-        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
+        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription());
 
         return Optional.of(dto);
     }
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product p = optionalProduct.get();
 
-        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription(), p.getSetOfImages());
+        ProductDTO dto = new ProductDTO(p.getName(), p.getSku(), p.getDescription());
 
         return Optional.of(dto);
     }
@@ -83,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
         List<ReviewDTO> reviewsDTO = new ArrayList<>();
 
         for(int i=0; i < reviews.size(); i++) {
-            ReviewDTO reviewDTO = new ReviewDTO(reviews.get(i).getReviewId(),reviews.get(i).getText(),reviews.get(i).getRating(),reviews.get(i).getUpVote(),reviews.get(i).getDownVote(),reviews.get(i).getDataTime(),reviews.get(i).getStatus(),reviews.get(i).getProductSku(),reviews.get(i).getCustomerId(),reviews.get(i).getFunnyFact(),reviews.get(i).getVersion());
+            ReviewDTO reviewDTO = new ReviewDTO(reviews.get(i).getReviewId(),reviews.get(i).getUuid(),reviews.get(i).getText(),reviews.get(i).getRating(),reviews.get(i).getUpVote(),reviews.get(i).getDownVote(),reviews.get(i).getDataTime(),reviews.get(i).getStatus(),reviews.get(i).getProductSku(),reviews.get(i).getCustomerId(),reviews.get(i).getFunnyFact(),reviews.get(i).getVersion());
             reviewsDTO.add(reviewDTO);
         }
 

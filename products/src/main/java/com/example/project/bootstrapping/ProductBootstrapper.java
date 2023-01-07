@@ -33,6 +33,7 @@ public class ProductBootstrapper implements CommandLineRunner {
     @Scheduled(fixedDelay = 1000, initialDelay = 500)
     public void run(String... args) {
         rpc.helper();
+        rpc.helper2();
     }
 
 }

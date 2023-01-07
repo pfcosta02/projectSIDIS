@@ -52,6 +52,13 @@ public class Product {
         this.sku = sku;
     }
 
+    public Product(String sku, String description, String name) {
+        this.sku = sku;
+        this.name = name;
+        this.description = description;
+    }
+
+
     public Long getProductId() {
         return productId;
     }

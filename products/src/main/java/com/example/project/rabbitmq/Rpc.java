@@ -30,15 +30,21 @@ public class Rpc {
         List<Product> finalProductList = new ArrayList<>();
         List<ProductDTO> prod = (List<ProductDTO>) amqpTemplate.convertSendAndReceive("rpc", "key", "");
 
+        if (prod.isEmpty()){ return; }
+
         for (ProductDTO aux:prod){
             finalProductList.add(new Product(aux.sku,aux.description, aux.name));
         }
         for (Product auxAdd: finalProductList){
             prodRepo.save(auxAdd);
         }
+    }
 
+    public void helper2(){
         List<Review> finalReviewList = new ArrayList<>();
         List<ReviewDTO> rev = (List<ReviewDTO>) amqpTemplate.convertSendAndReceive("rpc_rev", "key", "");
+
+        if (rev.isEmpty()){ return; }
 
         for (ReviewDTO aux:rev){
             finalReviewList.add(new Review(aux.reviewId,aux.uuid,aux.text,aux.rating,aux.upVote,aux.downVote,aux.dataTime,aux.status,aux.productSku,aux.customerId,aux.funnyFact,aux.version));

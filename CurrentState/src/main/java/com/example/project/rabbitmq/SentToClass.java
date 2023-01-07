@@ -28,7 +28,7 @@ public class SentToClass {
         List<Product> prod = productRepo.findAllProducts();
         List<ProductDTO> allProductsDto = new ArrayList<>();
         for (Product aux: prod) {
-            ProductDTO product = new ProductDTO(aux.getSku(),aux.getName(),aux.getDescription(),aux.getSetOfImages());
+            ProductDTO product = new ProductDTO(aux.getSku(),aux.getName(),aux.getDescription());
             allProductsDto.add(product);
         }
         return allProductsDto ;

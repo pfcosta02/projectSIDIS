@@ -81,6 +81,21 @@ public class Review implements Serializable {
         this.funnyFact = retrieveDataFromApi(dataTime);
     }
 
+    public Review(Long reviewId, UUID uuid, String text, Integer rating,Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long cust, String funnyFact, Long version){
+        this.reviewId = reviewId;
+        this.uuid = uuid;
+        this.text = text;
+        this.rating = rating;
+        this.upVote = upVote;
+        this.downVote = downVote;
+        this.dataTime = dataTime;
+        this.productSku = productSku;
+        this.customerId = cust;
+        this.status = status;
+        this.funnyFact = funnyFact;
+        this.version = version;
+    }
+
     // Constructor for tests
     public Review(String text) {
         this.text = text;

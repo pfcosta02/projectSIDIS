@@ -113,7 +113,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding(DirectExchange directExchange, Queue queueReceiver){
+    public Binding binding6(DirectExchange directExchange, Queue queueReceiver){
         return BindingBuilder.bind(queueReceiver).to(directExchange).with("key");
     }
 
@@ -129,7 +129,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding2(DirectExchange directExchange2, Queue queueReceiver2){
+    public Binding binding7(DirectExchange directExchange2, Queue queueReceiver2){
         return BindingBuilder.bind(queueReceiver2).to(directExchange2).with("key");
     }
 
@@ -146,7 +146,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding3(DirectExchange directExchange3, Queue queueReceiver3){
+    public Binding binding8(DirectExchange directExchange3, Queue queueReceiver3){
         return BindingBuilder.bind(queueReceiver3).to(directExchange3).with("key");
     }
 }

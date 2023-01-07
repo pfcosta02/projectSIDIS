@@ -8,16 +8,13 @@ public class ProductDTO {
     public final String sku;
     public final String name;
     public final String description;
-    public List<String> images;
 
     public ProductDTO (@JsonProperty("name") String name,
                        @JsonProperty("sku") String sku,
-                       @JsonProperty("description") String description,
-                       @JsonProperty("images") List<String> images) {
+                       @JsonProperty("description") String description) {
         this.sku = sku;
         this.description = description;
         this.name = name;
-        this.images = images;
     }
 
 }

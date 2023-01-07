@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime; // Import the LocalDateTime class
 import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
+import java.util.UUID;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,6 +24,7 @@ import org.hibernate.StaleObjectStateException;
 public class ReviewDTO {
 
     public Long reviewId;
+    public UUID uuid;
 
     public String text;
 
@@ -46,7 +48,7 @@ public class ReviewDTO {
 
     public ReviewDTO(){}
 
-    public ReviewDTO(Long reviewId, String text, Integer rating,Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long cust, String funnyFact, Long version) {
+    public ReviewDTO(Long reviewId, UUID uuid, String text, Integer rating,Integer upVote, Integer downVote, String dataTime, String status, String productSku, Long cust, String funnyFact, Long version) {
         this.reviewId = reviewId;
         this.text = text;
         this.rating = rating;
@@ -140,4 +142,11 @@ public class ReviewDTO {
         this.customerId = id;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 }
