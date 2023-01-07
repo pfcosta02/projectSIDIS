@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -66,18 +67,24 @@ public class Receiver {
     @RabbitListener(queues = "#{autoDeleteQueue4.name}")
     public void consumeMessage(Vote vote) {
 
-        Optional<Vote> optional = voteRepository.findById(vote.getId());
-
-        if(optional.isPresent()) {
-            System.out.println("Vote Duplicated");
-            return;
-        }
-
         final Vote obj = Vote.newFrom(vote);
 
         voteRepository.save(obj);
 
         System.out.println("Vote received:" + vote);
+    }
+
+    @RabbitListener(queues = "#{autoDeleteQueue6.name}")
+    public void updateVote(UUID uuid) {
+        List<Vote> prod = voteRepository.findVotesReviewPending(uuid);
+
+        for (Vote aux: prod) {
+            aux.applyPatch(aux.getVersion());
+
+            voteRepository.save(aux);
+        }
+
+        System.out.println("Review updated:" + prod.get(0));
     }
 
     @RabbitListener(queues = "#{autoDeleteQueue5.name}")

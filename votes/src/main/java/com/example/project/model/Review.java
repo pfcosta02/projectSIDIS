@@ -92,6 +92,14 @@ public class Review implements Serializable {
         this.version = version;
     }
 
+    public Review(UUID uuid, String text, Integer rating, String productSku, Long customerId) {
+        this.uuid = uuid;
+        this.text = text;
+        this.rating = rating;
+        this.productSku = productSku;
+        this.customerId = customerId;
+    }
+
     // Constructor for tests
     public Review(String text) {
         this.text = text;

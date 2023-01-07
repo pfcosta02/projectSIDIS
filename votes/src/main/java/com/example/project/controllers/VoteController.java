@@ -1,11 +1,13 @@
 package com.example.project.controllers;
 
+import com.example.project.model.Review;
 import com.example.project.model.Vote;
 import com.example.project.model.VoteDTO;
 import com.example.project.rabbitmq.Sender;
 import com.example.project.services.VoteService;
 import com.example.project.usermanagement.model.Role;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Votes", description = "Endpoints for managing votes")
 @RestController
@@ -45,7 +48,7 @@ public class VoteController {
     @RolesAllowed(Role.CUSTOMER)
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource,final WebRequest request2) {
+    public ResponseEntity<Vote> create(@Valid  @RequestBody final Vote resource, final WebRequest request2) {
 
         final String auth = request2.getHeader("Authorization");
 
@@ -59,6 +62,23 @@ public class VoteController {
         final var vote = service.create(resource);
 
         return ResponseEntity.status(HttpStatus.CREATED).eTag(Long.toString(vote.getVersion())).body(vote);
+    }
+
+    @Operation(summary = "Partially updates an existing review")
+    @RolesAllowed(Role.MODERATOR)
+    @PatchMapping(value = "/{uuid}")
+    public ResponseEntity<Vote> partialUpdate(final WebRequest request,
+                                                @PathVariable("uuid") @Parameter(description = "The uuid of the review to update") final UUID uuid,
+                                                @Valid @RequestBody final Vote resource) {
+        final String ifMatchValue = request.getHeader("If-Match");
+        if (ifMatchValue == null || ifMatchValue.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "You must issue a conditional PATCH using 'if-match'");
+        }
+
+        final var vote = service.partialUpdate(uuid, resource, Long.parseLong(ifMatchValue));
+
+        return ResponseEntity.ok().eTag(Long.toString(vote.getVersion())).body(vote);
     }
 
 }

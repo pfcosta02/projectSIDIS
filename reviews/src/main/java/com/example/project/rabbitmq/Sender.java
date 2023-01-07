@@ -2,6 +2,7 @@ package com.example.project.rabbitmq;
 
 import com.example.project.model.Product;
 import com.example.project.model.Review;
+import com.example.project.model.Vote;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class Sender {
     public void update(String exchange, Review review) {
         template.convertAndSend(exchange, "", review);
         System.out.println(" [x] Sent '" + review + "'");
+    }
+
+    public void update(String exchange, UUID uuid) {
+        template.convertAndSend(exchange, "", uuid);
+        System.out.println(" [x] Sent '" + uuid + "'");
     }
 
     public void delete(String exchange, UUID uuid) {

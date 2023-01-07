@@ -44,6 +44,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     public String exchangeUpdate = "review_update_fanout";
 
+    public String exchangeUpdateVote = "vote_update_fanout";
+
     @Override
     public Review create(final Review resource) {
         // construct a new object based on data received by the service to ensure domain
@@ -81,6 +83,8 @@ public class ReviewServiceImpl implements ReviewService {
         review.applyPatch(resource, desiredVersion);
 
         sender.update(exchangeUpdate, review);
+
+        sender.update(exchangeUpdateVote, review.getUuid());
 
         // in the meantime some other user might have changed this object on the
         // database, so concurrency control will still be applied when we try to save

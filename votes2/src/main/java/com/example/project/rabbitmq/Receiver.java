@@ -1,6 +1,7 @@
 package com.example.project.rabbitmq;
 
 
+import com.example.project.exceptions.MyResourceNotFoundException;
 import com.example.project.model.Review;
 import com.example.project.model.Vote;
 import com.example.project.repositories.ReviewRepository;
@@ -10,7 +11,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class Receiver {
@@ -27,16 +30,10 @@ public class Receiver {
     @RabbitListener(queues = "#{autoDeleteQueue1.name}")
     public void consumeMessage(Vote vote) {
 
-        Optional<Vote> optional = repository.findById(vote.getId());
-
-        if(optional.isPresent()) {
-            System.out.println("Vote Duplicated");
-            return;
-        }
-
         final Vote obj = Vote.newFrom(vote);
 
         repository.save(obj);
+
         System.out.println("Vote received:" + vote);
     }
 
@@ -57,6 +54,19 @@ public class Receiver {
 
         System.out.println("Review received:" + review);
 
+    }
+
+    @RabbitListener(queues = "#{autoDeleteQueue3.name}")
+    public void updateVote(UUID uuid) {
+        List<Vote> prod = repository.findVotesReviewPending(uuid);
+
+        for (Vote aux: prod) {
+            aux.applyPatch(aux.getVersion());
+
+            repository.save(aux);
+        }
+
+        System.out.println("Review updated:" + prod.get(0));
     }
 
 

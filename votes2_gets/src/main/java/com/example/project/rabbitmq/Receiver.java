@@ -10,7 +10,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class Receiver {
@@ -57,6 +59,19 @@ public class Receiver {
 
         System.out.println("Review received:" + review);
 
+    }
+
+    @RabbitListener(queues = "#{autoDeleteQueue3.name}")
+    public void updateVote(UUID uuid) {
+        List<Vote> prod = repository.findVotesReviewPending(uuid);
+
+        for (Vote aux: prod) {
+            aux.applyPatch(aux.getVersion());
+
+            repository.save(aux);
+        }
+
+        System.out.println("Review updated:" + prod.get(0));
     }
 
 

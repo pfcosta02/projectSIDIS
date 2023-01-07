@@ -61,6 +61,17 @@ public class Config {
     }
 
     @Bean
+    public Queue autoDeleteQueue6() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public FanoutExchange updateVote() {
+        return new FanoutExchange("vote_update_fanout");
+    }
+
+
+    @Bean
     public Binding binding1(FanoutExchange fanout,
                             Queue autoDeleteQueue1) {
         return BindingBuilder.bind(autoDeleteQueue1).to(fanout);
@@ -91,6 +102,12 @@ public class Config {
     }
 
     @Bean
+    public Binding binding6(FanoutExchange updateVote,
+                            Queue autoDeleteQueue6) {
+        return BindingBuilder.bind(autoDeleteQueue6).to(updateVote);
+    }
+
+    @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
@@ -113,7 +130,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding6(DirectExchange directExchange, Queue queueReceiver){
+    public Binding binding7(DirectExchange directExchange, Queue queueReceiver){
         return BindingBuilder.bind(queueReceiver).to(directExchange).with("key");
     }
 
@@ -129,7 +146,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding7(DirectExchange directExchange2, Queue queueReceiver2){
+    public Binding binding8(DirectExchange directExchange2, Queue queueReceiver2){
         return BindingBuilder.bind(queueReceiver2).to(directExchange2).with("key");
     }
 
@@ -146,7 +163,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding8(DirectExchange directExchange3, Queue queueReceiver3){
+    public Binding binding9(DirectExchange directExchange3, Queue queueReceiver3){
         return BindingBuilder.bind(queueReceiver3).to(directExchange3).with("key");
     }
 }

@@ -23,4 +23,14 @@ public class Sender {
         System.out.println(" [x] Sent '" + vote + "'");
     }
 
+    public void send(String exchange, Review review) {
+        template.convertAndSend(exchange, "", review);
+        System.out.println(" [x] Sent '" + review + "'");
+    }
+
+    public void update(String exchange, Vote vote) {
+        template.convertAndSend(exchange, "", vote);
+        System.out.println(" [x] Sent '" + vote + "'");
+    }
+
 }

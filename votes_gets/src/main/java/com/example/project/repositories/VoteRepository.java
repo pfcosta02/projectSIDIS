@@ -12,7 +12,11 @@ import java.util.UUID;
 public interface VoteRepository extends CrudRepository<Vote, Long> {
 
     @Modifying
-    @Query("SELECT f FROM Vote f WHERE f.uuid = ?1 ")
+    @Query("SELECT f FROM Vote f WHERE f.uuid = ?1 AND f.status = 'approved'")
     List<Vote> findVotesReview(UUID uuid);
+
+    @Modifying
+    @Query("SELECT f FROM Vote f WHERE f.uuid = ?1 AND f.status = 'pending'")
+    List<Vote> findVotesReviewPending(UUID uuid);
 
 }

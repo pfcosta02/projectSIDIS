@@ -1,9 +1,12 @@
 package com.example.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.StaleObjectStateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +25,18 @@ public class Vote {
     @Column (name = "customerId")
     private Long customerId;
 
+    @Column (name = "status")
+    private String status;
+
+    @Column (name = "text")
+    private String text;
+
+    @Column (name = "rating")
+    private Integer rating;
+
+    @Column (name = "productSku")
+    private String productSku;
+
     @Version
     private Long version;
 
@@ -32,6 +47,7 @@ public class Vote {
         this.vote = vote;
         this.uuid = uuid;
         this.customerId = customerId;
+        this.status="approved";
     }
 
     public static Vote newFrom(final Vote resource) {
@@ -51,9 +67,25 @@ public class Vote {
             obj.setCustomerId(resource.customerId);
         }
 
+        if (resource.getStatus() != null) {
+            obj.setStatus(resource.status);
+        } else {
+            obj.setStatus("approved");
+        }
+
         return obj;
     }
 
+    public void applyPatch(final long desiredVersion) {
+        // check current version
+        if (this.version != desiredVersion) {
+            throw new StaleObjectStateException("Object was already modified by another user", this.vote);
+        }
+        // apply patch only if the field was sent in the request. we do not allow to
+        // change the name attribute so we simply ignore it
+
+        this.setStatus("approved");
+    }
 
     public Long getId() {
         return id;
@@ -89,5 +121,41 @@ public class Vote {
 
     public Long getVersion() {
         return version;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public String getProductSku() {
+        return productSku;
+    }
+
+    public void setProductSku(String productSku) {
+        this.productSku = productSku;
     }
 }

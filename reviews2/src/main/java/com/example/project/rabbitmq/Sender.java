@@ -27,6 +27,11 @@ public class Sender {
         System.out.println(" [x] Sent '" + review + "'");
     }
 
+    public void update(String exchange, UUID uuid) {
+        template.convertAndSend(exchange, "", uuid);
+        System.out.println(" [x] Sent '" + uuid + "'");
+    }
+
     public void delete(String exchange, UUID uuid) {
         template.convertAndSend(exchange, "", uuid);
         System.out.println(" [x] Sent '" + uuid + "'");
