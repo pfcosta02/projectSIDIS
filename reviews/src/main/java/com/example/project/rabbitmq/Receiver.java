@@ -50,7 +50,7 @@ public class Receiver {
         final var review2 = repository.findByUUID(review.getUuid())
                 .orElseThrow(() -> new MyResourceNotFoundException("Cannot update an object that does not yet exist"));
 
-        review2.applyPatch(review, 0);
+        review2.applyPatch(review, review2.getVersion());
 
         repository.save(review2);
 

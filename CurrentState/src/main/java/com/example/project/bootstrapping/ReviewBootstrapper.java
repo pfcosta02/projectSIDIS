@@ -30,13 +30,14 @@ public class ReviewBootstrapper implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (reviewRepo.findById(1L).isEmpty()) {
+        UUID uuid=UUID.fromString("fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe");
+
+        if (reviewRepo.findByUUID(uuid).isEmpty()) {
             Review f1 = new Review(1L);
             f1.setText("Bom");
             f1.setRating(4);
             f1.setUpVote(0);
             f1.setDownVote(0);
-            UUID uuid=UUID.fromString("fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe");
             f1.setUuid(uuid);
             f1.setDataTime("06-11-2022 23:30:00");
             f1.setFunnyFact();

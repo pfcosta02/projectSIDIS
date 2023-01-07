@@ -29,7 +29,7 @@ public class VoteBootstrapper implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (voteRepo.findById(1L).isEmpty()) {
+        if (voteRepo.findById(6L).isEmpty()) {
             Vote f1 = new Vote();
             f1.setCustomerId(3L);
             f1.setVote("UpVote");
@@ -37,7 +37,7 @@ public class VoteBootstrapper implements CommandLineRunner {
             f1.setReviewId(uuid);
             voteRepo.save(f1);
         }
-        if (voteRepo.findById(2L).isEmpty()) {
+        if (voteRepo.findById(7L).isEmpty()) {
             Vote f1 = new Vote();
             f1.setCustomerId(3L);
             f1.setVote("DownVote");
