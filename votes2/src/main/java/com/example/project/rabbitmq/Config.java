@@ -41,6 +41,27 @@ public class Config {
     }
 
     @Bean
+    public Queue autoDeleteQueue4() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public FanoutExchange updateReviewFanout() {
+        return new FanoutExchange("review_update_fanout");
+    }
+
+    @Bean
+    public Queue autoDeleteQueue5() {
+        return new AnonymousQueue();
+    }
+
+    @Bean
+    public FanoutExchange deleteReviewFanout() {
+        return new FanoutExchange("review_delete_fanout");
+    }
+
+
+    @Bean
     public Binding binding1(FanoutExchange fanout,
                             Queue autoDeleteQueue1) {
         return BindingBuilder.bind(autoDeleteQueue1).to(fanout);
@@ -56,6 +77,18 @@ public class Config {
     public Binding binding3(FanoutExchange updateVoteFanout,
                             Queue autoDeleteQueue3) {
         return BindingBuilder.bind(autoDeleteQueue3).to(updateVoteFanout);
+    }
+
+    @Bean
+    public Binding binding4(FanoutExchange updateReviewFanout,
+                            Queue autoDeleteQueue4) {
+        return BindingBuilder.bind(autoDeleteQueue4).to(updateReviewFanout);
+    }
+
+    @Bean
+    public Binding binding5(FanoutExchange deleteReviewFanout,
+                            Queue autoDeleteQueue5) {
+        return BindingBuilder.bind(autoDeleteQueue5).to(deleteReviewFanout);
     }
 
     @Bean
@@ -82,7 +115,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding4(DirectExchange directExchange, Queue queueReceiver){
+    public Binding binding6(DirectExchange directExchange, Queue queueReceiver){
         return BindingBuilder.bind(queueReceiver).to(directExchange).with("key");
     }
 
@@ -98,7 +131,7 @@ public class Config {
     }
 
     @Bean
-    public Binding binding5(DirectExchange directExchange2, Queue queueReceiver2){
+    public Binding binding7(DirectExchange directExchange2, Queue queueReceiver2){
         return BindingBuilder.bind(queueReceiver2).to(directExchange2).with("key");
     }
 }

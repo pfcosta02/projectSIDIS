@@ -30,6 +30,13 @@ public class Receiver {
     @RabbitListener(queues = "#{autoDeleteQueue1.name}")
     public void consumeMessage(Vote vote) {
 
+        List<Vote> optional = repository.findVotesReviewPending(vote.getUuid());
+
+        if(!optional.isEmpty()) {
+            System.out.println("Vote Duplicated");
+            return;
+        }
+
         final Vote obj = Vote.newFrom(vote);
 
         repository.save(obj);
@@ -56,9 +63,32 @@ public class Receiver {
 
     }
 
+    @RabbitListener(queues = "#{autoDeleteQueue4.name}")
+    public void updateReview(Review review) {
+        final var review2 = reviewRepository.findByUUID(review.getUuid())
+                .orElseThrow(() -> new MyResourceNotFoundException("Cannot update an object that does not yet exist"));
+
+        review2.applyPatch(review, review2.getVersion());
+
+        reviewRepository.save(review2);
+
+        System.out.println("Review updated:" + review2);
+    }
+
+    @RabbitListener(queues = "#{autoDeleteQueue5.name}")
+    public void deleteReview(UUID uuid) {
+        reviewRepository.deleteByIdIfMatch(uuid,1);
+
+        System.out.println("Review deleted:" + uuid);
+    }
+
     @RabbitListener(queues = "#{autoDeleteQueue3.name}")
     public void updateVote(UUID uuid) {
         List<Vote> prod = repository.findVotesReviewPending(uuid);
+
+        if(prod.isEmpty()) {
+            return;
+        }
 
         for (Vote aux: prod) {
             aux.applyPatch(aux.getVersion());
@@ -66,7 +96,7 @@ public class Receiver {
             repository.save(aux);
         }
 
-        System.out.println("Review updated:" + prod.get(0));
+        System.out.println("Votes  Updated");
     }
 
 

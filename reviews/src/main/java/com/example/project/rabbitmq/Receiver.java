@@ -68,13 +68,6 @@ public class Receiver {
     @RabbitListener(queues = "#{autoDeleteQueue4.name}")
     public void consumeMessage(Vote vote) {
 
-        Optional<Vote> optional = voteRepository.findById(vote.getId());
-
-        if(optional.isPresent()) {
-            System.out.println("Vote Duplicated");
-            return;
-        }
-
         final Vote obj = Vote.newFrom(vote);
 
         voteRepository.save(obj);
@@ -86,13 +79,17 @@ public class Receiver {
     public void updateVote(UUID uuid) {
         List<Vote> prod = voteRepository.findVotesReviewPending(uuid);
 
+        if(prod.isEmpty()) {
+            return;
+        }
+
         for (Vote aux: prod) {
             aux.applyPatch(aux.getVersion());
 
             voteRepository.save(aux);
         }
 
-        System.out.println("Vote updated");
+        System.out.println("Votes  Updated");
     }
 
     @RabbitListener(queues = "#{autoDeleteQueue5.name}")

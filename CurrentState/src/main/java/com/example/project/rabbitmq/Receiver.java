@@ -78,13 +78,17 @@ public class Receiver {
     public void updateVote(UUID uuid) {
         List<Vote> prod = voteRepository.findVotesReviewPending(uuid);
 
+        if(prod.isEmpty()) {
+            return;
+        }
+
         for (Vote aux: prod) {
             aux.applyPatch(aux.getVersion());
 
             voteRepository.save(aux);
         }
 
-        System.out.println("Review updated:" + prod.get(0));
+        System.out.println("Votes  Updated");
     }
 
     @RabbitListener(queues = "#{autoDeleteQueue5.name}")

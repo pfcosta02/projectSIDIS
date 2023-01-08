@@ -1,4 +1,5 @@
 package com.example.project.rabbitmq;
+import com.example.project.exceptions.MyResourceNotFoundException;
 import com.example.project.model.Product;
 import com.example.project.model.Review;
 import com.example.project.repositories.ProductRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class Receiver {
@@ -53,5 +55,24 @@ public class Receiver {
 
         System.out.println("Review received:" + review);
 
+    }
+
+    @RabbitListener(queues = "#{autoDeleteQueue3.name}")
+    public void updateReview(Review review) {
+        final var review2 = repository.findByUUID(review.getUuid())
+                .orElseThrow(() -> new MyResourceNotFoundException("Cannot update an object that does not yet exist"));
+
+        review2.applyPatch(review, review2.getVersion());
+
+        repository.save(review2);
+
+        System.out.println("Review updated:" + review2);
+    }
+
+    @RabbitListener(queues = "#{autoDeleteQueue4.name}")
+    public void deleteReview(UUID uuid) {
+        repository.deleteByIdIfMatch(uuid,1);
+
+        System.out.println("Review deleted:" + uuid);
     }
 }

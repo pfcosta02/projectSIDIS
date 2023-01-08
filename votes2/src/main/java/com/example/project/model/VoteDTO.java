@@ -12,7 +12,7 @@ public class VoteDTO {
     public Long reviewId;
     public Long customerId;
 
-    public VoteDTO(@JsonProperty("vote") String vote, @JsonProperty("vote") UUID uuid,@JsonProperty("reviewId") Long reviewId, @JsonProperty("customerId") Long customerId) {
+    public VoteDTO(@JsonProperty("vote") String vote, @JsonProperty("UUID") UUID uuid,@JsonProperty("reviewId") Long reviewId, @JsonProperty("customerId") Long customerId) {
         this.vote = vote;
         this.uuid = uuid;
         this.reviewId = reviewId;
