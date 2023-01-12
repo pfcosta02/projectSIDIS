@@ -303,9 +303,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{products}}{{baseUrl}}/products",
+									"raw": "{{products_get}}{{baseUrl}}/products",
 									"host": [
-										"{{products}}{{baseUrl}}"
+										"{{products_get}}{{baseUrl}}"
 									],
 									"path": [
 										"products"
@@ -320,9 +320,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{products}}{{baseUrl}}/products/sku/123456789A",
+									"raw": "{{products_get}}{{baseUrl}}/products/sku/123456789A",
 									"host": [
-										"{{products}}{{baseUrl}}"
+										"{{products_get}}{{baseUrl}}"
 									],
 									"path": [
 										"products",
@@ -339,9 +339,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{products}}{{baseUrl}}/products/name/Martelo",
+									"raw": "{{products_get}}{{baseUrl}}/products/name/Martelo",
 									"host": [
-										"{{products}}{{baseUrl}}"
+										"{{products_get}}{{baseUrl}}"
 									],
 									"path": [
 										"products",
@@ -358,9 +358,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{products}}{{baseUrl}}/products/123456789A/rating",
+									"raw": "{{products_get}}{{baseUrl}}/products/123456789A/rating",
 									"host": [
-										"{{products}}{{baseUrl}}"
+										"{{products_get}}{{baseUrl}}"
 									],
 									"path": [
 										"products",
@@ -383,7 +383,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Samsung S22\",\r\n    \"description\": \"Smartphone Samsung S22 256GB\",\r\n    \"sku\": \"ABCD123456\"\r\n}",
+									"raw": "{\r\n    \"name\": \"teste rabbit\",\r\n    \"description\": \"rabbit\",\r\n    \"sku\": \"SKURABBT9\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -391,9 +391,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{products}}{{baseUrl}}/products",
+									"raw": "{{product_cmd}}{{baseUrl}}/products",
 									"host": [
-										"{{products}}{{baseUrl}}"
+										"{{product_cmd}}{{baseUrl}}"
 									],
 									"path": [
 										"products"
@@ -448,9 +448,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/product/123456789A/date/votes",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/product/123456789A/date/votes",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
@@ -469,9 +469,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/product/123456789A/date",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/product/123456789A/date",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
@@ -489,13 +489,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/1",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"1"
+										"fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe"
 									]
 								}
 							},
@@ -503,18 +503,29 @@
 						},
 						{
 							"name": "GET Review Votes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/upVote/1",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/votes/fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"upVote",
-										"1"
+										"votes",
+										"fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe"
 									]
 								}
 							},
@@ -532,7 +543,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"123456789A\"\r\n}",
+									"raw": "{\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"123456789A\",\r\n    \"uuid\": \"ac3b2b1f-e246-46d0-8b0f-c10ae397c8fe\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -540,9 +551,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews",
+									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_cmd}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews"
@@ -558,18 +569,18 @@
 								"header": [
 									{
 										"key": "If-Match",
-										"value": "1",
+										"value": "0",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/7",
+									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_cmd}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"7"
+										"fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe"
 									]
 								}
 							},
@@ -581,14 +592,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/customer/5",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/customer/3",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
 										"customer",
-										"5"
+										"3"
 									]
 								}
 							},
@@ -635,9 +646,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/pending",
+									"raw": "{{reviews_get}}{{baseUrl}}/reviews/pending",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_get}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
@@ -654,7 +665,7 @@
 								"header": [
 									{
 										"key": "If-Match",
-										"value": "1",
+										"value": "0",
 										"type": "text"
 									}
 								],
@@ -668,13 +679,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{reviews}}{{baseUrl}}/reviews/1",
+									"raw": "{{reviews_cmd}}{{baseUrl}}/reviews/fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe",
 									"host": [
-										"{{reviews}}{{baseUrl}}"
+										"{{reviews_cmd}}{{baseUrl}}"
 									],
 									"path": [
 										"reviews",
-										"1"
+										"fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe"
 									]
 								}
 							},
@@ -734,7 +745,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": " {\r\n     \"vote\": \"UpVote\",\r\n     \"reviewId\": \"1\"\r\n }",
+							"raw": " {\r\n    \"vote\": \"UpVote\",\r\n    \"uuid\": \"fd3b2b1f-e246-46d0-8b0f-c10ae397c8fe\",\r\n    \"text\": \"Bom\",\r\n    \"rating\": \"3\",\r\n    \"productSku\": \"123456789A\"\r\n }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -742,9 +753,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{votes}}{{baseUrl}}/votes",
+							"raw": "{{votes_cmd}}{{baseUrl}}/votes",
 							"host": [
-								"{{votes}}{{baseUrl}}"
+								"{{votes_cmd}}{{baseUrl}}"
 							],
 							"path": [
 								"votes"
